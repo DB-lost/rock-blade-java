@@ -30,6 +30,9 @@
 		<java.version>21</java.version>
 		<cucumber.version>7.20.1</cucumber.version>
 		<jacoco.version>0.8.12</jacoco.version>
+		<spotless.version>2.44.1</spotless.version>
+		<googleJavaFormat.version>1.25.2</googleJavaFormat.version>
+		<sortpom.version>4.0.0</sortpom.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -133,6 +136,67 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>com.diffplug.spotless</groupId>
+				<artifactId>spotless-maven-plugin</artifactId>
+				<version>${spotless.version}</version>
+				<configuration>
+					<formats>
+						<!-- 配置基础文件格式 -->
+						<format>
+							<includes>
+								<include>*.md</include>
+								<include>.gitignore</include>
+							</includes>
+							<trimTrailingWhitespace/>
+							<endWithNewline/>
+							<indent>
+								<spaces>true</spaces>
+								<spacesPerTab>4</spacesPerTab>
+							</indent>
+						</format>
+					</formats>
+					<!-- Java代码格式化配置 -->
+					<java>
+						<googleJavaFormat>
+							<version>${googleJavaFormat.version}</version>
+							<style>GOOGLE</style>
+							<reflowLongStrings>true</reflowLongStrings>
+						</googleJavaFormat>
+						<removeUnusedImports/>
+						<importOrder>
+							<order>java,javax,org,com</order>
+						</importOrder>
+						<!-- 添加许可证头 -->
+						<licenseHeader>
+							<content>/*
+ * Copyright (c) $YEAR RockBlade
+ */</content>
+						</licenseHeader>
+					</java>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>apply</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- 添加Save Actions插件配置 -->
+			<!-- 这个插件的作用是对POM文件进行排序 -->
+			<plugin>
+				<groupId>com.github.ekryd.sortpom</groupId>
+				<artifactId>sortpom-maven-plugin</artifactId>
+				<version>${sortpom.version}</version>
+				<configuration>
+					<sortProperties>true</sortProperties>
+					<keepBlankLines>true</keepBlankLines>
+					<sortDependencies>scope,groupId,artifactId</sortDependencies>
+					<createBackupFile>false</createBackupFile>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
