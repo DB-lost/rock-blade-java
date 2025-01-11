@@ -1,4 +1,4 @@
-package com.rockblade.rock_blade_java;
+package com.rockblade;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

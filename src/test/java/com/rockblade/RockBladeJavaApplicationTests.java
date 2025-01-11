@@ -1,4 +1,4 @@
-package com.rockblade.rock_blade_java;
+package com.rockblade;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
