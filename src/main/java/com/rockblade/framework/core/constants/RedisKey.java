@@ -2,11 +2,11 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 21:26:39
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-15 21:29:46
+ * @LastEditTime: 2025-01-16 09:03:39
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/core/constants/RedisKey.java
  * @Description: Redis键
  * 
- * Copyright (c) 2025 by DB, All Rights Reserved. 
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
  */
 package com.rockblade.framework.core.constants;
 
@@ -19,14 +19,9 @@ package com.rockblade.framework.core.constants;
  */
 public interface RedisKey {
 
-    /**
-     * 验证码
-     */
-    String CAPTCHA_KEY = "sys:sys-login:captcha:";
+  /** 验证码 */
+  String CAPTCHA_KEY = "sys:sys-login:captcha:";
 
-    /**
-     * redis分布式锁key
-     */
-    String DISTRIBUTED_LOCK = "sys:redis:distributed-lock:";
-
+  /** redis分布式锁key */
+  String DISTRIBUTED_LOCK = "sys:redis:distributed-lock:";
 }
