@@ -107,6 +107,12 @@
 			<version>${mybatis-flex.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- 代码生成器 -->
+		<dependency>
+			<groupId>com.mybatis-flex</groupId>
+			<artifactId>mybatis-flex-codegen</artifactId>
+			<version>${mybatis-flex.version}</version>
+		</dependency>
 
 		<!--  Sa-Token 权限认证，在线文档：https://sa-token.cc  -->
 		<dependency>
@@ -144,6 +150,12 @@
 			<groupId>cn.hutool</groupId>
 			<artifactId>hutool-all</artifactId>
 			<version>${hutool.version}</version>
+		</dependency>
+		
+		<!-- 提供HikariCP连接池 -->
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -257,17 +269,26 @@
 		</plugins>
 	</build>
 
-	<repositories>
-		<repository>
-			<id>aliyun</id>
-			<url>https://maven.aliyun.com/repository/public</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
+	<!-- 本地开发环境使用阿里云镜像加速 -->
+	<profiles>
+		<profile>
+			<id>local</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>aliyun</id>
+					<url>https://maven.aliyun.com/repository/public</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
 
 </project>
