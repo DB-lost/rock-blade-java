@@ -231,12 +231,6 @@
 						<importOrder>
 							<order>java,javax,org,com</order>
 						</importOrder>
-						<!-- 添加许可证头 -->
-						<licenseHeader>
-							<content>/*
- * Copyright (c) $YEAR RockBlade
- */</content>
-						</licenseHeader>
 					</java>
 				</configuration>
 				<executions>
