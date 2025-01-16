@@ -50,21 +50,21 @@ import lombok.experimental.Accessors;
 #end
 #end
 #(table.buildTableAnnotation())
-public class #(entityClassName)#if(withActiveRecord) extends Model<#(entityClassName)>#else#(table.buildExtends())#(table.buildImplements())#end  {
+public class #(entityClassName)#if(withActiveRecord) extends Model<#(entityClassName)>#else#(table.buildExtends(false))#(table.buildImplements())#end  {
 
 #for(column : table.columns)
     #if(column.property != "createTime" && column.property != "createUserId" && column.property != "updateTime" && column.property != "updateUserId")
     #set(comment = javadocConfig.formatColumnComment(column.comment))
-    #if(isNotBlank(comment))
+    #if(hasText(comment))
     /**
      * #(comment)
      */
     #end
     #set(annotations = column.buildAnnotations())
-    #if(isNotBlank(annotations))
+    #if(hasText(annotations))
     #(annotations)
     #end
-    private #(column.propertySimpleType) #(column.property)#if(isNotBlank(column.propertyDefaultValue)) = #(column.propertyDefaultValue)#end;
+    private #(column.propertySimpleType) #(column.property)#if(hasText(column.propertyDefaultValue)) = #(column.propertyDefaultValue)#end;
     #end
 
 #end
