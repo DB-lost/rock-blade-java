@@ -5,8 +5,8 @@
  * @LastEditTime: 2025-01-16 09:03:42
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/utils/MessageUtils.java
  * @Description: 获取i18n资源文件
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.framework.utils;
 

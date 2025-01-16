@@ -5,8 +5,8 @@
  * @LastEditTime: 2025-01-16 09:03:17
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/core/base/entity/R.java
  * @Description: 响应信息主体
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.framework.core.base.entity;
 

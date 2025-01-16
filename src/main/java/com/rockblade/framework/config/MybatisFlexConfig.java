@@ -5,20 +5,21 @@
  * @LastEditTime: 2025-01-16 19:45:10
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/config/MybatisFlexConfig.java
  * @Description: Mybatis flex配置
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.framework.config;
 
+import org.springframework.context.annotation.Configuration;
+
 import com.mybatisflex.core.mybatis.FlexConfiguration;
 import com.mybatisflex.spring.boot.ConfigurationCustomizer;
-import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MybatisFlexConfig implements ConfigurationCustomizer {
 
-    @Override
-    public void customize(FlexConfiguration configuration) {
-        // 在这里为 configuration 进行配置
-    }
+  @Override
+  public void customize(FlexConfiguration configuration) {
+    // 在这里为 configuration 进行配置
+  }
 }

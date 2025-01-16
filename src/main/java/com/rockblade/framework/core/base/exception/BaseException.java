@@ -5,8 +5,8 @@
  * @LastEditTime: 2025-01-16 09:03:21
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/core/base/exception/BaseException.java
  * @Description: 基础异常
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.framework.core.base.exception;
 

@@ -4,8 +4,8 @@
  * @LastEditors: DB 2502523450@qq.com
  * @LastEditTime: 2025-01-16 09:03:29
  * @Description: 工具类异常
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.framework.core.base.exception;
 

@@ -5,8 +5,8 @@
  * @LastEditTime: 2025-01-16 09:02:34
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/config/RestTemplateConfig.java
  * @Description: Rest模板
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 
 package com.rockblade.framework.config;

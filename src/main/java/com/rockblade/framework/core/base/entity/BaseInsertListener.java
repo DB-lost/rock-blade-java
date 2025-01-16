@@ -5,8 +5,8 @@
  * @LastEditTime: 2025-01-15 21:27:24
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/core/base/entity/BaseInsertListener.java
  * @Description: 基础插入侦听器
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.framework.core.base.entity;
 

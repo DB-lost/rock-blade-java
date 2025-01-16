@@ -5,8 +5,8 @@
  * @LastEditTime: 2025-01-16 09:03:26
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/core/base/exception/ServiceException.java
  * @Description: 业务异常
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.framework.core.base.exception;
 
