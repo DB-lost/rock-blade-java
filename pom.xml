@@ -43,6 +43,8 @@
 		<mybatis-flex.version>1.10.5</mybatis-flex.version>
 		<sa-token.version>1.39.0</sa-token.version>
 		<hutool.version>5.8.34</hutool.version>
+		<postgresql.version>42.6.0</postgresql.version>
+		<knife4j.version>4.5.0</knife4j.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -156,6 +158,18 @@
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
+		</dependency>
+		<!-- PgSQL -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${postgresql.version}</version>
+		</dependency>
+		<!-- knife4j-Swagger -->
+		<dependency>
+			<groupId>com.github.xiaoymin</groupId>
+			<artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+			<version>${knife4j.version}</version>
 		</dependency>
 	</dependencies>
 
