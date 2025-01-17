@@ -1,0 +1,102 @@
+<configuration>
+    <!--本文主要输出日志为控制台日志，系统日志，sql日志，异常日志-->
+    <!-- %m输出的信息,%p日志级别,%t线程名,%d日期,%c类的全名 -->
+    <!--控制台-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS, GMT+8} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--定义日志文件的存储地址和前缀名-->
+    <property name="LOG_HOME" value="./logs"/>
+    <property name="LOG_PREFIX" value="RockBlade-System"/>
+
+    <!--系统info级别日志-->
+    <!--<File> 日志目录，没有会自动创建-->
+    <!--<rollingPolicy>日志策略，每天简历一个日志文件，或者当天日志文件超过64MB时-->
+    <!--encoder 日志编码及输出格式-->
+    <appender name="fileLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/${LOG_PREFIX}/info.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${LOG_PREFIX}/info.log.%d.%i</fileNamePattern>
+            <!-- 保留的历史日志文件数 -->
+            <maxHistory>15</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 64 MB -->
+                <maxFileSize>64 MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <!--对记录事件进行格式化。负责两件事，一是把日志信息转换成字节数组，二是把字节数组写入到输出流。-->
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS, GMT+8} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--sql日志-->
+    <appender name="sqlFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/${LOG_PREFIX}/sql.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${LOG_PREFIX}/sql.log.%d.%i</fileNamePattern>
+            <!-- 保留的历史日志文件数 -->
+            <maxHistory>15</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 64 MB -->
+                <maxFileSize>64 MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <!--对记录事件进行格式化。负责两件事，一是把日志信息转换成字节数组，二是把字节数组写入到输出流。-->
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS, GMT+8} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--异常日志-->
+    <appender name="errorFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/${LOG_PREFIX}/error.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${LOG_PREFIX}/error.log.%d.%i</fileNamePattern>
+            <!-- 保留的历史日志文件数 -->
+            <maxHistory>15</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 64 MB -->
+                <maxFileSize>64 MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <!--对记录事件进行格式化。负责两件事，一是把日志信息转换成字节数组，二是把字节数组写入到输出流。-->
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS, GMT+8} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!--
+            日志都在这里 过滤出 error
+            使用 try {}catch (Exception e){} 的话异常无法写入日志，可以在catch里用logger.error()方法手动写入日志
+            -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <!--  日志输出级别 -->
+    <!--All\DEBUG\INFO\WARN\ERROR\FATAL\OFF-->
+    <!--打印info级别日志，分别在控制台，fileLog，errorFile输出
+        异常日志在上面由过滤器过滤出ERROR日志打印
+    -->
+    <root level="INFO">
+        <appender-ref ref="fileLog" />
+        <appender-ref ref="console" />
+        <appender-ref ref="errorFile" />
+    </root>
+
+    <!--打印sql至sqlFile文件日志-->
+    <logger name="com.rockblade.core.mapper" level="DEBUG">
+        <appender-ref ref="sqlFile" />
+    </logger>
+    <logger name="com.rockblade.system.business.mapper" level="DEBUG">
+        <appender-ref ref="sqlFile" />
+    </logger>
+</configuration>
