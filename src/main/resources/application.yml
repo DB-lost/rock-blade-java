@@ -95,16 +95,6 @@ mybatis-flex:
     # 全局默认逻辑删除字段
     logic-delete-column: deleted
 
-# mongo-plus
-mongo-plus:
-  configuration:
-    collection:
-      block-attack-inner: true
-  spring:
-    transaction: true
-  log: true
-  format: true
-
 #日志
 logging:
   config: classpath:logback.xml
