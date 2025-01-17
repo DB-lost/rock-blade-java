@@ -1,7 +1,14 @@
 /*
- * Copyright (c) 2025 RockBlade
+ * @Author: DB 2502523450@qq.com
+ * @Date: 2025-01-15 20:49:05
+ * @LastEditors: DB 2502523450@qq.com
+ * @LastEditTime: 2025-01-17 22:47:29
+ * @FilePath: /rock-blade-java/src/test/java/com/rockblade/framework/steps/ExampleSteps.java
+ * @Description: 示例步骤定义类
+ * 
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
  */
-package com.rockblade.steps;
+package com.rockblade.framework.steps;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -9,7 +16,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-/** 示例步骤定义类 */
 @SpringBootTest
 public class ExampleSteps {
 

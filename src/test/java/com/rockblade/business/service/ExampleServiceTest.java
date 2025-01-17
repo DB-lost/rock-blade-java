@@ -1,7 +1,17 @@
 /*
+ * @Author: DB 2502523450@qq.com
+ * @Date: 2025-01-17 22:51:52
+ * @LastEditors: DB 2502523450@qq.com
+ * @LastEditTime: 2025-01-17 22:52:45
+ * @FilePath: /rock-blade-java/src/test/java/com/rockblade/business/service/ExampleServiceTest.java
+ * @Description: 文件描述
+ * 
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ */
+/*
  * Copyright (c) 2025 RockBlade
  */
-package com.rockblade.service;
+package com.rockblade.business.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
