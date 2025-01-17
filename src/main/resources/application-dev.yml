@@ -34,16 +34,6 @@ server:
   servlet:
     context-path: /rock-blade
 
-#redisson
-redisson:
-  #redis配置
-  redis:
-    #地址
-    addr:
-    #数据库
-    database:
-    #密码
-    password:
 #Mybatis-Flex
 mybatis-flex:
   configuration:
