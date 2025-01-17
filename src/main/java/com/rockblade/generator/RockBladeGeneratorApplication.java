@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-16 21:43:20
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-16 23:06:45
+ * @LastEditTime: 2025-01-17 22:22:46
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/generator/RockBladeGeneratorApplication.java
  * @Description: 代码生成器
  *
@@ -30,13 +30,13 @@ import io.micrometer.common.util.StringUtils;
 public class RockBladeGeneratorApplication {
 
   /** 数据库 URL */
-  private static final String URL = "jdbc:mysql://127.0.0.1:5432/rock_blade_java_dev";
+  private static final String URL = "";
 
   /** 数据库用户名 */
-  private static final String USERNAME = "rock_blade_java_dev";
+  private static final String USERNAME = "";
 
   /** 数据库密码 */
-  private static final String PASSWORD = "TBSJGGXykiRXGZWRTablesTables";
+  private static final String PASSWORD = "";
 
   /** 输出路径 */
   private static final String EXPORT_URL = "";
@@ -45,7 +45,7 @@ public class RockBladeGeneratorApplication {
   private static final String EXPORT_ITEM = "";
 
   /** 表前缀 */
-  private static final String TABLE_PREFIX = "sys_";
+  private static final String TABLE_PREFIX = "";
 
   /**
    * 主入口

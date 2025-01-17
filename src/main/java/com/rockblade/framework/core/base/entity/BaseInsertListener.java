@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 21:06:09
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-15 21:27:24
+ * @LastEditTime: 2025-01-17 22:31:06
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/core/base/entity/BaseInsertListener.java
  * @Description: 基础插入侦听器
  *
@@ -40,9 +40,9 @@ public class BaseInsertListener implements InsertListener {
     } catch (SaTokenContextException e) {
       userId = Constants.SUPER_ADMIN_ID;
     }
-    baseEntity.setCreateTime(LocalDateTime.now());
-    baseEntity.setCreateUserId(userId);
-    baseEntity.setUpdateTime(LocalDateTime.now());
-    baseEntity.setUpdateUserId(userId);
+    baseEntity.setCreatedAt(LocalDateTime.now());
+    baseEntity.setCreatedBy(userId);
+    baseEntity.setUpdatedAt(LocalDateTime.now());
+    baseEntity.setUpdatedBy(userId);
   }
 }

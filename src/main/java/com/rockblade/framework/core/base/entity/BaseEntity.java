@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 21:06:09
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-16 09:03:04
+ * @LastEditTime: 2025-01-17 22:30:42
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/core/base/entity/BaseEntity.java
  * @Description: 基础实体类
  *
@@ -21,16 +21,16 @@ import lombok.Data;
 public class BaseEntity {
 
   /** 创建时间 */
-  private LocalDateTime createTime;
+  private LocalDateTime createdAt;
 
   /** 创建人 */
-  private String createUserId;
+  private String createdBy;
 
   /** 更新时间 */
-  private LocalDateTime updateTime;
+  private LocalDateTime updatedAt;
 
   /** 更新人 */
-  private String updateUserId;
+  private String updatedBy;
 
   /** 请求参数 */
   @Column(ignore = true)
