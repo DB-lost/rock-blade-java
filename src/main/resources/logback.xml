@@ -11,7 +11,7 @@
 
     <!--定义日志文件的存储地址和前缀名-->
     <property name="LOG_HOME" value="./logs"/>
-    <property name="LOG_PREFIX" value="RockBlade-System"/>
+    <property name="LOG_PREFIX" value="rock-blade-java"/>
 
     <!--系统info级别日志-->
     <!--<File> 日志目录，没有会自动创建-->
@@ -93,10 +93,7 @@
     </root>
 
     <!--打印sql至sqlFile文件日志-->
-    <logger name="com.rockblade.core.mapper" level="DEBUG">
-        <appender-ref ref="sqlFile" />
-    </logger>
-    <logger name="com.rockblade.system.business.mapper" level="DEBUG">
+    <logger name="com.rockblade.business.mapper" level="DEBUG">
         <appender-ref ref="sqlFile" />
     </logger>
 </configuration>
