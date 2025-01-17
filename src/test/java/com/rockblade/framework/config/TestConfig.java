@@ -5,8 +5,8 @@
  * @LastEditTime: 2025-01-17 22:47:18
  * @FilePath: /rock-blade-java/src/test/java/com/rockblade/framework/config/TestConfig.java
  * @Description: 测试配置类
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 
 package com.rockblade.framework.config;

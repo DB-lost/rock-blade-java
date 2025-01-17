@@ -5,8 +5,8 @@
  * @LastEditTime: 2025-01-17 22:52:45
  * @FilePath: /rock-blade-java/src/test/java/com/rockblade/business/service/ExampleServiceTest.java
  * @Description: 文件描述
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 /*
  * Copyright (c) 2025 RockBlade
