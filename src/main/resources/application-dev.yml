@@ -8,26 +8,27 @@ rock-blade:
   gateway:
     rsa-keypair:
       # 公钥文件
-      public-key-file:
+      public-key-file: ${PUBLIC_KEY_PATH}
       # 公钥文件
-      private-key-file:
+      private-key-file: ${PRIVATE_KEY_PATH}
 
 # DataSource Config
 spring:
   application:
     name: rock-blade-java-dev
-  redis:
-    host:
-    port:
-    password:
-    database:
-    timeout: 10s
-    lettuce:
-      pool:
-        max-active: 200
-        max-wait: -1ms
-        max-idle: 10
-        min-idle: 0
+  data:
+    redis:
+      host: ${DEV_REDIS_HOST}
+      port: ${DEV_REDIS_PORT}
+      password: ${DEV_REDIS_PASSWORD}
+      database: ${DEV_REDIS_DATABASE}
+      timeout: 10s
+      lettuce:
+        pool:
+          max-active: 200
+          max-wait: -1ms
+          max-idle: 10
+          min-idle: 0
 
 server:
   port: 8080
@@ -38,15 +39,6 @@ server:
 mybatis-flex:
   configuration:
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
-  datasource:
-    master:
-      url:
-      username:
-      password:
-    slaver:
-      url:
-      username:
-      password:
 
 # springdoc-openapi项目配置
 springdoc:
