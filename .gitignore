@@ -32,7 +32,13 @@ build/
 ### VS Code ###
 .vscode/
 
+#Ignore tool version
+.tool-versions
+
 #Ignore .env
 .env
+
+#Ignore RSA key
+/src/main/resources/rsa/*
 
 logs/
