@@ -1,7 +1,7 @@
 # 项目相关配置
 rock-blade:
   # 文件路径 示例（ Windows配置W:/WorkSpace/java/uploadPath，Linux配置 /home/baseFramework/uploadPath）
-  profile:
+  profile: ${PROFILE_PATH}
   jwt:
     #白名单
     white-list: /profile/**,/doc.html,/webjars/**,/favicon.ico,/v3/api-docs/**,/swagger-ui.html,/swagger-ui/**
@@ -49,8 +49,8 @@ springdoc:
   api-docs:
     path: /v3/api-docs
   group-configs:
-    - group: '系统后台'
-      paths-to-match: '/**'
+    - group: "系统后台"
+      paths-to-match: "/**"
       packages-to-scan: com.rockblade.system.business.controller.backstage
 
 # knife4j的增强配置，不需要增强可以不配
@@ -58,4 +58,3 @@ knife4j:
   enable: true
   setting:
     language: zh_cn
-
