@@ -22,3 +22,9 @@ PRIVATE_KEY_PATH=
 #JWT相关
 JWT_SECRET_KEY=
 ```
+
+# 初始化公私钥
+
+RockBladeSystemWebApplicationTests
+@Test
+public void initKeyPair()
