@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.4.1</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.rockblade</groupId>
 	<artifactId>rock-blade-java</artifactId>
 	<version>1.0.0</version>
 	<name>rock-blade-java</name>
 	<description>Demo project for Spring Boot</description>
-	<url/>
+	<url />
 	<licenses>
-		<license/>
+		<license />
 	</licenses>
 	<developers>
-		<developer/>
+		<developer />
 	</developers>
 	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
+		<connection />
+		<developerConnection />
+		<tag />
+		<url />
 	</scm>
 	<properties>
 		<java.version>21</java.version>
@@ -45,6 +46,7 @@
 		<hutool.version>5.8.34</hutool.version>
 		<postgresql.version>42.6.0</postgresql.version>
 		<knife4j.version>4.5.0</knife4j.version>
+		<dotenv.version>5.2.2</dotenv.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -96,7 +98,7 @@
 			<artifactId>junit-platform-suite</artifactId>
 			<scope>test</scope>
 		</dependency>
-	
+
 		<!-- MyBatis Flex -->
 		<dependency>
 			<groupId>com.mybatis-flex</groupId>
@@ -104,7 +106,7 @@
 			<version>${mybatis-flex.version}</version>
 		</dependency>
 		<dependency>
-    		<groupId>com.mybatis-flex</groupId>
+			<groupId>com.mybatis-flex</groupId>
 			<artifactId>mybatis-flex-processor</artifactId>
 			<version>${mybatis-flex.version}</version>
 			<scope>provided</scope>
@@ -124,7 +126,7 @@
 		</dependency>
 		<!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
 		<dependency>
-    		<groupId>cn.dev33</groupId>
+			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-redis-jackson</artifactId>
 			<version>${sa-token.version}</version>
 		</dependency>
@@ -153,7 +155,7 @@
 			<artifactId>hutool-all</artifactId>
 			<version>${hutool.version}</version>
 		</dependency>
-		
+
 		<!-- 提供HikariCP连接池 -->
 		<dependency>
 			<groupId>com.zaxxer</groupId>
@@ -177,6 +179,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
+		</dependency>
+
+		<!-- 读取环境变量 -->
+		<dependency>
+			<groupId>io.github.cdimascio</groupId>
+			<artifactId>java-dotenv</artifactId>
+			<version>${dotenv.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -245,8 +254,8 @@
 								<include>*.md</include>
 								<include>.gitignore</include>
 							</includes>
-							<trimTrailingWhitespace/>
-							<endWithNewline/>
+							<trimTrailingWhitespace />
+							<endWithNewline />
 							<indent>
 								<spaces>true</spaces>
 								<spacesPerTab>4</spacesPerTab>
@@ -260,7 +269,7 @@
 							<style>GOOGLE</style>
 							<reflowLongStrings>true</reflowLongStrings>
 						</googleJavaFormat>
-						<removeUnusedImports/>
+						<removeUnusedImports />
 						<importOrder>
 							<order>java,javax,org,com</order>
 						</importOrder>

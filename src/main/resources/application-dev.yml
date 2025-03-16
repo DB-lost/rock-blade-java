@@ -1,33 +1,34 @@
 # 项目相关配置
 rock-blade:
   # 文件路径 示例（ Windows配置W:/WorkSpace/java/uploadPath，Linux配置 /home/baseFramework/uploadPath）
-  profile:
+  profile: ${PROFILE_PATH}
   jwt:
     #白名单
     white-list: /profile/**,/doc.html,/webjars/**,/favicon.ico,/v3/api-docs/**,/swagger-ui.html,/swagger-ui/**
   gateway:
     rsa-keypair:
       # 公钥文件
-      public-key-file:
+      public-key-file: ${PUBLIC_KEY_PATH}
       # 公钥文件
-      private-key-file:
+      private-key-file: ${PRIVATE_KEY_PATH}
 
 # DataSource Config
 spring:
   application:
     name: rock-blade-java-dev
-  redis:
-    host:
-    port:
-    password:
-    database:
-    timeout: 10s
-    lettuce:
-      pool:
-        max-active: 200
-        max-wait: -1ms
-        max-idle: 10
-        min-idle: 0
+  data:
+    redis:
+      host: ${DEV_REDIS_HOST}
+      port: ${DEV_REDIS_PORT}
+      password: ${DEV_REDIS_PASSWORD}
+      database: ${DEV_REDIS_DATABASE}
+      timeout: 10s
+      lettuce:
+        pool:
+          max-active: 200
+          max-wait: -1ms
+          max-idle: 10
+          min-idle: 0
 
 server:
   port: 8080
@@ -38,15 +39,6 @@ server:
 mybatis-flex:
   configuration:
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
-  datasource:
-    master:
-      url:
-      username:
-      password:
-    slaver:
-      url:
-      username:
-      password:
 
 # springdoc-openapi项目配置
 springdoc:
@@ -57,8 +49,8 @@ springdoc:
   api-docs:
     path: /v3/api-docs
   group-configs:
-    - group: '系统后台'
-      paths-to-match: '/**'
+    - group: "系统后台"
+      paths-to-match: "/**"
       packages-to-scan: com.rockblade.system.business.controller.backstage
 
 # knife4j的增强配置，不需要增强可以不配
@@ -66,4 +58,3 @@ knife4j:
   enable: true
   setting:
     language: zh_cn
-

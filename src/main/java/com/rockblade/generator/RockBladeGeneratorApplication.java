@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-16 21:43:20
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-17 22:22:46
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/generator/RockBladeGeneratorApplication.java
+ * @LastEditTime: 2025-03-16 22:34:10
+ * @FilePath: /rock-blade-admin-java/home/db/Workspace/Template-Workspace/rock-blade-java/src/main/java/com/rockblade/generator/RockBladeGeneratorApplication.java
  * @Description: 代码生成器
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -25,18 +25,21 @@ import com.rockblade.framework.core.base.entity.BaseInsertListener;
 import com.rockblade.framework.core.base.entity.BaseUpdateListener;
 import com.zaxxer.hikari.HikariDataSource;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import io.micrometer.common.util.StringUtils;
 
 public class RockBladeGeneratorApplication {
 
+  private static final Dotenv dotenv = Dotenv.load();
+
   /** 数据库 URL */
-  private static final String URL = "";
+  private static final String URL = dotenv.get("DEV_DATABASE_URL");
 
   /** 数据库用户名 */
-  private static final String USERNAME = "";
+  private static final String USERNAME = dotenv.get("DEV_DATABASE_USERNAME");
 
   /** 数据库密码 */
-  private static final String PASSWORD = "";
+  private static final String PASSWORD = dotenv.get("DEV_DATABASE_PASSWORD");
 
   /** 输出路径 */
   private static final String EXPORT_URL = "";
