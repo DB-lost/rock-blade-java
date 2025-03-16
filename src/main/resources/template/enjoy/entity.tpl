@@ -16,7 +16,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 #end
 #if(withSwagger && swaggerVersion.getName() == "DOC")
-import io.swagger.v3.oas.annotations.media.Schema;
 #end
 #if(withLombok)
 #if(withActiveRecord)
@@ -53,7 +52,7 @@ import lombok.experimental.Accessors;
 public class #(entityClassName)#if(withActiveRecord) extends Model<#(entityClassName)>#else#(table.buildExtends(false))#(table.buildImplements())#end  {
 
 #for(column : table.columns)
-    #if(column.property != "createTime" && column.property != "createUserId" && column.property != "updateTime" && column.property != "updateUserId")
+    #if(column.property != "createTime" && column.property != "createdBy" && column.property != "updateTime" && column.property != "updatedBy")
     #set(comment = javadocConfig.formatColumnComment(column.comment))
     #if(hasText(comment))
     /**
