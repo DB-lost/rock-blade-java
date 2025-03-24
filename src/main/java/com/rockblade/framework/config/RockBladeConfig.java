@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 23:51:34
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-16 09:02:54
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/config/RockBladeConfig.java
+ * @LastEditTime: 2025-03-24 10:50:04
+ * @FilePath: /rock-blade-AI-java/home/db/Workspace/Template-Workspace/rock-blade-java/src/main/java/com/rockblade/framework/config/RockBladeConfig.java
  * @Description: rock-blade-java配置
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.DependsOn;
 
 import com.rockblade.framework.core.base.exception.UtilException;
 
@@ -35,6 +36,7 @@ import lombok.Getter;
 
 @Getter
 @Component
+@DependsOn("envConfig")
 @ConfigurationProperties(prefix = "rock-blade")
 public class RockBladeConfig {
 
@@ -48,7 +50,8 @@ public class RockBladeConfig {
   private static String profile;
 
   /** 验证码类型 */
-  @Getter private static String captchaType;
+  @Getter
+  private static String captchaType;
 
   /** jwt */
   private Jwt jwt;
@@ -79,7 +82,8 @@ public class RockBladeConfig {
   }
 
   /** 网关配置 */
-  @Getter private Gateway gateway;
+  @Getter
+  private Gateway gateway;
 
   /**
    * 设置网关
@@ -238,15 +242,14 @@ public class RockBladeConfig {
   public RSA getLoginRsa() {
     // rsa解密
     RockBladeConfig.Gateway.RsaKeypair rsaKeypair = gateway.getRsaKeypair();
-    Map<String, String> keyPair =
-        getKeyPair(rsaKeypair.getPublicKeyFile(), rsaKeypair.getPrivateKeyFile());
+    Map<String, String> keyPair = getKeyPair(rsaKeypair.getPublicKeyFile(), rsaKeypair.getPrivateKeyFile());
     return SecureUtil.rsa(keyPair.get("privateKey"), keyPair.get("publicKey"));
   }
 
   /**
    * 获取密钥对
    *
-   * @param publicKeyFile 公钥文件
+   * @param publicKeyFile  公钥文件
    * @param privateKeyFile 私钥文件
    * @return {@link Map }<{@link String }, {@link String }>
    * @author DB
@@ -292,7 +295,7 @@ public class RockBladeConfig {
   /**
    * 生成文件密钥对
    *
-   * @param publicKeyFile 公钥文件
+   * @param publicKeyFile  公钥文件
    * @param privateKeyFile 私钥文件
    * @author DB
    * @since 2024/05/23
@@ -332,9 +335,8 @@ public class RockBladeConfig {
    * @since 2024/05/23
    */
   private Map<String, Key> generateKeyPair() throws NoSuchAlgorithmException {
-    KeyPair keyPair =
-        SecureUtil.generateKeyPair(
-            gateway.getRsaKeypair().getAlgorithm(), gateway.getRsaKeypair().getKeySize());
+    KeyPair keyPair = SecureUtil.generateKeyPair(
+        gateway.getRsaKeypair().getAlgorithm(), gateway.getRsaKeypair().getKeySize());
     // 得到公钥
     Key publicKey = keyPair.getPublic();
     // 得到私钥
