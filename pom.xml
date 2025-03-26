@@ -45,7 +45,7 @@
 		<sa-token.version>1.39.0</sa-token.version>
 		<hutool.version>5.8.34</hutool.version>
 		<postgresql.version>42.6.0</postgresql.version>
-		<knife4j.version>4.5.0</knife4j.version>
+		<knife4j.version>4.6.0</knife4j.version>
 		<dotenv.version>5.2.2</dotenv.version>
 	</properties>
 	<dependencies>
