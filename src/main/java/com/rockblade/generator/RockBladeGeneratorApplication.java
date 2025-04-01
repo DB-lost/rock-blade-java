@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-16 21:43:20
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-03-16 22:34:10
- * @FilePath: /rock-blade-admin-java/home/db/Workspace/Template-Workspace/rock-blade-java/src/main/java/com/rockblade/generator/RockBladeGeneratorApplication.java
+ * @LastEditTime: 2025-04-01 22:44:20
+ * @FilePath: /rock-blade-java/src/main/java/com/rockblade/generator/RockBladeGeneratorApplication.java
  * @Description: 代码生成器
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -124,16 +124,16 @@ public class RockBladeGeneratorApplication {
     // 设置模板配置
     globalConfig
         .getTemplateConfig()
-        .setEntity(System.getProperty("user.dir") + "/src/main/resources/template/enjoy/entity.tpl")
-        .setMapper(System.getProperty("user.dir") + "/src/main/resources/template/enjoy/mapper.tpl")
+        .setEntity(System.getProperty("user.dir") + "/src/main/resources/templates/enjoy/entity.tpl")
+        .setMapper(System.getProperty("user.dir") + "/src/main/resources/templates/enjoy/mapper.tpl")
         .setService(
-            System.getProperty("user.dir") + "/src/main/resources/template/enjoy/service.tpl")
+            System.getProperty("user.dir") + "/src/main/resources/templates/enjoy/service.tpl")
         .setServiceImpl(
-            System.getProperty("user.dir") + "/src/main/resources/template/enjoy/serviceImpl.tpl")
+            System.getProperty("user.dir") + "/src/main/resources/templates/enjoy/serviceImpl.tpl")
         .setController(
-            System.getProperty("user.dir") + "/src/main/resources/template/enjoy/controller.tpl")
+            System.getProperty("user.dir") + "/src/main/resources/templates/enjoy/controller.tpl")
         .setMapperXml(
-            System.getProperty("user.dir") + "/src/main/resources/template/enjoy/mapperXml.tpl");
+            System.getProperty("user.dir") + "/src/main/resources/templates/enjoy/mapperXml.tpl");
     // Entity 生成配置
     globalConfig
         .getEntityConfig()
