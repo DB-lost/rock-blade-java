@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 20:49:05
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-03-16 22:34:55
- * @FilePath: /rock-blade-admin-java/home/db/Workspace/Template-Workspace/rock-blade-java/src/test/java/com/rockblade/RockBladeJavaApplicationTests.java
+ * @LastEditTime: 2025-03-24 10:40:37
+ * @FilePath: /rock-blade-AI-java/home/db/Workspace/Template-Workspace/rock-blade-java/src/test/java/com/rockblade/RockBladeWebApplicationTests.java
  * @Description: 测试类
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -24,9 +24,10 @@ import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
 
 @SpringBootTest
-class RockBladeSystemWebApplicationTests {
+class RockBladeWebApplicationTests {
 
-  @Autowired private RockBladeConfig rockBladeConfig;
+  @Autowired
+  private RockBladeConfig rockBladeConfig;
 
   /** 初始化密钥对 */
   @Test

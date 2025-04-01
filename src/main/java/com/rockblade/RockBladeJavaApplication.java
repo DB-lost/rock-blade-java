@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 20:49:05
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-17 23:42:41
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/RockBladeJavaApplication.java
+ * @LastEditTime: 2025-03-24 19:14:03
+ * @FilePath: /rock-blade-AI-java/home/db/Workspace/Template-Workspace/rock-blade-java/src/main/java/com/rockblade/RockBladeJavaApplication.java
  * @Description: 启动类
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -17,7 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-@SpringBootApplication(scanBasePackages = {"com.rockblade.business.**"})
+@SpringBootApplication(scanBasePackages = { "com.rockblade.**" })
 @MapperScan("com.rockblade.business.**.mapper")
 @EnableAsync
 @EnableScheduling
