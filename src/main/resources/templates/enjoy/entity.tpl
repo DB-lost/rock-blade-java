@@ -52,7 +52,7 @@ import lombok.experimental.Accessors;
 public class #(entityClassName)#if(withActiveRecord) extends Model<#(entityClassName)>#else#(table.buildExtends(false))#(table.buildImplements())#end  {
 
 #for(column : table.columns)
-    #if(column.property != "createTime" && column.property != "createdBy" && column.property != "updateTime" && column.property != "updatedBy")
+    #if(column.property != "createdAt" && column.property != "createdBy" && column.property != "updatedAt" && column.property != "updatedBy")
     #set(comment = javadocConfig.formatColumnComment(column.comment))
     #if(hasText(comment))
     /**
