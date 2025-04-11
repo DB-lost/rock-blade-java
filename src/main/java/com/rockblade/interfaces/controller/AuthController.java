@@ -1,0 +1,73 @@
+package com.rockblade.interfaces.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.rockblade.domain.user.dto.request.EmailCodeRequest;
+import com.rockblade.domain.user.dto.request.GetPublicKeyRequest;
+import com.rockblade.domain.user.dto.request.LoginRequest;
+import com.rockblade.domain.user.dto.request.RegisterRequest;
+import com.rockblade.domain.user.dto.request.ResetPasswordRequest;
+import com.rockblade.domain.user.dto.response.LoginResponse;
+import com.rockblade.domain.user.dto.response.PublicKeyResponse;
+import com.rockblade.domain.user.service.UserService;
+import com.rockblade.framework.core.base.entity.R;
+
+import cn.dev33.satoken.stp.StpUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RestController
+@RequestMapping("/auth")
+@Tag(name = "认证接口")
+public class AuthController {
+
+    @Autowired
+    private UserService userService;
+
+    @PostMapping("/getPublicKey")
+    @Operation(summary = "获取公钥")
+    public R<PublicKeyResponse> getPublicKey(@RequestBody GetPublicKeyRequest request) {
+        return R.ok(userService.getPublicKey(request));
+    }
+
+    @PostMapping("/register")
+    @Operation(summary = "用户注册")
+    public R<Void> register(@Validated @RequestBody RegisterRequest request) {
+        userService.register(request);
+        return R.ok();
+    }
+
+    @PostMapping("/login")
+    @Operation(summary = "用户登录")
+    public R<LoginResponse> login(@Validated @RequestBody LoginRequest request) {
+        return R.ok(userService.login(request));
+    }
+
+    @PostMapping("/resetPassword")
+    @Operation(summary = "重置密码")
+    public R<Void> resetPassword(@Validated @RequestBody ResetPasswordRequest request) {
+        userService.resetPassword(request);
+        return R.ok();
+    }
+
+    @PostMapping("/logout")
+    @Operation(summary = "退出登录")
+    public R<Void> logout() {
+        StpUtil.logout();
+        return R.ok();
+    }
+
+    @PostMapping("/sendEmailCode")
+    @Operation(summary = "发送邮箱验证码")
+    public R<Void> sendEmailCode(@Validated @RequestBody EmailCodeRequest request) {
+        userService.sendEmailCode(request);
+        return R.ok();
+    }
+}
