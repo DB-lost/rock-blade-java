@@ -1,14 +1,18 @@
+/*
+ * @Author: DB 2502523450@qq.com
+ * @Date: 2025-04-11 09:27:58
+ * @LastEditors: DB 2502523450@qq.com
+ * @LastEditTime: 2025-04-11 09:33:34
+ * @FilePath: /rock-blade-java/src/main/java/com/rockblade/infrastructure/mapper/MenuMapper.java
+ * @Description: 菜单权限表 映射层。
+ * 
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ */
 package com.rockblade.infrastructure.mapper;
 
 import com.mybatisflex.core.BaseMapper;
 import com.rockblade.domain.user.entity.Menu;
 
-/**
- * 菜单权限表 映射层。
- *
- * @author 
- * @since 2025-04-11
- */
 public interface MenuMapper extends BaseMapper<Menu> {
 
 }
