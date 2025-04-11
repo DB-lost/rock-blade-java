@@ -39,9 +39,6 @@ import static com.rockblade.domain.user.entity.table.UserTableDef.USER;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
     private EmailHandler emailHandler;
 
     @Autowired
@@ -87,7 +84,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         // 校验邮箱是否已注册
         QueryWrapper queryWrapper = QueryWrapper.create().where(USER.EMAIL.eq(request));
-        if (userMapper.selectCountByQuery(queryWrapper) > 0) {
+        if (this.count(queryWrapper) > 0) {
             throw new ServiceException(MessageUtils.message("auth.email.registered"));
         }
 
@@ -150,7 +147,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 查询用户信息
         QueryWrapper queryWrapper = QueryWrapper.create()
                 .where(User::getEmail).eq(request.getEmail());
-        User user = userMapper.selectOneByQuery(queryWrapper);
+        User user = this.getOne(queryWrapper);
         if (user == null) {
             throw new ServiceException(MessageUtils.message("auth.user.not.found"));
         }
@@ -162,7 +159,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         // 更新密码
         user.setPassword(BCrypt.hashpw(request.getNewPassword()));
-        userMapper.update(user);
+        this.updateById(user);
 
         // 删除验证码缓存
         redisHandler.del(RedisKey.EMAIL_RESET_CODE + request.getEmail());
@@ -182,9 +179,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             case "register":
                 // 校验邮箱是否已注册
                 QueryWrapper queryWrapper = QueryWrapper.create()
-                        .where(User::getEmail).eq(request.getEmail())
-                        .and(User::getDeleted).eq(false);
-                if (userMapper.selectCountByQuery(queryWrapper) > 0) {
+                        .where(User::getEmail).eq(request.getEmail());
+                if (this.count(queryWrapper) > 0) {
                     throw new ServiceException(MessageUtils.message("auth.email.registered"));
                 }
                 key = RedisKey.EMAIL_REGISTER_CODE;
@@ -192,9 +188,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             case "reset":
                 // 校验邮箱是否存在
                 queryWrapper = QueryWrapper.create()
-                        .where(User::getEmail).eq(request.getEmail())
-                        .and(User::getDeleted).eq(false);
-                if (userMapper.selectCountByQuery(queryWrapper) == 0) {
+                        .where(User::getEmail).eq(request.getEmail());
+                if (this.count(queryWrapper) == 0) {
                     throw new ServiceException(MessageUtils.message("auth.email.not.registered"));
                 }
                 key = RedisKey.EMAIL_RESET_CODE;
