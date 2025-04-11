@@ -187,3 +187,18 @@ CREATE INDEX idx_sys_menu_parent_id ON sys_menu(parent_id);
 CREATE INDEX idx_sys_menu_status ON sys_menu(status);
 CREATE INDEX idx_sys_menu_visible ON sys_menu(visible);
 CREATE INDEX idx_sys_menu_deleted ON sys_menu(deleted);
+
+-- 添加初始化菜单数据
+INSERT INTO sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, created_by) VALUES
+-- Dashboard
+('仪表盘', NULL, 1, 'dashboard', 'dashboard/index', FALSE, FALSE, 'C', '0', '0', 'dashboard:view', 'dashboard', 1),
+
+-- 系统管理
+('系统管理', NULL, 2, 'system', NULL, FALSE, FALSE, 'M', '0', '0', '', 'system', 1),
+
+-- 菜单管理
+('菜单管理', (SELECT id FROM sys_menu WHERE menu_name = '系统管理'), 1, 'menu', 'system/menu/index', FALSE, FALSE, 'C', '0', '0', 'system:menu:list', 'menu', 1),
+('菜单查询', (SELECT id FROM sys_menu WHERE menu_name = '菜单管理'), 1, '', '', FALSE, FALSE, 'F', '0', '0', 'system:menu:query', '#', 1),
+('菜单新增', (SELECT id FROM sys_menu WHERE menu_name = '菜单管理'), 2, '', '', FALSE, FALSE, 'F', '0', '0', 'system:menu:add', '#', 1),
+('菜单修改', (SELECT id FROM sys_menu WHERE menu_name = '菜单管理'), 3, '', '', FALSE, FALSE, 'F', '0', '0', 'system:menu:edit', '#', 1),
+('菜单删除', (SELECT id FROM sys_menu WHERE menu_name = '菜单管理'), 4, '', '', FALSE, FALSE, 'F', '0', '0', 'system:menu:remove', '#', 1);
