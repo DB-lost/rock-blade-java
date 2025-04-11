@@ -10,8 +10,8 @@
     </appender>
 
     <!--定义日志文件的存储地址和前缀名-->
-    <property name="LOG_HOME" value="./logs"/>
-    <property name="LOG_PREFIX" value="rock-blade-java"/>
+    <property name="LOG_HOME" value="./logs" />
+    <property name="LOG_PREFIX" value="rock-blade-java" />
 
     <!--系统info级别日志-->
     <appender name="fileLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -68,7 +68,7 @@
     </root>
 
     <!--打印sql至sqlFile文件日志-->
-    <logger name="com.rockblade.business.mapper" level="DEBUG">
+    <logger name="com.rockblade.infrastructure.mapper" level="DEBUG">
         <appender-ref ref="sqlFile" />
     </logger>
 </configuration>
