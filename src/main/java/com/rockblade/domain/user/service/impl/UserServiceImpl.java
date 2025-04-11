@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:43:06
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-11 13:34:36
+ * @LastEditTime: 2025-04-11 14:52:44
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/impl/UserServiceImpl.java
  * @Description: 用户服务实现类
  * 
@@ -133,9 +133,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         StpUtil.login(user.getId());
 
         // 返回用户信息
-        UserInfoResponse userInfo = new UserInfoResponse();
-        BeanUtil.copyProperties(user, userInfo);
-        userInfo.setUserId(user.getId());
+        UserInfoResponse userInfo = BeanUtil.toBean(user, UserInfoResponse.class);
 
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setTokenValue(StpUtil.getTokenValue());

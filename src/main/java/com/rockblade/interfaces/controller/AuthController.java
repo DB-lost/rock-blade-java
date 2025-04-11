@@ -1,7 +1,18 @@
+/*
+ * @Author: DB 2502523450@qq.com
+ * @Date: 2025-04-11 10:04:57
+ * @LastEditors: DB 2502523450@qq.com
+ * @LastEditTime: 2025-04-11 14:44:54
+ * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/AuthController.java
+ * @Description: 认证接口
+ * 
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ */
 package com.rockblade.interfaces.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +48,13 @@ public class AuthController {
         return R.ok(userService.getPublicKey(request));
     }
 
+    @PostMapping("/sendEmailCode")
+    @Operation(summary = "发送邮箱验证码")
+    public R<Void> sendEmailCode(@Validated @RequestBody EmailCodeRequest request) {
+        userService.sendEmailCode(request);
+        return R.ok();
+    }
+
     @PostMapping("/register")
     @Operation(summary = "用户注册")
     public R<Void> register(@Validated @RequestBody RegisterRequest request) {
@@ -57,17 +75,11 @@ public class AuthController {
         return R.ok();
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     @Operation(summary = "退出登录")
     public R<Void> logout() {
         StpUtil.logout();
         return R.ok();
     }
 
-    @PostMapping("/sendEmailCode")
-    @Operation(summary = "发送邮箱验证码")
-    public R<Void> sendEmailCode(@Validated @RequestBody EmailCodeRequest request) {
-        userService.sendEmailCode(request);
-        return R.ok();
-    }
 }

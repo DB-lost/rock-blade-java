@@ -1,5 +1,16 @@
+/*
+ * @Author: DB 2502523450@qq.com
+ * @Date: 2025-04-11 09:43:06
+ * @LastEditors: DB 2502523450@qq.com
+ * @LastEditTime: 2025-04-11 14:47:54
+ * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/UserService.java
+ * @Description: 用户服务接口
+ * 
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ */
 package com.rockblade.domain.user.service;
 
+import com.mybatisflex.core.service.IService;
 import com.rockblade.domain.user.dto.request.EmailCodeRequest;
 import com.rockblade.domain.user.dto.request.GetPublicKeyRequest;
 import com.rockblade.domain.user.dto.request.LoginRequest;
@@ -7,11 +18,9 @@ import com.rockblade.domain.user.dto.request.RegisterRequest;
 import com.rockblade.domain.user.dto.request.ResetPasswordRequest;
 import com.rockblade.domain.user.dto.response.LoginResponse;
 import com.rockblade.domain.user.dto.response.PublicKeyResponse;
+import com.rockblade.domain.user.entity.User;
 
-/**
- * 用户服务
- */
-public interface UserService {
+public interface UserService extends IService<User> {
 
     /**
      * 获取公钥
