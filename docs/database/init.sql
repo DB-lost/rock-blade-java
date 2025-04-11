@@ -3,6 +3,7 @@ CREATE TABLE sys_user (
     id BIGSERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
     password VARCHAR(100) NOT NULL,
+    avatar VARCHAR(100),
     phone VARCHAR(20),
     email VARCHAR(100),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -26,6 +27,7 @@ COMMENT ON COLUMN sys_user.created_by IS '创建人ID';
 COMMENT ON COLUMN sys_user.updated_at IS '更新时间';
 COMMENT ON COLUMN sys_user.updated_by IS '更新人ID';
 COMMENT ON COLUMN sys_user.deleted IS '是否删除';
+COMMENT ON COLUMN sys_user.avatar IS '头像';
 
 -- 创建用户登录日志表
 CREATE TABLE sys_user_login_log (

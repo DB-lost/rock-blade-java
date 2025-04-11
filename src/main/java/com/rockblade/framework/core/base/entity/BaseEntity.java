@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 21:06:09
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-17 22:30:42
+ * @LastEditTime: 2025-04-11 13:54:41
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/core/base/entity/BaseEntity.java
  * @Description: 基础实体类
  *
@@ -24,13 +24,13 @@ public class BaseEntity {
   private LocalDateTime createdAt;
 
   /** 创建人 */
-  private String createdBy;
+  private Long createdBy;
 
   /** 更新时间 */
   private LocalDateTime updatedAt;
 
   /** 更新人 */
-  private String updatedBy;
+  private Long updatedBy;
 
   /** 请求参数 */
   @Column(ignore = true)
