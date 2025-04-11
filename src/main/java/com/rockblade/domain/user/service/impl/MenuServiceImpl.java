@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-11 16:57:54
+ * @LastEditTime: 2025-04-11 17:43:33
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/impl/MenuServiceImpl.java
  * @Description: 菜单权限表 服务实现层。
  * 
@@ -73,28 +73,35 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     public List<MenuResponse> getMenuTreeByUserId(Long userId) {
+        // TODO: 实现角色管理后，需要根据用户角色返回对应的菜单
         // 通过用户ID获取角色ID列表
-        List<Long> roleIds = SpringUtil.getBean(UserRoleService.class).queryChain()
-                .select(USER_ROLE.ROLE_ID)
-                .where(USER_ROLE.USER_ID.eq(userId))
-                .list()
-                .stream()
-                .map(ur -> ur.getRoleId())
-                .toList();
+        // List<Long> roleIds = SpringUtil.getBean(UserRoleService.class).queryChain()
+        // .select(USER_ROLE.ROLE_ID)
+        // .where(USER_ROLE.USER_ID.eq(userId))
+        // .list()
+        // .stream()
+        // .map(ur -> ur.getRoleId())
+        // .toList();
 
-        // 通过角色ID列表获取菜单ID列表
-        List<Long> menuIds = SpringUtil.getBean(RoleMenuService.class).queryChain()
-                .select(ROLE_MENU.MENU_ID)
-                .where(ROLE_MENU.ROLE_ID.in(roleIds))
-                .list()
-                .stream()
-                .map(rm -> rm.getMenuId())
-                .toList();
+        // // 通过角色ID列表获取菜单ID列表
+        // List<Long> menuIds = SpringUtil.getBean(RoleMenuService.class).queryChain()
+        // .select(ROLE_MENU.MENU_ID)
+        // .where(ROLE_MENU.ROLE_ID.in(roleIds))
+        // .list()
+        // .stream()
+        // .map(rm -> rm.getMenuId())
+        // .toList();
 
-        // 查询菜单列表
+        // // 查询菜单列表
+        // List<Menu> menus = this.list(
+        // QueryWrapper.create()
+        // .where(MENU.ID.in(menuIds))
+        // .orderBy(MENU.ORDER_NUM.asc()));
+        // 目前临时返回所有可见的菜单
         List<Menu> menus = this.list(
                 QueryWrapper.create()
-                        .where(MENU.ID.in(menuIds))
+                        .where(MENU.STATUS.eq("0")) // 状态正常
+                        .and(MENU.VISIBLE.eq("0")) // 显示状态正常
                         .orderBy(MENU.ORDER_NUM.asc()));
 
         return buildMenuTree(menus, 0L);
@@ -185,7 +192,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     private List<MenuResponse> buildMenuTree(List<Menu> menus, Long parentId) {
         List<MenuResponse> tree = new ArrayList<>();
         menus.stream()
-                .filter(menu -> Objects.equals(menu.getParentId(), parentId))
+                .filter(menu -> parentId == 0L ? menu.getParentId() == null || menu.getParentId() == 0L
+                        : Objects.equals(menu.getParentId(), parentId))
                 .forEach(menu -> {
                     MenuResponse node = new MenuResponse();
                     BeanUtils.copyProperties(menu, node);
