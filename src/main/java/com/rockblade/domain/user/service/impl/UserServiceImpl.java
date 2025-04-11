@@ -1,3 +1,13 @@
+/*
+ * @Author: DB 2502523450@qq.com
+ * @Date: 2025-04-11 09:43:06
+ * @LastEditors: DB 2502523450@qq.com
+ * @LastEditTime: 2025-04-11 11:16:34
+ * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/impl/UserServiceImpl.java
+ * @Description: 用户服务实现类
+ * 
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ */
 package com.rockblade.domain.user.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
