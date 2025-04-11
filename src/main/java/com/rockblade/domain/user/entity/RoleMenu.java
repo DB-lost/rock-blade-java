@@ -1,3 +1,23 @@
+/*
+ * @Author: DB 2502523450@qq.com
+ * @Date: 2025-04-11 09:27:58
+ * @LastEditors: DB 2502523450@qq.com
+ * @LastEditTime: 2025-04-11 09:30:44
+ * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/entity/RoleMenu.java
+ * @Description: 
+ * 
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ */
+/*
+ * @Author: DB 2502523450@qq.com
+ * @Date: 2025-04-11 09:27:58
+ * @LastEditors: DB 2502523450@qq.com
+ * @LastEditTime: 2025-04-11 09:29:59
+ * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/entity/RoleMenu.java
+ * @Description: 角色和菜单关联表 实体类。
+ * 
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ */
 package com.rockblade.domain.user.entity;
 
 import com.mybatisflex.annotation.Id;
@@ -9,20 +29,13 @@ import java.io.Serializable;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-/**
- * 角色和菜单关联表 实体类。
- *
- * @author 
- * @since 2025-04-11
- */
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
 @Table(value = "sys_role_menu", onInsert = BaseInsertListener.class, onUpdate = BaseUpdateListener.class, mapperGenerateEnable = false)
-
 public class RoleMenu extends BaseEntity implements Serializable {
 
     /**

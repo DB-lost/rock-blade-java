@@ -1,7 +1,16 @@
+/*
+ * @Author: DB 2502523450@qq.com
+ * @Date: 2025-04-11 09:27:58
+ * @LastEditors: DB 2502523450@qq.com
+ * @LastEditTime: 2025-04-11 09:29:33
+ * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/entity/Role.java
+ * @Description: 角色信息表 实体类。
+ * 
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ */
 package com.rockblade.domain.user.entity;
 
 import com.mybatisflex.annotation.Id;
-import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import com.rockblade.framework.core.base.entity.BaseEntity;
 import com.rockblade.framework.core.base.entity.BaseInsertListener;
@@ -10,26 +19,19 @@ import java.io.Serializable;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-/**
- * 角色信息表 实体类。
- *
- * @author 
- * @since 2025-04-11
- */
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
 @Table(value = "sys_role", onInsert = BaseInsertListener.class, onUpdate = BaseUpdateListener.class, mapperGenerateEnable = false)
-
 public class Role extends BaseEntity implements Serializable {
 
     /**
      * 主键ID
      */
-    @Id(keyType = KeyType.Auto)
+    @Id
     private Long id;
 
     /**
