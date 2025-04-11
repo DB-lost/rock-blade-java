@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-16 21:43:20
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-01 22:44:20
+ * @LastEditTime: 2025-04-11 00:14:34
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/generator/RockBladeGeneratorApplication.java
  * @Description: 代码生成器
  *
@@ -15,7 +15,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.codegen.Generator;
+import com.mybatisflex.codegen.config.ColumnConfig;
 import com.mybatisflex.codegen.config.EntityConfig;
 import com.mybatisflex.codegen.config.GlobalConfig;
 import com.mybatisflex.codegen.config.TableConfig;
@@ -44,11 +46,8 @@ public class RockBladeGeneratorApplication {
   /** 输出路径 */
   private static final String EXPORT_URL = "";
 
-  /** 模块 */
-  private static final String EXPORT_ITEM = "";
-
   /** 表前缀 */
-  private static final String TABLE_PREFIX = "";
+  private static final String TABLE_PREFIX = "sys_";
 
   /**
    * 主入口
@@ -112,9 +111,13 @@ public class RockBladeGeneratorApplication {
     globalConfig
         .getPackageConfig()
         .setSourceDir(System.getProperty("user.dir") + EXPORT_URL + "/src/main/java")
-        .setBasePackage("com.rockblade." + EXPORT_ITEM + ".business")
         .setMapperXmlPath(
             System.getProperty("user.dir") + EXPORT_URL + "/src/main/resources/mapper");
+    globalConfig.setEntityPackage("com.rockblade.domain" + ".user.entity");
+    globalConfig.setMapperPackage("com.rockblade.infrastructure" + ".mapper");
+    globalConfig.setServicePackage("com.rockblade.domain" + ".user.service");
+    globalConfig.setServiceImplPackage("com.rockblade.domain" + ".user.service.impl");
+    globalConfig.setControllerPackage("com.rockblade.interfaces" + ".controller");
     // 设置策略配置
     globalConfig
         .getStrategyConfig()

@@ -28,8 +28,8 @@ sa-token:
   token-style: random-64
   # 是否输出操作日志
   is-log: true
-  # jwt秘钥
-  jwt-secret-key: ${JWT_SECRET_KEY}
+  # token前缀
+  token-prefix: Bearer
 
 #Spring
 spring:
