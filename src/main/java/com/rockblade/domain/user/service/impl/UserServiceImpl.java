@@ -15,14 +15,13 @@ import com.rockblade.domain.user.dto.response.LoginResponse;
 import com.rockblade.domain.user.dto.response.PublicKeyResponse;
 import com.rockblade.domain.user.dto.response.UserInfoResponse;
 import com.rockblade.domain.user.entity.User;
-import com.rockblade.domain.user.entity.UserRole;
 import com.rockblade.domain.user.service.UserService;
 import com.rockblade.framework.core.base.exception.ServiceException;
 import com.rockblade.framework.core.constants.RedisKey;
 import com.rockblade.framework.handler.EmailHandler;
 import com.rockblade.framework.handler.RedisHandler;
+import com.rockblade.framework.utils.MessageUtils;
 import com.rockblade.infrastructure.mapper.UserMapper;
-import com.rockblade.infrastructure.mapper.UserRoleMapper;
 
 import cn.dev33.satoken.secure.BCrypt;
 import cn.dev33.satoken.stp.StpUtil;
@@ -75,31 +74,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 校验验证码
         String cacheCode = (String) redisHandler.get(RedisKey.EMAIL_REGISTER_CODE + request.getEmail());
         if (cacheCode == null) {
-            throw new ServiceException("验证码已过期");
+            throw new ServiceException(MessageUtils.message("auth.verification.code.expired"));
         }
         if (!cacheCode.equals(request.getCode())) {
-            throw new ServiceException("验证码错误");
+            throw new ServiceException(MessageUtils.message("auth.verification.code.error"));
         }
 
         // 解密密码
-        String privateKey = (String) redisHandler.get(RedisKey.RSA_PRIVATE_KEY + request.getNonce());
-        if (privateKey == null) {
-            throw new ServiceException("私钥已过期");
-        }
-        RSA rsa = new RSA(privateKey, null);
-        String password = rsa.decryptStr(request.getPassword(), KeyType.PrivateKey);
-        if (password == null) {
-            throw new ServiceException("密码解密失败");
-        }
+        String password = decryptPassword(request.getPassword(), request.getNonce(), redisHandler);
         request.setPassword(password);
         request.setNonce(null);
-        // 删除私钥缓存
-        redisHandler.del(RedisKey.RSA_PRIVATE_KEY + request.getNonce());
 
         // 校验邮箱是否已注册
         QueryWrapper queryWrapper = QueryWrapper.create().where(USER.EMAIL.eq(request));
         if (userMapper.selectCountByQuery(queryWrapper) > 0) {
-            throw new ServiceException("该邮箱已注册");
+            throw new ServiceException(MessageUtils.message("auth.email.registered"));
         }
 
         // 保存用户信息
@@ -119,27 +108,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 查询用户信息
         User user = this.queryChain().where(USER.USERNAME.eq(request.getUsername())).one();
         if (user == null) {
-            throw new ServiceException("用户不存在");
+            throw new ServiceException(MessageUtils.message("auth.user.not.found"));
         }
 
         // 解密密码
-        String privateKey = (String) redisHandler.get(RedisKey.RSA_PRIVATE_KEY + request.getNonce());
-        if (privateKey == null) {
-            throw new ServiceException("私钥已过期");
-        }
-        RSA rsa = new RSA(privateKey, null);
-        String password = rsa.decryptStr(request.getPassword(), KeyType.PrivateKey);
-        if (password == null) {
-            throw new ServiceException("密码解密失败");
-        }
+        String password = decryptPassword(request.getPassword(), request.getNonce(), redisHandler);
         request.setPassword(password);
         request.setNonce(null);
-        // 删除私钥缓存
-        redisHandler.del(RedisKey.RSA_PRIVATE_KEY + request.getNonce());
 
         // 校验密码
         if (!BCrypt.checkpw(request.getPassword(), user.getPassword())) {
-            throw new ServiceException("密码错误");
+            throw new ServiceException(MessageUtils.message("auth.password.error"));
         }
 
         // 登录
@@ -162,10 +141,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 校验验证码
         String cacheCode = (String) redisHandler.get(RedisKey.EMAIL_RESET_CODE + request.getEmail());
         if (cacheCode == null) {
-            throw new ServiceException("验证码已过期");
+            throw new ServiceException(MessageUtils.message("auth.verification.code.expired"));
         }
         if (!cacheCode.equals(request.getCode())) {
-            throw new ServiceException("验证码错误");
+            throw new ServiceException(MessageUtils.message("auth.verification.code.error"));
         }
 
         // 查询用户信息
@@ -173,23 +152,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .where(User::getEmail).eq(request.getEmail());
         User user = userMapper.selectOneByQuery(queryWrapper);
         if (user == null) {
-            throw new ServiceException("用户不存在");
+            throw new ServiceException(MessageUtils.message("auth.user.not.found"));
         }
 
         // 解密密码
-        String privateKey = (String) redisHandler.get(RedisKey.RSA_PRIVATE_KEY + request.getNonce());
-        if (privateKey == null) {
-            throw new ServiceException("私钥已过期");
-        }
-        RSA rsa = new RSA(privateKey, null);
-        String password = rsa.decryptStr(request.getNewPassword(), KeyType.PrivateKey);
-        if (password == null) {
-            throw new ServiceException("密码解密失败");
-        }
+        String password = decryptPassword(request.getNewPassword(), request.getNonce(), redisHandler);
         request.setNewPassword(password);
         request.setNonce(null);
-        // 删除私钥缓存
-        redisHandler.del(RedisKey.RSA_PRIVATE_KEY + request.getNonce());
 
         // 更新密码
         user.setPassword(BCrypt.hashpw(request.getNewPassword()));
@@ -216,7 +185,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                         .where(User::getEmail).eq(request.getEmail())
                         .and(User::getDeleted).eq(false);
                 if (userMapper.selectCountByQuery(queryWrapper) > 0) {
-                    throw new ServiceException("该邮箱已注册");
+                    throw new ServiceException(MessageUtils.message("auth.email.registered"));
                 }
                 key = RedisKey.EMAIL_REGISTER_CODE;
                 break;
@@ -226,12 +195,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                         .where(User::getEmail).eq(request.getEmail())
                         .and(User::getDeleted).eq(false);
                 if (userMapper.selectCountByQuery(queryWrapper) == 0) {
-                    throw new ServiceException("该邮箱未注册");
+                    throw new ServiceException(MessageUtils.message("auth.email.not.registered"));
                 }
                 key = RedisKey.EMAIL_RESET_CODE;
                 break;
             default:
-                throw new ServiceException("不支持的业务类型");
+                throw new ServiceException(MessageUtils.message("auth.business.type.not.supported"));
         }
 
         // 发送验证码邮件
@@ -239,5 +208,33 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         // 将验证码存入Redis
         redisHandler.set(key + request.getEmail(), code, RedisKey.CAPTCHA_EXPIRE_MINUTES * 60);
+    }
+
+    /**
+     * 解密密码并删除私钥缓存
+     * 
+     * @param password     加密的密码
+     * @param nonce        随机字符串
+     * @param redisHandler Redis工具类
+     * @return 解密后的密码
+     */
+    private String decryptPassword(String password, String nonce, RedisHandler redisHandler) {
+        // 获取私钥
+        String privateKey = (String) redisHandler.get(RedisKey.RSA_PRIVATE_KEY + nonce);
+        if (privateKey == null) {
+            throw new ServiceException(MessageUtils.message("auth.private.key.expired"));
+        }
+
+        // 解密密码
+        RSA rsa = new RSA(privateKey, null);
+        String decryptedPassword = rsa.decryptStr(password, KeyType.PrivateKey);
+        if (decryptedPassword == null) {
+            throw new ServiceException(MessageUtils.message("auth.password.decrypt.failed"));
+        }
+
+        // 删除私钥缓存
+        redisHandler.del(RedisKey.RSA_PRIVATE_KEY + nonce);
+
+        return decryptedPassword;
     }
 }
