@@ -93,7 +93,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         request.setNonce(null);
 
         // 校验邮箱是否已注册
-        QueryWrapper queryWrapper = QueryWrapper.create().where(USER.EMAIL.eq(request));
+        QueryWrapper queryWrapper = QueryWrapper.create().where(USER.EMAIL.eq(request.getEmail()));
         if (this.count(queryWrapper) > 0) {
             throw new ServiceException(MessageUtils.message("auth.email.registered"));
         }
