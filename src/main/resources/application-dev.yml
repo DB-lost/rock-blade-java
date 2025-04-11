@@ -47,7 +47,11 @@ spring:
             enable: true
             required: true
           ssl:
-            enable: true             
+            enable: true         
+
+sa-token:               
+  # jwt秘钥
+  jwt-secret-key: ${JWT_SECRET_KEY}
 
 server:
   port: 8080
