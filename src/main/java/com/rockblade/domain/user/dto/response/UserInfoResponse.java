@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 10:27:38
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-11 14:50:52
+ * @LastEditTime: 2025-04-11 15:00:19
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/dto/response/UserInfoResponse.java
  * @Description: 
  * 
@@ -27,7 +27,7 @@ public class UserInfoResponse {
 
     /** 用户名 */
     @Schema(description = "用户名")
-    private Long username;
+    private String username;
 
     /** 头像 */
     @Schema(description = "头像")

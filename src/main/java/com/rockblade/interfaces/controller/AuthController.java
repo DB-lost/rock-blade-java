@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 10:04:57
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-11 14:44:54
+ * @LastEditTime: 2025-04-11 14:59:53
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/AuthController.java
  * @Description: 认证接口
  * 
@@ -62,17 +62,17 @@ public class AuthController {
         return R.ok();
     }
 
-    @PostMapping("/login")
-    @Operation(summary = "用户登录")
-    public R<LoginResponse> login(@Validated @RequestBody LoginRequest request) {
-        return R.ok(userService.login(request));
-    }
-
     @PostMapping("/resetPassword")
     @Operation(summary = "重置密码")
     public R<Void> resetPassword(@Validated @RequestBody ResetPasswordRequest request) {
         userService.resetPassword(request);
         return R.ok();
+    }
+
+    @PostMapping("/login")
+    @Operation(summary = "用户登录")
+    public R<LoginResponse> login(@Validated @RequestBody LoginRequest request) {
+        return R.ok(userService.login(request));
     }
 
     @GetMapping("/logout")
