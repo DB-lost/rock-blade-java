@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 20:49:05
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-03-24 10:40:37
- * @FilePath: /rock-blade-AI-java/home/db/Workspace/Template-Workspace/rock-blade-java/src/test/java/com/rockblade/RockBladeWebApplicationTests.java
+ * @LastEditTime: 2025-04-11 09:39:19
+ * @FilePath: /rock-blade-java/src/test/java/com/rockblade/RockBladeWebApplicationTests.java
  * @Description: 测试类
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -16,6 +16,7 @@ import java.security.PublicKey;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
 
 import com.rockblade.framework.config.RockBladeConfig;
 
@@ -24,6 +25,7 @@ import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
 
 @SpringBootTest
+@Profile("dev")
 class RockBladeWebApplicationTests {
 
   @Autowired
