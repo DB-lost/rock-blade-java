@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 21:26:39
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-16 09:03:32
+ * @LastEditTime: 2025-04-11 13:55:07
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/core/constants/Constants.java
  * @Description: 实体类
  *
@@ -86,17 +86,17 @@ public interface Constants {
 
   /** 定时任务违规的字符 */
   String[] JOB_ERROR_STR = {
-    "java.net.URL", "javax.naming.InitialContext", "org.yaml.snakeyaml", "org.springframework.jndi"
+      "java.net.URL", "javax.naming.InitialContext", "org.yaml.snakeyaml", "org.springframework.jndi"
   };
 
   /** 超级管理员 */
   String SUPER_ADMIN = "RockBlade";
 
   /** 超级管理员ID */
-  String SUPER_ADMIN_ID = "100";
+  Long SUPER_ADMIN_ID = 100L;
 
   /** 超级身份id */
-  String SUPER_IDENTITY_AUTH_ID = "100";
+  Long SUPER_IDENTITY_AUTH_ID = 100L;
 
   /** 所有权限 */
   String ALL_PERMISSION = "*";
@@ -135,47 +135,47 @@ public interface Constants {
   String IMAGE_GIF = "image/gif";
 
   /** 映像扩展 */
-  String[] IMAGE_EXTENSION = {"bmp", "gif", "jpg", "jpeg", "png"};
+  String[] IMAGE_EXTENSION = { "bmp", "gif", "jpg", "jpeg", "png" };
 
   /** flash扩展 */
-  String[] FLASH_EXTENSION = {"swf", "flv"};
+  String[] FLASH_EXTENSION = { "swf", "flv" };
 
   /** 媒体扩展 */
   String[] MEDIA_EXTENSION = {
-    "swf", "flv", "mp3", "wav", "wma", "wmv", "mid", "avi", "mpg", "asf", "rm", "rmvb"
+      "swf", "flv", "mp3", "wav", "wma", "wmv", "mid", "avi", "mpg", "asf", "rm", "rmvb"
   };
 
   /** 视频扩展 */
-  String[] VIDEO_EXTENSION = {"mp4", "avi", "rmvb"};
+  String[] VIDEO_EXTENSION = { "mp4", "avi", "rmvb" };
 
   /** 默认允许扩展 */
   String[] DEFAULT_ALLOWED_EXTENSION = {
-    // 图片
-    "bmp",
-    "gif",
-    "jpg",
-    "jpeg",
-    "png",
-    // word excel powerpoint
-    "doc",
-    "docx",
-    "xls",
-    "xlsx",
-    "ppt",
-    "pptx",
-    "html",
-    "htm",
-    "txt",
-    // 压缩文件
-    "rar",
-    "zip",
-    "gz",
-    "bz2",
-    // 视频格式
-    "mp4",
-    "avi",
-    "rmvb",
-    // pdf
-    "pdf"
+      // 图片
+      "bmp",
+      "gif",
+      "jpg",
+      "jpeg",
+      "png",
+      // word excel powerpoint
+      "doc",
+      "docx",
+      "xls",
+      "xlsx",
+      "ppt",
+      "pptx",
+      "html",
+      "htm",
+      "txt",
+      // 压缩文件
+      "rar",
+      "zip",
+      "gz",
+      "bz2",
+      // 视频格式
+      "mp4",
+      "avi",
+      "rmvb",
+      // pdf
+      "pdf"
   };
 }

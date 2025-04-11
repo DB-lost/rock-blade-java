@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:43:06
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-11 11:16:34
+ * @LastEditTime: 2025-04-11 13:34:36
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/impl/UserServiceImpl.java
  * @Description: 用户服务实现类
  * 
@@ -38,6 +38,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +58,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public PublicKeyResponse getPublicKey(GetPublicKeyRequest request) {
         String nonce = request.getNonce();
-        if (nonce == null) {
+        if (StrUtil.isBlank(nonce)) {
             nonce = IdUtil.fastSimpleUUID();
         }
 
