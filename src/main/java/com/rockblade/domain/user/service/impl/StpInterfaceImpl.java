@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-12 11:36:57
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-12 11:37:03
+ * @LastEditTime: 2025-04-12 14:59:08
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/impl/StpInterfaceImpl.java
  * @Description: 自定义权限加载接口实现类
  * 
@@ -27,12 +27,10 @@ public class StpInterfaceImpl implements StpInterface {
     public List<String> getPermissionList(Object loginId, String loginType) {
         // 本 list 仅做模拟，实际项目中要根据具体业务逻辑来查询权限
         List<String> list = new ArrayList<String>();
-        list.add("101");
-        list.add("user.add");
-        list.add("user.update");
-        list.add("user.get");
-        // list.add("user.delete");
-        list.add("art.*");
+        list.add("playground:view");
+        list.add("playground:history:view");
+        list.add("playground:starred:view");
+        list.add("playground:settings:view");
         return list;
     }
 

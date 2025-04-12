@@ -69,7 +69,7 @@ CREATE TABLE sys_role (
     id BIGSERIAL PRIMARY KEY,
     role_name VARCHAR(30) NOT NULL,
     role_key VARCHAR(100) NOT NULL,    -- 角色标识符，如：admin、user
-    status CHAR(1) NOT NULL,           -- 角色状态（0正常 1停用）
+    status CHAR(1) NOT NULL,           -- 角色状态（1正常 0停用）
     sort_order INTEGER DEFAULT 0,       -- 显示顺序
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_by BIGINT,
@@ -105,8 +105,8 @@ CREATE TABLE sys_menu (
     is_frame BOOLEAN DEFAULT FALSE,   -- 是否为外链
     is_cache BOOLEAN DEFAULT FALSE,   -- 是否缓存
     menu_type CHAR(1) NOT NULL,      -- 菜单类型（M目录 C菜单 F按钮）
-    visible CHAR(1) NOT NULL,        -- 显示状态（0显示 1隐藏）
-    status CHAR(1) NOT NULL,         -- 菜单状态（0正常 1停用）
+    visible CHAR(1) NOT NULL,        -- 显示状态（1显示 0隐藏）
+    status CHAR(1) NOT NULL,         -- 菜单状态（1正常 0停用）
     perms VARCHAR(100),              -- 权限标识
     icon VARCHAR(100),               -- 菜单图标
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -191,14 +191,14 @@ CREATE INDEX idx_sys_menu_deleted ON sys_menu(deleted);
 -- 添加初始化菜单数据
 INSERT INTO sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, created_by) VALUES
 -- Dashboard
-('仪表盘', NULL, 1, 'dashboard', 'dashboard/index', FALSE, FALSE, 'C', '0', '0', 'dashboard:view', 'dashboard', 1),
+('仪表盘', NULL, 1, 'dashboard', 'dashboard/index', FALSE, FALSE, 'C', '1', '1', 'dashboard:view', 'dashboard', 1),
 
 -- 系统管理
-('系统管理', NULL, 2, 'system', NULL, FALSE, FALSE, 'M', '0', '0', '', 'system', 1),
+('系统管理', NULL, 2, 'system', NULL, FALSE, FALSE, 'M', '1', '1', '', 'system', 1),
 
 -- 菜单管理
-('菜单管理', (SELECT id FROM sys_menu WHERE menu_name = '系统管理'), 1, 'menu', 'system/menu/index', FALSE, FALSE, 'C', '0', '0', 'system:menu:list', 'menu', 1),
-('菜单查询', (SELECT id FROM sys_menu WHERE menu_name = '菜单管理'), 1, '', '', FALSE, FALSE, 'F', '0', '0', 'system:menu:query', '#', 1),
-('菜单新增', (SELECT id FROM sys_menu WHERE menu_name = '菜单管理'), 2, '', '', FALSE, FALSE, 'F', '0', '0', 'system:menu:add', '#', 1),
-('菜单修改', (SELECT id FROM sys_menu WHERE menu_name = '菜单管理'), 3, '', '', FALSE, FALSE, 'F', '0', '0', 'system:menu:edit', '#', 1),
-('菜单删除', (SELECT id FROM sys_menu WHERE menu_name = '菜单管理'), 4, '', '', FALSE, FALSE, 'F', '0', '0', 'system:menu:remove', '#', 1);
+('菜单管理', (SELECT id FROM sys_menu WHERE menu_name = '系统管理'), 1, 'menu', 'system/menu/index', FALSE, FALSE, 'C', '1', '1', 'system:menu:list', 'menu', 1),
+('菜单查询', (SELECT id FROM sys_menu WHERE menu_name = '菜单管理'), 1, '', '', FALSE, FALSE, 'F', '1', '1', 'system:menu:query', '#', 1),
+('菜单新增', (SELECT id FROM sys_menu WHERE menu_name = '菜单管理'), 2, '', '', FALSE, FALSE, 'F', '1', '1', 'system:menu:add', '#', 1),
+('菜单修改', (SELECT id FROM sys_menu WHERE menu_name = '菜单管理'), 3, '', '', FALSE, FALSE, 'F', '1', '1', 'system:menu:edit', '#', 1),
+('菜单删除', (SELECT id FROM sys_menu WHERE menu_name = '菜单管理'), 4, '', '', FALSE, FALSE, 'F', '1', '1', 'system:menu:remove', '#', 1);

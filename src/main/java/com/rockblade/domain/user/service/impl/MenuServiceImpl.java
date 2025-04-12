@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-11 17:43:33
+ * @LastEditTime: 2025-04-12 15:48:50
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/impl/MenuServiceImpl.java
  * @Description: 菜单权限表 服务实现层。
  * 
@@ -100,8 +100,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         // 目前临时返回所有可见的菜单
         List<Menu> menus = this.list(
                 QueryWrapper.create()
-                        .where(MENU.STATUS.eq("0")) // 状态正常
-                        .and(MENU.VISIBLE.eq("0")) // 显示状态正常
+                        .where(MENU.STATUS.eq("1")) // 状态正常
+                        .and(MENU.VISIBLE.eq("1")) // 显示状态正常
                         .orderBy(MENU.ORDER_NUM.asc()));
 
         return buildMenuTree(menus, 0L);

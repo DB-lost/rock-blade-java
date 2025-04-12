@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-11 16:37:44
+ * @LastEditTime: 2025-04-12 15:49:10
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/dto/request/MenuRequest.java
  * @Description: 菜单请求DTO
  * 
@@ -63,11 +63,11 @@ public class MenuRequest {
     private String menuType;
 
     /** 显示状态 (0显示 1隐藏) */
-    @Schema(description = "显示状态 (0显示 1隐藏)")
+    @Schema(description = "显示状态 (1显示 0隐藏)")
     private String visible;
 
     /** 菜单状态 (0正常 1停用) */
-    @Schema(description = "菜单状态 (0正常 1停用)")
+    @Schema(description = "菜单状态 (1正常 0停用)")
     private String status;
 
     /** 权限标识 */
