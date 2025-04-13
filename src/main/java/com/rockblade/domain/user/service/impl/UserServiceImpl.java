@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:43:06
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-13 19:36:07
+ * @LastEditTime: 2025-04-13 20:30:09
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/impl/UserServiceImpl.java
  * @Description: 用户服务实现类
  * 
@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import com.rockblade.domain.user.dto.request.EmailCodeRequest;
+import com.rockblade.domain.user.dto.request.EmailLoginRequest;
 import com.rockblade.domain.user.dto.request.GetPublicKeyRequest;
 import com.rockblade.domain.user.dto.request.LoginRequest;
 import com.rockblade.domain.user.dto.request.RegisterRequest;
@@ -108,22 +109,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (user == null) {
             throw new ServiceException(MessageUtils.message("auth.user.not.found"));
         }
-
-        // 解密密码
-        String password = decryptPassword(request.getPassword(), request.getNonce(), redisHandler);
-        request.setPassword(password);
-        request.setNonce(null);
-
-        // 校验密码
-        if (!BCrypt.checkpw(request.getPassword(), user.getPassword())) {
-            throw new ServiceException(MessageUtils.message("auth.password.error"));
-        }
-        // 登录
-        StpUtil.login(user.getId());
-        // 返回用户信息
-        UserInfoResponse userInfo = BeanUtil.toBean(user, UserInfoResponse.class);
-        StpUtil.getSession().set("user", userInfo);
-        return StpUtil.getTokenValue();
+        return login(user, request.getPassword(), request.getNonce());
     }
 
     @Override
@@ -238,5 +224,38 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         // 删除验证码缓存
         redisHandler.del(key + request.getEmail());
+    }
+
+    @Override
+    public String emailLogin(EmailLoginRequest request) {
+        // 查询用户信息
+        User user = this.queryChain().where(USER.EMAIL.eq(request.getEmail())).one();
+        if (user == null) {
+            throw new ServiceException(MessageUtils.message("auth.user.not.found"));
+        }
+        return login(user, request.getPassword(), request.getNonce());
+    }
+
+    /**
+     * @description: 登陆
+     * @param {User}   user
+     * @param {String} password
+     * @param {String} nonce
+     * @return {*}
+     */
+    private String login(User user, String password, String nonce) {
+        // 解密密码
+        password = decryptPassword(password, nonce, redisHandler);
+
+        // 校验密码
+        if (!BCrypt.checkpw(password, user.getPassword())) {
+            throw new ServiceException(MessageUtils.message("auth.password.error"));
+        }
+        // 登录
+        StpUtil.login(user.getId());
+        // 返回用户信息
+        UserInfoResponse userInfo = BeanUtil.toBean(user, UserInfoResponse.class);
+        StpUtil.getSession().set("user", userInfo);
+        return StpUtil.getTokenValue();
     }
 }

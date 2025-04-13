@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 10:04:57
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-13 19:36:59
+ * @LastEditTime: 2025-04-13 20:26:28
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/AuthController.java
  * @Description: 认证接口
  * 
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rockblade.domain.user.dto.request.EmailCodeRequest;
+import com.rockblade.domain.user.dto.request.EmailLoginRequest;
 import com.rockblade.domain.user.dto.request.GetPublicKeyRequest;
 import com.rockblade.domain.user.dto.request.LoginRequest;
 import com.rockblade.domain.user.dto.request.RegisterRequest;
@@ -87,6 +88,12 @@ public class AuthController {
     public R<Void> logout() {
         StpUtil.logout();
         return R.ok();
+    }
+
+    @PostMapping("/emailLogin")
+    @Operation(summary = "邮箱登录")
+    public R<String> login(@Validated @RequestBody EmailLoginRequest request) {
+        return R.ok(userService.emailLogin(request));
     }
 
 }

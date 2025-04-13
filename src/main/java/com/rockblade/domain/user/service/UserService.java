@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:43:06
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-13 19:36:52
+ * @LastEditTime: 2025-04-13 20:26:44
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/UserService.java
  * @Description: 用户服务接口
  * 
@@ -12,6 +12,7 @@ package com.rockblade.domain.user.service;
 
 import com.mybatisflex.core.service.IService;
 import com.rockblade.domain.user.dto.request.EmailCodeRequest;
+import com.rockblade.domain.user.dto.request.EmailLoginRequest;
 import com.rockblade.domain.user.dto.request.GetPublicKeyRequest;
 import com.rockblade.domain.user.dto.request.LoginRequest;
 import com.rockblade.domain.user.dto.request.RegisterRequest;
@@ -65,4 +66,12 @@ public interface UserService extends IService<User> {
      * @param request 请求
      */
     void verifyEmailCode(VerifyEmailCodeRequest request);
+
+    /**
+     * 邮箱登录
+     * 
+     * @param request 请求
+     * @return {@link String}
+     */
+    String emailLogin(EmailLoginRequest request);
 }
