@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:43:06
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-13 18:54:13
+ * @LastEditTime: 2025-04-13 19:36:07
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/impl/UserServiceImpl.java
  * @Description: 用户服务实现类
  * 
@@ -22,7 +22,6 @@ import com.rockblade.domain.user.dto.request.LoginRequest;
 import com.rockblade.domain.user.dto.request.RegisterRequest;
 import com.rockblade.domain.user.dto.request.ResetPasswordRequest;
 import com.rockblade.domain.user.dto.request.VerifyEmailCodeRequest;
-import com.rockblade.domain.user.dto.response.LoginResponse;
 import com.rockblade.domain.user.dto.response.PublicKeyResponse;
 import com.rockblade.domain.user.dto.response.UserInfoResponse;
 import com.rockblade.domain.user.entity.User;
@@ -103,7 +102,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public LoginResponse login(LoginRequest request) {
+    public String login(LoginRequest request) {
         // 查询用户信息
         User user = this.queryChain().where(USER.USERNAME.eq(request.getUsername())).one();
         if (user == null) {
@@ -119,17 +118,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (!BCrypt.checkpw(request.getPassword(), user.getPassword())) {
             throw new ServiceException(MessageUtils.message("auth.password.error"));
         }
-
         // 登录
         StpUtil.login(user.getId());
-
         // 返回用户信息
         UserInfoResponse userInfo = BeanUtil.toBean(user, UserInfoResponse.class);
-
-        LoginResponse loginResponse = new LoginResponse();
-        loginResponse.setTokenValue(StpUtil.getTokenValue());
-        loginResponse.setUserInfo(userInfo);
-        return loginResponse;
+        StpUtil.getSession().set("user", userInfo);
+        return StpUtil.getTokenValue();
     }
 
     @Override

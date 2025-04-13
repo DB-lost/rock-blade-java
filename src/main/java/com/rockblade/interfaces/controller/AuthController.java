@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 10:04:57
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-13 17:04:31
+ * @LastEditTime: 2025-04-13 19:36:59
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/AuthController.java
  * @Description: 认证接口
  * 
@@ -24,7 +24,6 @@ import com.rockblade.domain.user.dto.request.LoginRequest;
 import com.rockblade.domain.user.dto.request.RegisterRequest;
 import com.rockblade.domain.user.dto.request.ResetPasswordRequest;
 import com.rockblade.domain.user.dto.request.VerifyEmailCodeRequest;
-import com.rockblade.domain.user.dto.response.LoginResponse;
 import com.rockblade.domain.user.dto.response.PublicKeyResponse;
 import com.rockblade.domain.user.service.UserService;
 import com.rockblade.framework.core.base.entity.R;
@@ -79,7 +78,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @Operation(summary = "用户登录")
-    public R<LoginResponse> login(@Validated @RequestBody LoginRequest request) {
+    public R<String> login(@Validated @RequestBody LoginRequest request) {
         return R.ok(userService.login(request));
     }
 
