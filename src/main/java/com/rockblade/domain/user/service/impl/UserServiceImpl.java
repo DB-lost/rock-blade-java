@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:43:06
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-11 14:52:44
+ * @LastEditTime: 2025-04-13 18:54:13
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/impl/UserServiceImpl.java
  * @Description: 用户服务实现类
  * 
@@ -21,6 +21,7 @@ import com.rockblade.domain.user.dto.request.GetPublicKeyRequest;
 import com.rockblade.domain.user.dto.request.LoginRequest;
 import com.rockblade.domain.user.dto.request.RegisterRequest;
 import com.rockblade.domain.user.dto.request.ResetPasswordRequest;
+import com.rockblade.domain.user.dto.request.VerifyEmailCodeRequest;
 import com.rockblade.domain.user.dto.response.LoginResponse;
 import com.rockblade.domain.user.dto.response.PublicKeyResponse;
 import com.rockblade.domain.user.dto.response.UserInfoResponse;
@@ -79,14 +80,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void register(RegisterRequest request) {
-        // 校验验证码
-        String cacheCode = (String) redisHandler.get(RedisKey.EMAIL_REGISTER_CODE + request.getEmail());
-        if (cacheCode == null) {
-            throw new ServiceException(MessageUtils.message("auth.verification.code.expired"));
-        }
-        if (!cacheCode.equals(request.getCode())) {
-            throw new ServiceException(MessageUtils.message("auth.verification.code.error"));
-        }
 
         // 解密密码
         String password = decryptPassword(request.getPassword(), request.getNonce(), redisHandler);
@@ -104,11 +97,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .email(request.getEmail())
                 .password(BCrypt.hashpw(request.getPassword()))
                 .username(request.getUsername())
+                .phone(request.getPhone())
                 .build();
         this.save(user);
-
-        // 删除验证码缓存
-        redisHandler.del(RedisKey.EMAIL_REGISTER_CODE + request.getEmail());
     }
 
     @Override
@@ -144,15 +135,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void resetPassword(ResetPasswordRequest request) {
-        // 校验验证码
-        String cacheCode = (String) redisHandler.get(RedisKey.EMAIL_RESET_CODE + request.getEmail());
-        if (cacheCode == null) {
-            throw new ServiceException(MessageUtils.message("auth.verification.code.expired"));
-        }
-        if (!cacheCode.equals(request.getCode())) {
-            throw new ServiceException(MessageUtils.message("auth.verification.code.error"));
-        }
-
         // 查询用户信息
         QueryWrapper queryWrapper = QueryWrapper.create()
                 .where(User::getEmail).eq(request.getEmail());
@@ -162,16 +144,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
 
         // 解密密码
-        String password = decryptPassword(request.getNewPassword(), request.getNonce(), redisHandler);
-        request.setNewPassword(password);
+        String password = decryptPassword(request.getPassword(), request.getNonce(), redisHandler);
+        request.setPassword(password);
         request.setNonce(null);
 
         // 更新密码
-        user.setPassword(BCrypt.hashpw(request.getNewPassword()));
+        user.setPassword(BCrypt.hashpw(request.getPassword()));
         this.updateById(user);
-
-        // 删除验证码缓存
-        redisHandler.del(RedisKey.EMAIL_RESET_CODE + request.getEmail());
 
         // 退出登录
         StpUtil.logout(user.getId());
@@ -240,5 +219,30 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         redisHandler.del(RedisKey.RSA_PRIVATE_KEY + nonce);
 
         return decryptedPassword;
+    }
+
+    @Override
+    public void verifyEmailCode(VerifyEmailCodeRequest request) {
+        String key;
+        switch (request.getType()) {
+            case "register":
+                key = RedisKey.EMAIL_REGISTER_CODE;
+                break;
+            case "reset":
+                key = RedisKey.EMAIL_RESET_CODE;
+                break;
+            default:
+                throw new ServiceException(MessageUtils.message("auth.business.type.not.supported"));
+        }
+        // 校验验证码
+        String cacheCode = (String) redisHandler.get(key + request.getEmail());
+        if (cacheCode == null) {
+            throw new ServiceException(MessageUtils.message("auth.verification.code.expired"));
+        }
+        if (!cacheCode.equals(request.getCode())) {
+            throw new ServiceException(MessageUtils.message("auth.verification.code.error"));
+        }
+        // 删除验证码缓存
+        redisHandler.del(key + request.getEmail());
     }
 }
