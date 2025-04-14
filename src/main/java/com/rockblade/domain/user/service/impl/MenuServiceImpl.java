@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-14 17:31:48
+ * @LastEditTime: 2025-04-14 19:34:03
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/impl/MenuServiceImpl.java
  * @Description: 菜单权限表 服务实现层。
  * 
@@ -34,15 +34,15 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     public List<MenuResponse> getMenuList() {
-        QueryWrapper query = QueryWrapper.create()
-                // .and(MENU.MENU_NAME.like(request.getMenuName()))
-                // .and(MENU.STATUS.eq(request.getStatus() != null ?
-                // request.getStatus().getCode() : null))
-                .orderBy(MENU.ORDER.asc());
-
-        return this.list(query).stream()
-                .map(this::convertToResponse)
-                .toList();
+        // List<Menu> menus =
+        // this.list(QueryWrapper.create().orderBy(MENU.ORDER.asc()));
+        // List<MenuResponse> menuResponses = new ArrayList<>();
+        // for (Menu menu : menus) {
+        // MenuResponse menuResponse = convertToResponse(menu);
+        // menuResponses.add(menuResponse);
+        // }
+        // return menuResponses;
+        return getMenuTree();
     }
 
     @Override
@@ -168,7 +168,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
                 .forEach(menu -> {
                     MenuResponse node = convertToResponse(menu);
                     List<MenuResponse> children = buildMenuTree(menus, menu.getId());
-                    // node.setChildren(children);
+                    node.setChildren(children);
                     // node.setHasChildren(!children.isEmpty());
                     tree.add(node);
                 });
@@ -183,7 +183,40 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
      */
     private MenuResponse convertToResponse(Menu menu) {
         MenuResponse response = new MenuResponse();
-        BeanUtils.copyProperties(menu, response);
+        // 复制基本字段
+        response.setId(menu.getId());
+        response.setName(menu.getName());
+        response.setPid(menu.getPid());
+        response.setPath(menu.getPath());
+        response.setComponent(menu.getComponent());
+        response.setRedirect(menu.getRedirect());
+        response.setType(menu.getType());
+        response.setAuthCode(menu.getAuthCode());
+
+        // 创建并设置meta信息
+        MenuResponse.MenuMeta meta = new MenuResponse.MenuMeta();
+        meta.setActiveIcon(menu.getActiveIcon());
+        meta.setActivePath(menu.getActivePath());
+        meta.setAffixTab(menu.getAffixTab());
+        meta.setAffixTabOrder(menu.getAffixTabOrder());
+        meta.setBadge(menu.getBadge());
+        meta.setBadgeType(menu.getBadgeType());
+        meta.setBadgeVariants(menu.getBadgeVariants());
+        meta.setHideChildrenInMenu(menu.getHideChildrenInMenu());
+        meta.setHideInBreadcrumb(menu.getHideInBreadcrumb());
+        meta.setHideInMenu(menu.getHideInMenu());
+        meta.setHideInTab(menu.getHideInTab());
+        meta.setIcon(menu.getIcon());
+        meta.setIframeSrc(menu.getIframeSrc());
+        meta.setKeepAlive(menu.getKeepAlive());
+        meta.setLink(menu.getLink());
+        meta.setMaxNumOfOpenTab(menu.getMaxNumOfOpenTab());
+        meta.setNoBasicLayout(menu.getNoBasicLayout());
+        meta.setOpenInNewWindow(menu.getOpenInNewWindow());
+        meta.setOrder(menu.getOrder());
+        meta.setTitle(menu.getTitle());
+
+        response.setMeta(meta);
         return response;
     }
 }

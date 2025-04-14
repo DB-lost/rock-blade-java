@@ -215,14 +215,14 @@ CREATE INDEX idx_sys_menu_deleted ON sys_menu(deleted);
 -- 添加初始化菜单数据
 INSERT INTO sys_menu (id, name, pid, "order", path, component, type, auth_code, icon, title, created_by) VALUES
 -- Dashboard
-(1, '仪表盘', NULL, 1, 'dashboard', 'dashboard/index', 'menu', 'dashboard:view', 'dashboard', '仪表盘', 1),
+(1, '仪表盘', NULL, 1, 'dashboard', 'dashboard/index', 'CATALOG', 'dashboard:view', 'dashboard', '仪表盘', 1),
 
 -- 系统管理
-(2, '系统管理', NULL, 2, 'system', NULL, 'catalog', '', 'system', '系统管理', 1),
+(2, '系统管理', NULL, 2, 'system', NULL, 'CATALOG', '', 'system', '系统管理', 1),
 
 -- 菜单管理
-(3, '菜单管理', 2, 1, 'menu', 'system/menu/index', 'menu', 'system:menu:list', 'menu', '菜单管理', 1),
-(4, '菜单查询', 3, 1, '', '', 'button', 'system:menu:query', '#', '菜单查询', 1),
-(5, '菜单新增', 3, 2, '', '', 'button', 'system:menu:add', '#', '菜单新增', 1),
-(6, '菜单修改', 3, 3, '', '', 'button', 'system:menu:edit', '#', '菜单修改', 1),
-(7, '菜单删除', 3, 4, '', '', 'button', 'system:menu:remove', '#', '菜单删除', 1);
+(3, '菜单管理', 2, 1, 'menu', 'system/menu/index', 'MENU', 'system:menu:list', 'menu', '菜单管理', 1),
+(4, '菜单查询', 3, 1, '', '', 'BUTTON', 'system:menu:query', '#', '菜单查询', 1),
+(5, '菜单新增', 3, 2, '', '', 'BUTTON', 'system:menu:add', '#', '菜单新增', 1),
+(6, '菜单修改', 3, 3, '', '', 'BUTTON', 'system:menu:edit', '#', '菜单修改', 1),
+(7, '菜单删除', 3, 4, '', '', 'BUTTON', 'system:menu:remove', '#', '菜单删除', 1);
