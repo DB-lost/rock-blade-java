@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-12 15:48:50
+ * @LastEditTime: 2025-04-14 13:00:16
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/impl/MenuServiceImpl.java
  * @Description: 菜单权限表 服务实现层。
  * 
@@ -10,30 +10,26 @@
  */
 package com.rockblade.domain.user.service.impl;
 
-import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import com.rockblade.domain.user.dto.request.MenuRequest;
 import com.rockblade.domain.user.dto.response.MenuResponse;
 import com.rockblade.domain.user.entity.Menu;
+import com.rockblade.domain.user.enums.StatusType;
+import com.rockblade.domain.user.enums.VisibleType;
 import com.rockblade.domain.user.service.MenuService;
 import com.rockblade.domain.user.service.RoleMenuService;
-import com.rockblade.domain.user.service.UserRoleService;
 import com.rockblade.infrastructure.mapper.MenuMapper;
-
 import cn.hutool.extra.spring.SpringUtil;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import static com.rockblade.domain.user.entity.table.MenuTableDef.MENU;
 import static com.rockblade.domain.user.entity.table.RoleMenuTableDef.ROLE_MENU;
-import static com.rockblade.domain.user.entity.table.UserRoleTableDef.USER_ROLE;
 
 @Service
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
@@ -42,15 +38,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     public List<MenuResponse> getMenuList(MenuRequest request) {
         QueryWrapper query = QueryWrapper.create()
                 .and(MENU.MENU_NAME.like(request.getMenuName()))
-                .and(MENU.STATUS.eq(request.getStatus()))
+                .and(MENU.STATUS.eq(request.getStatus() != null ? request.getStatus().getCode() : null))
                 .orderBy(MENU.ORDER_NUM.asc());
 
         return this.list(query).stream()
-                .map(menu -> {
-                    MenuResponse response = new MenuResponse();
-                    BeanUtils.copyProperties(menu, response);
-                    return response;
-                })
+                .map(this::convertToResponse)
                 .toList();
     }
 
@@ -60,9 +52,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         if (menu == null) {
             return null;
         }
-        MenuResponse response = new MenuResponse();
-        BeanUtils.copyProperties(menu, response);
-        return response;
+        return convertToResponse(menu);
     }
 
     @Override
@@ -73,38 +63,32 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     public List<MenuResponse> getMenuTreeByUserId(Long userId) {
-        // TODO: 实现角色管理后，需要根据用户角色返回对应的菜单
-        // 通过用户ID获取角色ID列表
-        // List<Long> roleIds = SpringUtil.getBean(UserRoleService.class).queryChain()
-        // .select(USER_ROLE.ROLE_ID)
-        // .where(USER_ROLE.USER_ID.eq(userId))
-        // .list()
-        // .stream()
-        // .map(ur -> ur.getRoleId())
-        // .toList();
-
-        // // 通过角色ID列表获取菜单ID列表
-        // List<Long> menuIds = SpringUtil.getBean(RoleMenuService.class).queryChain()
-        // .select(ROLE_MENU.MENU_ID)
-        // .where(ROLE_MENU.ROLE_ID.in(roleIds))
-        // .list()
-        // .stream()
-        // .map(rm -> rm.getMenuId())
-        // .toList();
-
-        // // 查询菜单列表
-        // List<Menu> menus = this.list(
-        // QueryWrapper.create()
-        // .where(MENU.ID.in(menuIds))
-        // .orderBy(MENU.ORDER_NUM.asc()));
-        // 目前临时返回所有可见的菜单
+        // 查询所有可见的菜单
         List<Menu> menus = this.list(
                 QueryWrapper.create()
-                        .where(MENU.STATUS.eq("1")) // 状态正常
-                        .and(MENU.VISIBLE.eq("1")) // 显示状态正常
+                        .where(MENU.STATUS.eq(StatusType.NORMAL.getCode()))
+                        .and(MENU.VISIBLE.eq(VisibleType.SHOW.getCode()))
                         .orderBy(MENU.ORDER_NUM.asc()));
 
-        return buildMenuTree(menus, 0L);
+        // 过滤权限并构建树
+        List<Menu> authorizedMenus = menus.stream()
+                .filter(menu -> {
+                    // 如果菜单忽略权限访问，直接返回true
+                    if (Boolean.TRUE.equals(menu.getIgnoreAccess())) {
+                        return true;
+                    }
+
+                    // TODO: 实现角色权限检查
+                    // 如果设置了authority,需要检查用户角色是否匹配
+                    // if (menu.getAuthority() != null && menu.getAuthority().length > 0) {
+                    // return checkUserHasRole(userId, menu.getAuthority());
+                    // }
+
+                    return true;
+                })
+                .toList();
+
+        return buildMenuTree(authorizedMenus, 0L);
     }
 
     @Override
@@ -195,13 +179,24 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
                 .filter(menu -> parentId == 0L ? menu.getParentId() == null || menu.getParentId() == 0L
                         : Objects.equals(menu.getParentId(), parentId))
                 .forEach(menu -> {
-                    MenuResponse node = new MenuResponse();
-                    BeanUtils.copyProperties(menu, node);
+                    MenuResponse node = convertToResponse(menu);
                     List<MenuResponse> children = buildMenuTree(menus, menu.getId());
                     node.setChildren(children);
                     node.setHasChildren(!children.isEmpty());
                     tree.add(node);
                 });
         return tree;
+    }
+
+    /**
+     * 将Menu实体转换为MenuResponse
+     *
+     * @param menu Menu实体
+     * @return MenuResponse
+     */
+    private MenuResponse convertToResponse(Menu menu) {
+        MenuResponse response = new MenuResponse();
+        BeanUtils.copyProperties(menu, response);
+        return response;
     }
 }
