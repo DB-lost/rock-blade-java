@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 22:21:37
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-14 13:00:12
+ * @LastEditTime: 2025-04-14 13:04:28
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/MenuService.java
  * @Description: 
  * 
@@ -25,7 +25,7 @@ public interface MenuService extends IService<Menu> {
      * @param request 查询参数
      * @return 菜单列表
      */
-    List<MenuResponse> getMenuList(MenuRequest request);
+    List<MenuResponse> getMenuList();
 
     /**
      * 获取菜单详情

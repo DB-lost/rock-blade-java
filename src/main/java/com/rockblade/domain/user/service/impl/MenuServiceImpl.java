@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-14 13:00:16
+ * @LastEditTime: 2025-04-14 17:31:48
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/impl/MenuServiceImpl.java
  * @Description: 菜单权限表 服务实现层。
  * 
@@ -15,8 +15,6 @@ import com.mybatisflex.spring.service.impl.ServiceImpl;
 import com.rockblade.domain.user.dto.request.MenuRequest;
 import com.rockblade.domain.user.dto.response.MenuResponse;
 import com.rockblade.domain.user.entity.Menu;
-import com.rockblade.domain.user.enums.StatusType;
-import com.rockblade.domain.user.enums.VisibleType;
 import com.rockblade.domain.user.service.MenuService;
 import com.rockblade.domain.user.service.RoleMenuService;
 import com.rockblade.infrastructure.mapper.MenuMapper;
@@ -35,11 +33,12 @@ import static com.rockblade.domain.user.entity.table.RoleMenuTableDef.ROLE_MENU;
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
 
     @Override
-    public List<MenuResponse> getMenuList(MenuRequest request) {
+    public List<MenuResponse> getMenuList() {
         QueryWrapper query = QueryWrapper.create()
-                .and(MENU.MENU_NAME.like(request.getMenuName()))
-                .and(MENU.STATUS.eq(request.getStatus() != null ? request.getStatus().getCode() : null))
-                .orderBy(MENU.ORDER_NUM.asc());
+                // .and(MENU.MENU_NAME.like(request.getMenuName()))
+                // .and(MENU.STATUS.eq(request.getStatus() != null ?
+                // request.getStatus().getCode() : null))
+                .orderBy(MENU.ORDER.asc());
 
         return this.list(query).stream()
                 .map(this::convertToResponse)
@@ -57,7 +56,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     public List<MenuResponse> getMenuTree() {
-        List<Menu> menus = this.list(QueryWrapper.create().orderBy(MENU.ORDER_NUM.asc()));
+        List<Menu> menus = this.list(QueryWrapper.create().orderBy(MENU.ORDER.asc()));
         return buildMenuTree(menus, 0L);
     }
 
@@ -66,17 +65,15 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         // 查询所有可见的菜单
         List<Menu> menus = this.list(
                 QueryWrapper.create()
-                        .where(MENU.STATUS.eq(StatusType.NORMAL.getCode()))
-                        .and(MENU.VISIBLE.eq(VisibleType.SHOW.getCode()))
-                        .orderBy(MENU.ORDER_NUM.asc()));
+                        .orderBy(MENU.ORDER.asc()));
 
         // 过滤权限并构建树
         List<Menu> authorizedMenus = menus.stream()
                 .filter(menu -> {
                     // 如果菜单忽略权限访问，直接返回true
-                    if (Boolean.TRUE.equals(menu.getIgnoreAccess())) {
-                        return true;
-                    }
+                    // if (Boolean.TRUE.equals(menu.getIgnoreAccess())) {
+                    // return true;
+                    // }
 
                     // TODO: 实现角色权限检查
                     // 如果设置了authority,需要检查用户角色是否匹配
@@ -106,7 +103,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         List<Menu> menus = this.list(
                 QueryWrapper.create()
                         .where(MENU.ID.in(menuIds))
-                        .orderBy(MENU.ORDER_NUM.asc()));
+                        .orderBy(MENU.ORDER.asc()));
 
         return buildMenuTree(menus, 0L);
     }
@@ -114,11 +111,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean createMenu(MenuRequest request) {
-        // 校验菜单名称唯一性
-        if (!checkMenuNameUnique(request.getMenuName(), request.getParentId(), null)) {
-            throw new RuntimeException("菜单名称已存在");
-        }
-
         Menu menu = new Menu();
         BeanUtils.copyProperties(request, menu);
         return this.save(menu);
@@ -127,11 +119,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateMenu(MenuRequest request) {
-        // 校验菜单名称唯一性
-        if (!checkMenuNameUnique(request.getMenuName(), request.getParentId(), request.getId())) {
-            throw new RuntimeException("菜单名称已存在");
-        }
-
         Menu menu = new Menu();
         BeanUtils.copyProperties(request, menu);
         return this.updateById(menu);
@@ -141,7 +128,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Transactional(rollbackFor = Exception.class)
     public Boolean deleteMenu(Long menuId) {
         // 判断是否存在子菜单
-        long count = this.count(QueryWrapper.create().where(MENU.PARENT_ID.eq(menuId)));
+        long count = this.count(QueryWrapper.create().where(MENU.PID.eq(menuId)));
         if (count > 0) {
             throw new RuntimeException("存在子菜单,不允许删除");
         }
@@ -156,8 +143,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     public Boolean checkMenuNameUnique(String menuName, Long parentId, Long menuId) {
         QueryWrapper query = QueryWrapper.create()
-                .where(MENU.MENU_NAME.eq(menuName))
-                .and(MENU.PARENT_ID.eq(parentId));
+                .where(MENU.NAME.eq(menuName))
+                .and(MENU.PID.eq(parentId));
 
         if (menuId != null) {
             query.and(MENU.ID.ne(menuId));
@@ -176,13 +163,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     private List<MenuResponse> buildMenuTree(List<Menu> menus, Long parentId) {
         List<MenuResponse> tree = new ArrayList<>();
         menus.stream()
-                .filter(menu -> parentId == 0L ? menu.getParentId() == null || menu.getParentId() == 0L
-                        : Objects.equals(menu.getParentId(), parentId))
+                .filter(menu -> parentId == 0L ? menu.getPid() == null || menu.getPid() == 0L
+                        : Objects.equals(menu.getPid(), parentId))
                 .forEach(menu -> {
                     MenuResponse node = convertToResponse(menu);
                     List<MenuResponse> children = buildMenuTree(menus, menu.getId());
-                    node.setChildren(children);
-                    node.setHasChildren(!children.isEmpty());
+                    // node.setChildren(children);
+                    // node.setHasChildren(!children.isEmpty());
                     tree.add(node);
                 });
         return tree;

@@ -3,13 +3,12 @@ package com.rockblade.domain.user.entity;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
 import com.rockblade.domain.user.enums.MenuType;
-import com.rockblade.domain.user.enums.StatusType;
-import com.rockblade.domain.user.enums.VisibleType;
+import com.rockblade.domain.user.enums.BadgeType;
+import com.rockblade.domain.user.enums.BadgeVariants;
 import com.rockblade.framework.core.base.entity.BaseEntity;
 import com.rockblade.framework.core.base.entity.BaseInsertListener;
 import com.rockblade.framework.core.base.entity.BaseUpdateListener;
 import java.io.Serializable;
-import java.util.Map;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -23,7 +22,7 @@ import lombok.experimental.Accessors;
 public class Menu extends BaseEntity implements Serializable {
 
     /**
-     * 主键ID
+     * 菜单ID
      */
     @Id
     private Long id;
@@ -31,20 +30,15 @@ public class Menu extends BaseEntity implements Serializable {
     /**
      * 菜单名称
      */
-    private String menuName;
+    private String name;
 
     /**
-     * 父菜单ID
+     * 父级ID
      */
-    private Long parentId;
+    private Long pid;
 
     /**
-     * 显示顺序
-     */
-    private Integer orderNum;
-
-    /**
-     * 路由地址
+     * 路由路径
      */
     private String path;
 
@@ -54,67 +48,72 @@ public class Menu extends BaseEntity implements Serializable {
     private String component;
 
     /**
-     * 路由参数
+     * 重定向地址
      */
-    private Map<String, Object> query;
+    private String redirect;
 
     /**
-     * 激活图标
+     * 菜单类型(catalog目录 menu菜单 embedded内嵌 link链接 button按钮)
+     */
+    private MenuType type;
+
+    /**
+     * 后端权限标识
+     */
+    private String authCode;
+
+    /**
+     * 激活时显示的图标
      */
     private String activeIcon;
 
     /**
-     * 当前激活的菜单路径
+     * 作为路由时，需要激活的菜单的Path
      */
     private String activePath;
 
     /**
-     * 是否固定标签页
+     * 固定在标签栏
      */
     private Boolean affixTab;
 
     /**
-     * 固定标签页的顺序
+     * 在标签栏固定的顺序
      */
     private Integer affixTabOrder;
 
     /**
-     * 需要特定的角色标识才可以访问
-     */
-    private String[] authority;
-
-    /**
-     * 徽标
+     * 徽标内容(当徽标类型为normal时有效)
      */
     private String badge;
 
     /**
-     * 徽标类型
+     * 徽标类型(dot,normal)
      */
-    private String badgeType;
+    private BadgeType badgeType;
 
     /**
-     * 徽标颜色
+     * 徽标变体颜色(default,destructive,primary,success,warning)
      */
-    private String badgeVariants;
+    private BadgeVariants badgeVariants;
 
     /**
-     * 当前路由的子级在菜单中不展现
+     * 在菜单中隐藏下级
      */
     private Boolean hideChildrenInMenu;
 
     /**
-     * 当前路由在面包屑中不展现
+     * 在面包屑中隐藏
      */
     private Boolean hideInBreadcrumb;
 
     /**
-     * 当前路由在菜单中不展现
+     * 在菜单中隐藏
      */
     private Boolean hideInMenu;
 
     /**
-     * 当前路由在标签页不展现
+     * 在标签栏中隐藏
      */
     private Boolean hideInTab;
 
@@ -124,83 +123,43 @@ public class Menu extends BaseEntity implements Serializable {
     private String icon;
 
     /**
-     * iframe 地址
+     * 内嵌Iframe的URL
      */
     private String iframeSrc;
 
     /**
-     * 忽略权限，直接可以访问
+     * 是否缓存页面
      */
-    private Boolean ignoreAccess;
+    private Boolean keepAlive;
 
     /**
-     * 是否为外链
-     */
-    private Boolean isFrame;
-
-    /**
-     * 是否缓存
-     */
-    private Boolean isCache;
-
-    /**
-     * 外链-跳转路径
+     * 外链页面的URL
      */
     private String link;
 
     /**
-     * 路由是否已经加载过
+     * 同一个路由最大打开的标签数
      */
-    private Boolean loaded;
+    private Integer maxNumOfOpenTab;
 
     /**
-     * 标签页最大打开数量
-     */
-    private Integer maxOpenTab;
-
-    /**
-     * 菜单可以看到，但是访问会被重定向到403
-     */
-    private Boolean menuForbidden;
-
-    /**
-     * 不使用基础布局
+     * 无需基础布局
      */
     private Boolean noBasicLayout;
 
     /**
-     * 在新窗口打开
+     * 是否在新窗口打开
      */
     private Boolean openInNewWindow;
 
     /**
-     * 菜单类型（M目录 C菜单 F按钮）
+     * 菜单排序
      */
-    private MenuType menuType;
+    private Integer order;
 
     /**
-     * 显示状态（1显示 0隐藏）
+     * 菜单标题
      */
-    private VisibleType visible;
-
-    /**
-     * 菜单状态（1正常 0停用）
-     */
-    private StatusType status;
-
-    /**
-     * 权限标识
-     */
-    private String perms;
-
-    /**
-     * 是否删除
-     */
-    private Boolean deleted;
-
-    /**
-     * 备注
-     */
-    private String remark;
+    private String title;
 
 }

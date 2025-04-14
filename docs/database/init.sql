@@ -96,89 +96,75 @@ COMMENT ON COLUMN sys_role.remark IS '备注';
 -- 创建菜单权限表
 CREATE TABLE sys_menu (
     id BIGSERIAL PRIMARY KEY,
-    menu_name VARCHAR(50) NOT NULL,
-    parent_id BIGINT,
-    order_num INTEGER DEFAULT 0,
-    path VARCHAR(200),                -- 路由地址
+    name VARCHAR(50) NOT NULL,        -- 菜单名称
+    pid BIGSERIAL,                  -- 父级ID
+    path VARCHAR(200),                -- 路由路径
     component VARCHAR(255),           -- 组件路径
-    query JSONB,                      -- 路由参数
-    active_icon VARCHAR(100),         -- 激活图标
-    active_path VARCHAR(200),         -- 当前激活的菜单路径
-    affix_tab BOOLEAN DEFAULT FALSE,  -- 是否固定标签页
-    affix_tab_order INTEGER DEFAULT 0, -- 固定标签页的顺序
-    authority VARCHAR[],              -- 需要特定的角色标识才可以访问
-    badge VARCHAR(50),                -- 徽标
-    badge_type VARCHAR(20),           -- 徽标类型
-    badge_variants VARCHAR(20),       -- 徽标颜色
-    hide_children_in_menu BOOLEAN DEFAULT FALSE, -- 当前路由的子级在菜单中不展现
-    hide_in_breadcrumb BOOLEAN DEFAULT FALSE,   -- 当前路由在面包屑中不展现
-    hide_in_menu BOOLEAN DEFAULT FALSE,         -- 当前路由在菜单中不展现
-    hide_in_tab BOOLEAN DEFAULT FALSE,          -- 当前路由在标签页不展现
-    iframe_src VARCHAR(500),          -- iframe地址
-    ignore_access BOOLEAN DEFAULT FALSE, -- 忽略权限，直接可以访问
-    is_frame BOOLEAN DEFAULT FALSE,   -- 是否为外链
-    is_cache BOOLEAN DEFAULT FALSE,   -- 是否缓存
-    link VARCHAR(500),                -- 外链-跳转路径
-    loaded BOOLEAN DEFAULT FALSE,      -- 路由是否已经加载过
-    max_open_tab INTEGER DEFAULT -1,   -- 标签页最大打开数量
-    menu_forbidden BOOLEAN DEFAULT FALSE, -- 菜单可以看到，但是访问会被重定向到403
-    no_basic_layout BOOLEAN DEFAULT FALSE, -- 不使用基础布局
-    open_in_new_window BOOLEAN DEFAULT FALSE, -- 在新窗口打开
-    menu_type CHAR(1) NOT NULL,      -- 菜单类型（M目录 C菜单 F按钮）
-    visible CHAR(1) NOT NULL,        -- 显示状态（1显示 0隐藏）
-    status CHAR(1) NOT NULL,         -- 菜单状态（1正常 0停用）
-    perms VARCHAR(100),              -- 权限标识
+    redirect VARCHAR(200),            -- 重定向地址
+    type VARCHAR(20) NOT NULL,        -- 菜单类型(catalog目录 menu菜单 embedded内嵌 link链接 button按钮)
+    auth_code VARCHAR(100),           -- 后端权限标识
+    active_icon VARCHAR(100),         -- 激活时显示的图标
+    active_path VARCHAR(200),         -- 作为路由时，需要激活的菜单的Path
+    affix_tab BOOLEAN DEFAULT FALSE,  -- 固定在标签栏
+    affix_tab_order INTEGER,         -- 在标签栏固定的顺序
+    badge VARCHAR(50),                -- 徽标内容(当徽标类型为normal时有效)
+    badge_type VARCHAR(20),           -- 徽标类型(dot,normal)
+    badge_variants VARCHAR(20),       -- 徽标变体颜色(default,destructive,primary,success,warning)
+    hide_children_in_menu BOOLEAN DEFAULT FALSE, -- 在菜单中隐藏下级
+    hide_in_breadcrumb BOOLEAN DEFAULT FALSE,   -- 在面包屑中隐藏
+    hide_in_menu BOOLEAN DEFAULT FALSE,         -- 在菜单中隐藏
+    hide_in_tab BOOLEAN DEFAULT FALSE,          -- 在标签栏中隐藏
     icon VARCHAR(100),               -- 菜单图标
+    iframe_src VARCHAR(500),          -- 内嵌Iframe的URL
+    keep_alive BOOLEAN DEFAULT FALSE, -- 是否缓存页面
+    link VARCHAR(500),               -- 外链页面的URL
+    max_num_of_open_tab INTEGER,     -- 同一个路由最大打开的标签数
+    no_basic_layout BOOLEAN DEFAULT FALSE, -- 无需基础布局
+    open_in_new_window BOOLEAN DEFAULT FALSE, -- 是否在新窗口打开
+    "order" INTEGER DEFAULT 0,        -- 菜单排序
+    title VARCHAR(100),              -- 菜单标题
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_by BIGINT,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_by BIGINT,
     deleted BOOLEAN DEFAULT FALSE,
-    remark VARCHAR(500),             -- 备注
-    CONSTRAINT fk_menu_parent_id FOREIGN KEY (parent_id) REFERENCES sys_menu (id)
+    CONSTRAINT fk_menu_pid FOREIGN KEY (pid) REFERENCES sys_menu (id)
 );
 
-COMMENT ON TABLE sys_menu IS '菜单权限表';
-COMMENT ON COLUMN sys_menu.id IS '主键ID';
-COMMENT ON COLUMN sys_menu.menu_name IS '菜单名称';
-COMMENT ON COLUMN sys_menu.parent_id IS '父菜单ID';
-COMMENT ON COLUMN sys_menu.order_num IS '显示顺序';
-COMMENT ON COLUMN sys_menu.path IS '路由地址';
+COMMENT ON TABLE sys_menu IS '菜单表';
+COMMENT ON COLUMN sys_menu.id IS '菜单ID';
+COMMENT ON COLUMN sys_menu.name IS '菜单名称';
+COMMENT ON COLUMN sys_menu.pid IS '父级ID';
+COMMENT ON COLUMN sys_menu.path IS '路由路径';
 COMMENT ON COLUMN sys_menu.component IS '组件路径';
-COMMENT ON COLUMN sys_menu.query IS '路由参数';
-COMMENT ON COLUMN sys_menu.active_icon IS '激活图标';
-COMMENT ON COLUMN sys_menu.active_path IS '当前激活的菜单路径';
-COMMENT ON COLUMN sys_menu.affix_tab IS '是否固定标签页';
-COMMENT ON COLUMN sys_menu.affix_tab_order IS '固定标签页的顺序';
-COMMENT ON COLUMN sys_menu.authority IS '需要特定的角色标识才可以访问';
-COMMENT ON COLUMN sys_menu.badge IS '徽标';
-COMMENT ON COLUMN sys_menu.badge_type IS '徽标类型';
-COMMENT ON COLUMN sys_menu.badge_variants IS '徽标颜色';
-COMMENT ON COLUMN sys_menu.hide_children_in_menu IS '当前路由的子级在菜单中不展现';
-COMMENT ON COLUMN sys_menu.hide_in_breadcrumb IS '当前路由在面包屑中不展现';
-COMMENT ON COLUMN sys_menu.hide_in_menu IS '当前路由在菜单中不展现';
-COMMENT ON COLUMN sys_menu.hide_in_tab IS '当前路由在标签页不展现';
-COMMENT ON COLUMN sys_menu.iframe_src IS 'iframe地址';
-COMMENT ON COLUMN sys_menu.ignore_access IS '忽略权限，直接可以访问';
-COMMENT ON COLUMN sys_menu.is_frame IS '是否为外链';
-COMMENT ON COLUMN sys_menu.is_cache IS '是否缓存';
-COMMENT ON COLUMN sys_menu.link IS '外链-跳转路径';
-COMMENT ON COLUMN sys_menu.loaded IS '路由是否已经加载过';
-COMMENT ON COLUMN sys_menu.max_open_tab IS '标签页最大打开数量';
-COMMENT ON COLUMN sys_menu.menu_forbidden IS '菜单可以看到，但是访问会被重定向到403';
-COMMENT ON COLUMN sys_menu.no_basic_layout IS '不使用基础布局';
-COMMENT ON COLUMN sys_menu.open_in_new_window IS '在新窗口打开';
-COMMENT ON COLUMN sys_menu.menu_type IS '菜单类型';
-COMMENT ON COLUMN sys_menu.visible IS '显示状态';
-COMMENT ON COLUMN sys_menu.status IS '菜单状态';
-COMMENT ON COLUMN sys_menu.perms IS '权限标识';
+COMMENT ON COLUMN sys_menu.redirect IS '重定向地址';
+COMMENT ON COLUMN sys_menu.type IS '菜单类型(catalog目录 menu菜单 embedded内嵌 link链接 button按钮)';
+COMMENT ON COLUMN sys_menu.auth_code IS '后端权限标识';
+COMMENT ON COLUMN sys_menu.active_icon IS '激活时显示的图标';
+COMMENT ON COLUMN sys_menu.active_path IS '作为路由时，需要激活的菜单的Path';
+COMMENT ON COLUMN sys_menu.affix_tab IS '固定在标签栏';
+COMMENT ON COLUMN sys_menu.affix_tab_order IS '在标签栏固定的顺序';
+COMMENT ON COLUMN sys_menu.badge IS '徽标内容(当徽标类型为normal时有效)';
+COMMENT ON COLUMN sys_menu.badge_type IS '徽标类型(dot,normal)';
+COMMENT ON COLUMN sys_menu.badge_variants IS '徽标变体颜色(default,destructive,primary,success,warning)';
+COMMENT ON COLUMN sys_menu.hide_children_in_menu IS '在菜单中隐藏下级';
+COMMENT ON COLUMN sys_menu.hide_in_breadcrumb IS '在面包屑中隐藏';
+COMMENT ON COLUMN sys_menu.hide_in_menu IS '在菜单中隐藏';
+COMMENT ON COLUMN sys_menu.hide_in_tab IS '在标签栏中隐藏';
 COMMENT ON COLUMN sys_menu.icon IS '菜单图标';
+COMMENT ON COLUMN sys_menu.iframe_src IS '内嵌Iframe的URL';
+COMMENT ON COLUMN sys_menu.keep_alive IS '是否缓存页面';
+COMMENT ON COLUMN sys_menu.link IS '外链页面的URL';
+COMMENT ON COLUMN sys_menu.max_num_of_open_tab IS '同一个路由最大打开的标签数';
+COMMENT ON COLUMN sys_menu.no_basic_layout IS '无需基础布局';
+COMMENT ON COLUMN sys_menu.open_in_new_window IS '是否在新窗口打开';
+COMMENT ON COLUMN sys_menu."order" IS '菜单排序';
+COMMENT ON COLUMN sys_menu.title IS '菜单标题';
 COMMENT ON COLUMN sys_menu.created_at IS '创建时间';
 COMMENT ON COLUMN sys_menu.created_by IS '创建人ID';
 COMMENT ON COLUMN sys_menu.updated_at IS '更新时间';
 COMMENT ON COLUMN sys_menu.updated_by IS '更新人ID';
 COMMENT ON COLUMN sys_menu.deleted IS '是否删除';
-COMMENT ON COLUMN sys_menu.remark IS '备注';
 
 -- 创建用户-角色关联表
 CREATE TABLE sys_user_role (
@@ -223,22 +209,20 @@ CREATE INDEX idx_sys_user_login_log_status ON sys_user_login_log(status);
 CREATE INDEX idx_sys_role_status ON sys_role(status);
 CREATE INDEX idx_sys_role_deleted ON sys_role(deleted);
 
-CREATE INDEX idx_sys_menu_parent_id ON sys_menu(parent_id);
-CREATE INDEX idx_sys_menu_status ON sys_menu(status);
-CREATE INDEX idx_sys_menu_visible ON sys_menu(visible);
+CREATE INDEX idx_sys_menu_pid ON sys_menu(pid);
 CREATE INDEX idx_sys_menu_deleted ON sys_menu(deleted);
 
 -- 添加初始化菜单数据
-INSERT INTO sys_menu (menu_name, parent_id, order_num, path, component, menu_type, visible, status, perms, icon, created_by) VALUES
+INSERT INTO sys_menu (id, name, pid, "order", path, component, type, auth_code, icon, title, created_by) VALUES
 -- Dashboard
-('仪表盘', NULL, 1, 'dashboard', 'dashboard/index', 'C', '1', '1', 'dashboard:view', 'dashboard', 1),
+('1', '仪表盘', NULL, 1, 'dashboard', 'dashboard/index', 'menu', 'dashboard:view', 'dashboard', '仪表盘', 1),
 
 -- 系统管理
-('系统管理', NULL, 2, 'system', NULL, 'M', '1', '1', '', 'system', 1),
+('2', '系统管理', NULL, 2, 'system', NULL, 'catalog', '', 'system', '系统管理', 1),
 
 -- 菜单管理
-('菜单管理', (SELECT id FROM sys_menu WHERE menu_name = '系统管理'), 1, 'menu', 'system/menu/index', 'C', '1', '1', 'system:menu:list', 'menu', 1),
-('菜单查询', (SELECT id FROM sys_menu WHERE menu_name = '菜单管理'), 1, '', '', 'F', '1', '1', 'system:menu:query', '#', 1),
-('菜单新增', (SELECT id FROM sys_menu WHERE menu_name = '菜单管理'), 2, '', '', 'F', '1', '1', 'system:menu:add', '#', 1),
-('菜单修改', (SELECT id FROM sys_menu WHERE menu_name = '菜单管理'), 3, '', '', 'F', '1', '1', 'system:menu:edit', '#', 1),
-('菜单删除', (SELECT id FROM sys_menu WHERE menu_name = '菜单管理'), 4, '', '', 'F', '1', '1', 'system:menu:remove', '#', 1);
+('3', '菜单管理', '2', 1, 'menu', 'system/menu/index', 'menu', 'system:menu:list', 'menu', '菜单管理', 1),
+('4', '菜单查询', '3', 1, '', '', 'button', 'system:menu:query', '#', '菜单查询', 1),
+('5', '菜单新增', '3', 2, '', '', 'button', 'system:menu:add', '#', '菜单新增', 1),
+('6', '菜单修改', '3', 3, '', '', 'button', 'system:menu:edit', '#', '菜单修改', 1),
+('7', '菜单删除', '3', 4, '', '', 'button', 'system:menu:remove', '#', '菜单删除', 1);
