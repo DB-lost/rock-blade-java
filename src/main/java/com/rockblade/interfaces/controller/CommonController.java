@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 14:43:52
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-13 19:37:44
+ * @LastEditTime: 2025-04-15 16:34:59
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/CommonController.java
  * @Description: 公共接口
  * 
@@ -46,7 +46,7 @@ public class CommonController {
     @GetMapping("/getMenuList")
     @Operation(summary = "获取菜单树")
     public R<List<MenuResponse>> getMenuList() {
-        return R.ok(menuService.getMenuTreeByUserId(StpUtil.getLoginIdAsLong()));
+        return R.ok(menuService.getMenuTreeByUserId(StpUtil.getLoginIdAsString()));
     }
 
     @GetMapping("/getCodes")

@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-15 14:14:50
+ * @LastEditTime: 2025-04-15 16:33:29
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/RoleController.java
  * @Description: 角色接口
  * 
@@ -54,14 +54,14 @@ public class RoleController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "删除角色")
-    public R<Void> deleteRole(@PathVariable Long id) {
+    public R<Void> deleteRole(@PathVariable String id) {
         roleService.deleteRole(id);
         return R.ok();
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "获取角色详情")
-    public R<RoleResponse> getRoleDetail(@PathVariable Long id) {
+    public R<RoleResponse> getRoleDetail(@PathVariable String id) {
         return R.ok(roleService.getRoleDetail(id));
     }
 

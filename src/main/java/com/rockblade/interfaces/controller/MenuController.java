@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 22:21:37
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-15 11:35:18
+ * @LastEditTime: 2025-04-15 16:34:57
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/MenuController.java
  * @Description: 
  * 
@@ -72,7 +72,7 @@ public class MenuController {
     @DeleteMapping("/{menuId}")
     @Operation(summary = "删除菜单", description = "删除指定的菜单，如果有子菜单则不允许删除")
     @Parameter(name = "menuId", description = "菜单ID", required = true)
-    public R<Boolean> remove(@PathVariable("menuId") Long menuId) {
+    public R<Boolean> remove(@PathVariable("menuId") String menuId) {
         return R.ok(menuService.deleteMenu(menuId));
     }
 

@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-11 09:30:21
+ * @LastEditTime: 2025-04-15 16:21:58
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/entity/UserLoginLog.java
  * @Description: 用户登录日志表 实体类。
  * 
@@ -32,12 +32,12 @@ public class UserLoginLog extends BaseEntity implements Serializable {
      * 主键ID
      */
     @Id
-    private Long id;
+    private String id;
 
     /**
      * 用户ID
      */
-    private Long userId;
+    private String userId;
 
     /**
      * 登录方式

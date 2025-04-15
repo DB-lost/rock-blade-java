@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-15 15:18:33
+ * @LastEditTime: 2025-04-15 16:31:22
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/impl/RoleServiceImpl.java
  * @Description: 角色信息表 服务层实现。
  * 
@@ -108,7 +108,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteRole(Long id) {
+    public void deleteRole(String id) {
         // 检查角色是否存在
         Role existingRole = getById(id);
         if (existingRole == null) {
@@ -116,15 +116,14 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         }
 
         // 软删除角色
-        existingRole.setDeleted(true);
-        updateById(existingRole);
+        removeById(id);
 
         // 删除权限关系
         SpringUtil.getBean(RoleMenuService.class).remove(ROLE_MENU.ROLE_ID.eq(id));
     }
 
     @Override
-    public RoleResponse getRoleDetail(Long id) {
+    public RoleResponse getRoleDetail(String id) {
         // 获取角色信息
         Role role = getById(id);
         if (role == null || role.getDeleted()) {
@@ -142,9 +141,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     /**
      * 保存角色的权限关系
      */
-    private void saveRoleMenus(Long roleId, Long[] menuIds) {
+    private void saveRoleMenus(String roleId, String[] menuIds) {
         if (menuIds != null && menuIds.length > 0) {
-            for (Long menuId : menuIds) {
+            for (String menuId : menuIds) {
                 RoleMenu roleMenu = new RoleMenu();
                 roleMenu.setRoleId(roleId);
                 roleMenu.setMenuId(menuId);
@@ -156,11 +155,11 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     /**
      * 获取角色的权限ID列表
      */
-    private Long[] getRoleMenuIds(Long roleId) {
+    private String[] getRoleMenuIds(String roleId) {
         return SpringUtil.getBean(RoleMenuService.class).list(ROLE_MENU.ROLE_ID.eq(roleId))
                 .stream()
                 .map(RoleMenu::getMenuId)
-                .toArray(Long[]::new);
+                .toArray(String[]::new);
     }
 
 }

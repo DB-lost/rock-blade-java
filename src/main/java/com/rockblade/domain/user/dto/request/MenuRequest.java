@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-15 09:57:35
+ * @LastEditTime: 2025-04-15 16:22:53
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/dto/request/MenuRequest.java
  * @Description: 菜单请求DTO
  * 
@@ -36,7 +36,7 @@ public class MenuRequest {
 
     /** 菜单ID */
     @Schema(description = "菜单ID")
-    private Long id;
+    private String id;
 
     /** 菜单元数据 */
     @Schema(description = "菜单元数据")
@@ -52,7 +52,7 @@ public class MenuRequest {
 
     /** 父级ID */
     @Schema(description = "父级ID")
-    private Long pid;
+    private String pid;
 
     /** 重定向 */
     @Schema(description = "重定向")

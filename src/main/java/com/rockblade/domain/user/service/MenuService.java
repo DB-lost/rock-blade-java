@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 22:21:37
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-14 13:04:28
+ * @LastEditTime: 2025-04-15 16:31:34
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/MenuService.java
  * @Description: 
  * 
@@ -33,7 +33,7 @@ public interface MenuService extends IService<Menu> {
      * @param menuId 菜单ID
      * @return 菜单详情
      */
-    MenuResponse getMenuInfo(Long menuId);
+    MenuResponse getMenuInfo(String menuId);
 
     /**
      * 获取菜单树
@@ -48,7 +48,7 @@ public interface MenuService extends IService<Menu> {
      * @param userId 用户ID
      * @return 用户的菜单树
      */
-    List<MenuResponse> getMenuTreeByUserId(Long userId);
+    List<MenuResponse> getMenuTreeByUserId(String userId);
 
     /**
      * 获取角色的菜单树
@@ -56,7 +56,7 @@ public interface MenuService extends IService<Menu> {
      * @param roleId 角色ID
      * @return 角色的菜单树
      */
-    List<MenuResponse> getMenuTreeByRoleId(Long roleId);
+    List<MenuResponse> getMenuTreeByRoleId(String roleId);
 
     /**
      * 创建菜单
@@ -80,7 +80,7 @@ public interface MenuService extends IService<Menu> {
      * @param menuId 菜单ID
      * @return 是否成功
      */
-    Boolean deleteMenu(Long menuId);
+    Boolean deleteMenu(String menuId);
 
     /**
      * 校验菜单名称是否唯一
@@ -90,5 +90,5 @@ public interface MenuService extends IService<Menu> {
      * @param menuId   菜单ID（更新时传入）
      * @return true: 唯一, false: 不唯一
      */
-    Boolean checkMenuNameUnique(String menuName, Long parentId, Long menuId);
+    Boolean checkMenuNameUnique(String menuName, String parentId, String menuId);
 }

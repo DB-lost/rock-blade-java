@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 22:21:37
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-15 09:57:25
+ * @LastEditTime: 2025-04-15 16:23:22
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/dto/response/MenuResponse.java
  * @Description: 
  * 
@@ -37,7 +37,7 @@ public class MenuResponse {
 
     /** 菜单ID */
     @Schema(description = "菜单ID")
-    private Long id;
+    private String id;
 
     /** 菜单元数据 */
     @Schema(description = "菜单元数据")
@@ -53,7 +53,7 @@ public class MenuResponse {
 
     /** 父级ID */
     @Schema(description = "父级ID")
-    private Long pid;
+    private String pid;
 
     /** 重定向 */
     @Schema(description = "重定向")

@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-15 11:44:54
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-15 14:29:27
+ * @LastEditTime: 2025-04-15 16:23:37
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/dto/response/RoleResponse.java
  * @Description: 角色响应DTO
  * 
@@ -19,7 +19,7 @@ public class RoleResponse {
 
     /** 角色ID */
     @Schema(description = "角色ID")
-    private Long id;
+    private String id;
 
     /** 角色名称 */
     @Schema(description = "角色名称")
@@ -35,7 +35,7 @@ public class RoleResponse {
 
     /** 权限列表 */
     @Schema(description = "权限列表")
-    private Long[] permissions;
+    private String[] permissions;
 
     /** 备注 */
     @Schema(description = "备注")

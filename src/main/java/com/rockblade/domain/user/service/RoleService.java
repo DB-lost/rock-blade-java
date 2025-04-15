@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-15 12:14:59
+ * @LastEditTime: 2025-04-15 16:31:33
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/RoleService.java
  * @Description: 角色信息表 服务层。
  * 
@@ -53,7 +53,7 @@ public interface RoleService extends IService<Role> {
      *
      * @param id 角色ID
      */
-    void deleteRole(Long id);
+    void deleteRole(String id);
 
     /**
      * 获取角色详情
@@ -61,6 +61,6 @@ public interface RoleService extends IService<Role> {
      * @param id 角色ID
      * @return 角色详情
      */
-    RoleResponse getRoleDetail(Long id);
+    RoleResponse getRoleDetail(String id);
 
 }

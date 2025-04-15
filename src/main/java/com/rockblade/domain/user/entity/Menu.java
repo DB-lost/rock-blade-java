@@ -25,7 +25,7 @@ public class Menu extends BaseEntity implements Serializable {
      * 菜单ID
      */
     @Id
-    private Long id;
+    private String id;
 
     /**
      * 菜单名称
@@ -35,7 +35,7 @@ public class Menu extends BaseEntity implements Serializable {
     /**
      * 父级ID
      */
-    private Long pid;
+    private String pid;
 
     /**
      * 路由路径
