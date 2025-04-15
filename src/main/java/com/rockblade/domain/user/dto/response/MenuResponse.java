@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 22:21:37
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-14 19:40:29
+ * @LastEditTime: 2025-04-15 09:57:25
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/dto/response/MenuResponse.java
  * @Description: 
  * 
@@ -62,6 +62,10 @@ public class MenuResponse {
     /** 菜单类型 */
     @Schema(description = "菜单类型")
     private MenuType type;
+
+    /** 状态 */
+    @Schema(description = "状态")
+    private String status;
 
     @Data
     @Schema(description = "菜单元数据")

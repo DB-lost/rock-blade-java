@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-14 19:34:03
+ * @LastEditTime: 2025-04-15 11:04:42
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/impl/MenuServiceImpl.java
  * @Description: 菜单权限表 服务实现层。
  * 
@@ -34,14 +34,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     public List<MenuResponse> getMenuList() {
-        // List<Menu> menus =
-        // this.list(QueryWrapper.create().orderBy(MENU.ORDER.asc()));
-        // List<MenuResponse> menuResponses = new ArrayList<>();
-        // for (Menu menu : menus) {
-        // MenuResponse menuResponse = convertToResponse(menu);
-        // menuResponses.add(menuResponse);
-        // }
-        // return menuResponses;
         return getMenuTree();
     }
 
@@ -113,6 +105,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     public Boolean createMenu(MenuRequest request) {
         Menu menu = new Menu();
         BeanUtils.copyProperties(request, menu);
+        BeanUtils.copyProperties(request.getMeta(), menu);
         return this.save(menu);
     }
 
@@ -121,6 +114,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     public Boolean updateMenu(MenuRequest request) {
         Menu menu = new Menu();
         BeanUtils.copyProperties(request, menu);
+        BeanUtils.copyProperties(request.getMeta(), menu);
         return this.updateById(menu);
     }
 
@@ -192,6 +186,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         response.setRedirect(menu.getRedirect());
         response.setType(menu.getType());
         response.setAuthCode(menu.getAuthCode());
+        response.setStatus(menu.getStatus());
 
         // 创建并设置meta信息
         MenuResponse.MenuMeta meta = new MenuResponse.MenuMeta();

@@ -6,6 +6,7 @@ CREATE TABLE sys_user (
     avatar VARCHAR(100),
     phone VARCHAR(20),
     email VARCHAR(100),
+    status CHAR(1) NOT NULL DEFAULT '1',           -- 角色状态（1正常 0停用）
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_by BIGINT,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -39,7 +40,7 @@ CREATE TABLE sys_user_login_log (
     os_name VARCHAR(50),                -- 操作系统
     browser VARCHAR(50),                -- 浏览器
     location VARCHAR(100),              -- 登录地点
-    status VARCHAR(20) NOT NULL,        -- 登录状态：成功、失败
+    status CHAR(1) NOT NULL DEFAULT '1',           -- 角色状态（1正常 0停用）
     msg VARCHAR(200),                   -- 登录消息，如失败原因
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_by BIGINT,
@@ -69,7 +70,7 @@ CREATE TABLE sys_role (
     id BIGSERIAL PRIMARY KEY,
     role_name VARCHAR(30) NOT NULL,
     role_key VARCHAR(100) NOT NULL,    -- 角色标识符，如：admin、user
-    status CHAR(1) NOT NULL,           -- 角色状态（1正常 0停用）
+    status CHAR(1) NOT NULL DEFAULT '1',           -- 角色状态（1正常 0停用）
     sort_order INTEGER DEFAULT 0,       -- 显示顺序
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_by BIGINT,
@@ -101,6 +102,7 @@ CREATE TABLE sys_menu (
     path VARCHAR(200),                -- 路由路径
     component VARCHAR(255),           -- 组件路径
     redirect VARCHAR(200),            -- 重定向地址
+    status CHAR(1) NOT NULL DEFAULT '1',           -- 角色状态（1正常 0停用）
     type VARCHAR(20) NOT NULL,        -- 菜单类型(catalog目录 menu菜单 embedded内嵌 link链接 button按钮)
     auth_code VARCHAR(100),           -- 后端权限标识
     active_icon VARCHAR(100),         -- 激活时显示的图标
@@ -215,14 +217,18 @@ CREATE INDEX idx_sys_menu_deleted ON sys_menu(deleted);
 -- 添加初始化菜单数据
 INSERT INTO sys_menu (id, name, pid, "order", path, component, type, auth_code, icon, title, created_by) VALUES
 -- Dashboard
-(1, '仪表盘', NULL, 1, 'dashboard', 'dashboard/index', 'CATALOG', 'dashboard:view', 'dashboard', '仪表盘', 1),
+(1, '仪表盘', NULL, 1, '/dashboard', '/dashboard/index', 'CATALOG', 'dashboard:view', 'dashboard', '仪表盘', 1),
 
 -- 系统管理
-(2, '系统管理', NULL, 2, 'system', NULL, 'CATALOG', '', 'system', '系统管理', 1),
+(2, '系统管理', NULL, 2, '/system', NULL, 'CATALOG', '', 'system', '系统管理', 1),
 
 -- 菜单管理
-(3, '菜单管理', 2, 1, 'menu', 'system/menu/index', 'MENU', 'system:menu:list', 'menu', '菜单管理', 1),
+(3, '菜单管理', 2, 1, '/menu', '/system/menu/index', 'MENU', 'system:menu:list', 'menu', '菜单管理', 1),
 (4, '菜单查询', 3, 1, '', '', 'BUTTON', 'system:menu:query', '#', '菜单查询', 1),
 (5, '菜单新增', 3, 2, '', '', 'BUTTON', 'system:menu:add', '#', '菜单新增', 1),
 (6, '菜单修改', 3, 3, '', '', 'BUTTON', 'system:menu:edit', '#', '菜单修改', 1),
 (7, '菜单删除', 3, 4, '', '', 'BUTTON', 'system:menu:remove', '#', '菜单删除', 1);
+
+-- 添加超级管理员用户
+INSERT INTO sys_user (id, username, password, status, created_by) VALUES
+(1, 'admin', '$2a$10$5kj44kCu2CyuN20/3qTt9eVnA7QoVhDoMumPuoCnCAMU9mEEb94vW', '1', 1);

@@ -162,4 +162,7 @@ public class Menu extends BaseEntity implements Serializable {
      */
     private String title;
 
+    /** 状态 */
+    private String status;
+
 }

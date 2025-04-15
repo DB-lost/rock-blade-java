@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 22:21:37
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-14 17:31:28
+ * @LastEditTime: 2025-04-15 11:35:18
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/MenuController.java
  * @Description: 
  * 
@@ -80,27 +80,6 @@ public class MenuController {
     @Operation(summary = "获取菜单树", description = "返回所有菜单的树形结构")
     public R<List<MenuResponse>> getMenuTree() {
         return R.ok(menuService.getMenuTree());
-    }
-
-    @GetMapping("/user/tree")
-    @Operation(summary = "获取当前用户的菜单树", description = "返回当前用户有权限访问的菜单树形结构")
-    @Parameter(name = "userId", description = "用户ID", required = true)
-    public R<List<MenuResponse>> getUserMenuTree(@RequestParam("userId") Long userId) {
-        return R.ok(menuService.getMenuTreeByUserId(userId));
-    }
-
-    @GetMapping("/role/tree/{roleId}")
-    @Operation(summary = "获取角色的菜单树", description = "返回指定角色的菜单树形结构")
-    @Parameter(name = "roleId", description = "角色ID", required = true)
-    public R<List<MenuResponse>> getRoleMenuTree(@PathVariable("roleId") Long roleId) {
-        return R.ok(menuService.getMenuTreeByRoleId(roleId));
-    }
-
-    @GetMapping("/{menuId}")
-    @Operation(summary = "获取菜单详情", description = "根据菜单ID获取菜单详细信息")
-    @Parameter(name = "menuId", description = "菜单ID", required = true)
-    public R<MenuResponse> getInfo(@PathVariable("menuId") Long menuId) {
-        return R.ok(menuService.getMenuInfo(menuId));
     }
 
 }
