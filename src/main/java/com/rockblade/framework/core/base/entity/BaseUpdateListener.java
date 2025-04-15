@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 21:06:09
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-15 16:35:31
+ * @LastEditTime: 2025-04-15 17:12:50
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/core/base/entity/BaseUpdateListener.java
  * @Description: 基础更新监听器
  *
@@ -17,7 +17,6 @@ import com.rockblade.framework.core.constants.Constants;
 
 import cn.dev33.satoken.exception.SaTokenContextException;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.core.util.StrUtil;
 
 public class BaseUpdateListener implements UpdateListener {
 
@@ -33,7 +32,7 @@ public class BaseUpdateListener implements UpdateListener {
     BaseEntity baseEntity = (BaseEntity) entity;
     String userId;
     try {
-      userId = StrUtil.isBlank(StpUtil.getLoginIdAsString())
+      userId = StpUtil.getLoginIdDefaultNull() == null
           ? Constants.SUPER_ADMIN_ID
           : StpUtil.getLoginIdAsString();
     } catch (SaTokenContextException e) {

@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 21:06:09
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-15 16:34:36
+ * @LastEditTime: 2025-04-15 17:12:36
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/core/base/entity/BaseInsertListener.java
  * @Description: 基础插入侦听器
  *
@@ -17,7 +17,6 @@ import com.rockblade.framework.core.constants.Constants;
 
 import cn.dev33.satoken.exception.SaTokenContextException;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.core.util.StrUtil;
 
 public class BaseInsertListener implements InsertListener {
 
@@ -34,7 +33,7 @@ public class BaseInsertListener implements InsertListener {
     // 设置 account 被新增时的一些默认数据
     String userId;
     try {
-      userId = StrUtil.isBlank(StpUtil.getLoginIdAsString())
+      userId = StpUtil.getLoginIdDefaultNull() == null
           ? Constants.SUPER_ADMIN_ID
           : StpUtil.getLoginIdAsString();
     } catch (SaTokenContextException e) {
