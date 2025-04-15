@@ -174,6 +174,8 @@ CREATE TABLE sys_user_role (
     role_id BIGINT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_by BIGINT,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_by BIGINT,
     PRIMARY KEY (user_id, role_id),
     CONSTRAINT fk_ur_user_id FOREIGN KEY (user_id) REFERENCES sys_user (id),
     CONSTRAINT fk_ur_role_id FOREIGN KEY (role_id) REFERENCES sys_role (id)
@@ -184,6 +186,8 @@ COMMENT ON COLUMN sys_user_role.user_id IS '用户ID';
 COMMENT ON COLUMN sys_user_role.role_id IS '角色ID';
 COMMENT ON COLUMN sys_user_role.created_at IS '创建时间';
 COMMENT ON COLUMN sys_user_role.created_by IS '创建人ID';
+COMMENT ON COLUMN sys_user_role.updated_at IS '更新时间';
+COMMENT ON COLUMN sys_user_role.updated_by IS '更新人ID';
 
 -- 创建角色-菜单关联表
 CREATE TABLE sys_role_menu (
@@ -191,6 +195,8 @@ CREATE TABLE sys_role_menu (
     menu_id BIGINT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_by BIGINT,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_by BIGINT,
     PRIMARY KEY (role_id, menu_id),
     CONSTRAINT fk_rm_role_id FOREIGN KEY (role_id) REFERENCES sys_role (id),
     CONSTRAINT fk_rm_menu_id FOREIGN KEY (menu_id) REFERENCES sys_menu (id)
@@ -201,6 +207,8 @@ COMMENT ON COLUMN sys_role_menu.role_id IS '角色ID';
 COMMENT ON COLUMN sys_role_menu.menu_id IS '菜单ID';
 COMMENT ON COLUMN sys_role_menu.created_at IS '创建时间';
 COMMENT ON COLUMN sys_role_menu.created_by IS '创建人ID';
+COMMENT ON COLUMN sys_role_menu.updated_at IS '更新时间';
+COMMENT ON COLUMN sys_role_menu.updated_by IS '更新人ID';
 
 -- 添加登录日志索引
 CREATE INDEX idx_sys_user_login_log_user_id ON sys_user_login_log(user_id);
