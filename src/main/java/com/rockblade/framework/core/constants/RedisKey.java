@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 21:26:39
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-16 09:03:39
+ * @LastEditTime: 2025-04-11 10:17:43
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/core/constants/RedisKey.java
  * @Description: Redis键
  *
@@ -24,4 +24,16 @@ public interface RedisKey {
 
   /** redis分布式锁key */
   String DISTRIBUTED_LOCK = "sys:redis:distributed-lock:";
+
+  /** 验证码过期时间（分钟） */
+  int CAPTCHA_EXPIRE_MINUTES = 5;
+
+  /** 邮箱注册验证码 */
+  String EMAIL_REGISTER_CODE = "sys:email:register-code:";
+
+  /** 邮箱重置密码验证码 */
+  String EMAIL_RESET_CODE = "sys:email:reset-code:";
+
+  /** RSA私钥 */
+  String RSA_PRIVATE_KEY = "sys:rsa:private-key:";
 }

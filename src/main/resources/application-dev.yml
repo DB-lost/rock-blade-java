@@ -4,7 +4,7 @@ rock-blade:
   profile: ${PROFILE_PATH}
   jwt:
     #白名单
-    white-list: /profile/**,/doc.html,/webjars/**,/favicon.ico,/v3/api-docs/**,/swagger-ui.html,/swagger-ui/**
+    white-list: /profile/**,/doc.html,/webjars/**,/favicon.ico,/v3/api-docs/**,/swagger-ui.html,/swagger-ui/**,/auth/*
   gateway:
     rsa-keypair:
       # 公钥文件

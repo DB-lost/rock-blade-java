@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-11 09:30:44
+ * @LastEditTime: 2025-04-15 16:21:10
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/entity/RoleMenu.java
  * @Description: 
  * 
@@ -42,12 +42,12 @@ public class RoleMenu extends BaseEntity implements Serializable {
      * 角色ID
      */
     @Id
-    private Long roleId;
+    private String roleId;
 
     /**
      * 菜单ID
      */
     @Id
-    private Long menuId;
+    private String menuId;
 
 }
