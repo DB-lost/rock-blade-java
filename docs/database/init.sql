@@ -1,6 +1,6 @@
 -- 创建用户表
 CREATE TABLE sys_user (
-    id BIGSERIAL PRIMARY KEY,
+    id VARCHAR(32) PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
     password VARCHAR(100) NOT NULL,
     avatar VARCHAR(100),
@@ -8,9 +8,9 @@ CREATE TABLE sys_user (
     email VARCHAR(100),
     status CHAR(1) NOT NULL DEFAULT '1',           -- 角色状态（1正常 0停用）
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    created_by BIGINT,
+    created_by VARCHAR(32),
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_by BIGINT,
+    updated_by VARCHAR(32),
     deleted BOOLEAN DEFAULT FALSE,
     CONSTRAINT uk_username UNIQUE (username),
     CONSTRAINT uk_phone UNIQUE (phone),
@@ -32,8 +32,8 @@ COMMENT ON COLUMN sys_user.avatar IS '头像';
 
 -- 创建用户登录日志表
 CREATE TABLE sys_user_login_log (
-    id BIGSERIAL PRIMARY KEY,
-    user_id BIGINT NOT NULL,
+    id VARCHAR(32) PRIMARY KEY,
+    user_id VARCHAR(32) NOT NULL,
     login_type VARCHAR(20) NOT NULL,    -- 登录方式：账号密码、手机验证码等
     ip_address VARCHAR(50),             -- 登录IP
     device_type VARCHAR(20),            -- 设备类型：PC、Mobile等
@@ -43,9 +43,9 @@ CREATE TABLE sys_user_login_log (
     status CHAR(1) NOT NULL DEFAULT '1',           -- 角色状态（1正常 0停用）
     msg VARCHAR(200),                   -- 登录消息，如失败原因
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    created_by BIGINT,
+    created_by VARCHAR(32),
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_by BIGINT,
+    updated_by VARCHAR(32),
     CONSTRAINT fk_login_log_user_id FOREIGN KEY (user_id) REFERENCES sys_user (id)
 );
 
@@ -67,15 +67,14 @@ COMMENT ON COLUMN sys_user_login_log.updated_by IS '更新人ID';
 
 -- 创建角色表
 CREATE TABLE sys_role (
-    id BIGSERIAL PRIMARY KEY,
+    id VARCHAR(32) PRIMARY KEY,
     role_name VARCHAR(30) NOT NULL,
     role_key VARCHAR(100) NOT NULL,    -- 角色标识符，如：admin、user
     status CHAR(1) NOT NULL DEFAULT '1',           -- 角色状态（1正常 0停用）
-    sort_order INTEGER DEFAULT 0,       -- 显示顺序
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    created_by BIGINT,
+    created_by VARCHAR(32),
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_by BIGINT,
+    updated_by VARCHAR(32),
     deleted BOOLEAN DEFAULT FALSE,
     remark VARCHAR(500),               -- 备注
     CONSTRAINT uk_role_key UNIQUE (role_key)
@@ -86,7 +85,6 @@ COMMENT ON COLUMN sys_role.id IS '主键ID';
 COMMENT ON COLUMN sys_role.role_name IS '角色名称';
 COMMENT ON COLUMN sys_role.role_key IS '角色标识符';
 COMMENT ON COLUMN sys_role.status IS '角色状态';
-COMMENT ON COLUMN sys_role.sort_order IS '显示顺序';
 COMMENT ON COLUMN sys_role.created_at IS '创建时间';
 COMMENT ON COLUMN sys_role.created_by IS '创建人ID';
 COMMENT ON COLUMN sys_role.updated_at IS '更新时间';
@@ -96,9 +94,9 @@ COMMENT ON COLUMN sys_role.remark IS '备注';
 
 -- 创建菜单权限表
 CREATE TABLE sys_menu (
-    id BIGSERIAL PRIMARY KEY,
+    id VARCHAR(32) PRIMARY KEY,
     name VARCHAR(50) NOT NULL,        -- 菜单名称
-    pid BIGINT,                  -- 父级ID
+    pid VARCHAR(32),                  -- 父级ID
     path VARCHAR(200),                -- 路由路径
     component VARCHAR(255),           -- 组件路径
     redirect VARCHAR(200),            -- 重定向地址
@@ -126,9 +124,9 @@ CREATE TABLE sys_menu (
     "order" INTEGER DEFAULT 0,        -- 菜单排序
     title VARCHAR(100),              -- 菜单标题
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    created_by BIGINT,
+    created_by VARCHAR(32),
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_by BIGINT,
+    updated_by VARCHAR(32),
     deleted BOOLEAN DEFAULT FALSE,
     CONSTRAINT fk_menu_pid FOREIGN KEY (pid) REFERENCES sys_menu (id)
 );
@@ -170,12 +168,12 @@ COMMENT ON COLUMN sys_menu.deleted IS '是否删除';
 
 -- 创建用户-角色关联表
 CREATE TABLE sys_user_role (
-    user_id BIGINT NOT NULL,
-    role_id BIGINT NOT NULL,
+    user_id VARCHAR(32) NOT NULL,
+    role_id VARCHAR(32) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    created_by BIGINT,
+    created_by VARCHAR(32),
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_by BIGINT,
+    updated_by VARCHAR(32),
     PRIMARY KEY (user_id, role_id),
     CONSTRAINT fk_ur_user_id FOREIGN KEY (user_id) REFERENCES sys_user (id),
     CONSTRAINT fk_ur_role_id FOREIGN KEY (role_id) REFERENCES sys_role (id)
@@ -191,12 +189,12 @@ COMMENT ON COLUMN sys_user_role.updated_by IS '更新人ID';
 
 -- 创建角色-菜单关联表
 CREATE TABLE sys_role_menu (
-    role_id BIGINT NOT NULL,
-    menu_id BIGINT NOT NULL,
+    role_id VARCHAR(32) NOT NULL,
+    menu_id VARCHAR(32) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    created_by BIGINT,
+    created_by VARCHAR(32),
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_by BIGINT,
+    updated_by VARCHAR(32),
     PRIMARY KEY (role_id, menu_id),
     CONSTRAINT fk_rm_role_id FOREIGN KEY (role_id) REFERENCES sys_role (id),
     CONSTRAINT fk_rm_menu_id FOREIGN KEY (menu_id) REFERENCES sys_menu (id)
@@ -225,18 +223,18 @@ CREATE INDEX idx_sys_menu_deleted ON sys_menu(deleted);
 -- 添加初始化菜单数据
 INSERT INTO sys_menu (id, name, pid, "order", path, component, type, auth_code, icon, title, created_by) VALUES
 -- Dashboard
-(1, '仪表盘', NULL, 1, '/dashboard', '/dashboard/index', 'CATALOG', 'dashboard:view', 'dashboard', '仪表盘', 1),
+('1', '仪表盘', NULL, '1', '/dashboard', '/dashboard/index', 'CATALOG', 'dashboard:view', 'dashboard', '仪表盘', '100'),
 
 -- 系统管理
-(2, '系统管理', NULL, 2, '/system', NULL, 'CATALOG', '', 'system', '系统管理', 1),
+('2', '系统管理', NULL, '2', '/system', NULL, 'CATALOG', '', 'system', '系统管理', '100'),
 
 -- 菜单管理
-(3, '菜单管理', 2, 1, '/menu', '/system/menu/index', 'MENU', 'system:menu:list', 'menu', '菜单管理', 1),
-(4, '菜单查询', 3, 1, '', '', 'BUTTON', 'system:menu:query', '#', '菜单查询', 1),
-(5, '菜单新增', 3, 2, '', '', 'BUTTON', 'system:menu:add', '#', '菜单新增', 1),
-(6, '菜单修改', 3, 3, '', '', 'BUTTON', 'system:menu:edit', '#', '菜单修改', 1),
-(7, '菜单删除', 3, 4, '', '', 'BUTTON', 'system:menu:remove', '#', '菜单删除', 1);
+('3', '菜单管理', '2', 1, '/menu', '/system/menu/index', 'MENU', 'system:menu:list', 'menu', '菜单管理', '100'),
+('4', '菜单查询', '3', 1, '', '', 'BUTTON', 'system:menu:query', '#', '菜单查询', '100'),
+('5', '菜单新增', '3', 2, '', '', 'BUTTON', 'system:menu:add', '#', '菜单新增', '100'),
+('6', '菜单修改', '3', 3, '', '', 'BUTTON', 'system:menu:edit', '#', '菜单修改', '100'),
+('7', '菜单删除', '3', 4, '', '', 'BUTTON', 'system:menu:remove', '#', '菜单删除', '100');
 
 -- 添加超级管理员用户
 INSERT INTO sys_user (id, username, password, status, created_by) VALUES
-(1, 'admin', '$2a$10$5kj44kCu2CyuN20/3qTt9eVnA7QoVhDoMumPuoCnCAMU9mEEb94vW', '1', 1);
+('1', 'admin', '$2a$10$5kj44kCu2CyuN20/3qTt9eVnA7QoVhDoMumPuoCnCAMU9mEEb94vW', '1', '100');

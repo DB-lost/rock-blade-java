@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-15 16:32:08
+ * @LastEditTime: 2025-04-15 16:55:08
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/impl/MenuServiceImpl.java
  * @Description: 菜单权限表 服务实现层。
  * 
@@ -51,7 +51,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     public List<MenuResponse> getMenuTree() {
         List<Menu> menus = this.list(QueryWrapper.create().orderBy(MENU.ORDER.asc()));
-        return buildMenuTree(menus, "0");
+        return buildMenuTree(menus, null);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
                         .where(MENU.ID.in(menuIds))
                         .orderBy(MENU.ORDER.asc()));
 
-        return buildMenuTree(menus, "0");
+        return buildMenuTree(menus, null);
     }
 
     @Override
@@ -159,7 +159,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     private List<MenuResponse> buildMenuTree(List<Menu> menus, String parentId) {
         List<MenuResponse> tree = new ArrayList<>();
         menus.stream()
-                .filter(menu -> StrUtil.equals(parentId, "0") ? menu.getPid() == null || StrUtil.equals(parentId, "0")
+                .filter(menu -> StrUtil.isBlank(parentId) ? menu.getPid() == null
                         : Objects.equals(menu.getPid(), parentId))
                 .forEach(menu -> {
                     MenuResponse node = convertToResponse(menu);
