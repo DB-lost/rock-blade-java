@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 21:06:09
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-11 13:55:46
+ * @LastEditTime: 2025-04-15 17:12:50
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/core/base/entity/BaseUpdateListener.java
  * @Description: 基础更新监听器
  *
@@ -30,11 +30,11 @@ public class BaseUpdateListener implements UpdateListener {
   @Override
   public void onUpdate(Object entity) {
     BaseEntity baseEntity = (BaseEntity) entity;
-    Long userId;
+    String userId;
     try {
       userId = StpUtil.getLoginIdDefaultNull() == null
           ? Constants.SUPER_ADMIN_ID
-          : StpUtil.getLoginIdAsLong();
+          : StpUtil.getLoginIdAsString();
     } catch (SaTokenContextException e) {
       userId = Constants.SUPER_ADMIN_ID;
     }

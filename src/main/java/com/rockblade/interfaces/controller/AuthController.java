@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 10:04:57
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-11 14:59:53
+ * @LastEditTime: 2025-04-13 20:26:28
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/AuthController.java
  * @Description: 认证接口
  * 
@@ -19,11 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rockblade.domain.user.dto.request.EmailCodeRequest;
+import com.rockblade.domain.user.dto.request.EmailLoginRequest;
 import com.rockblade.domain.user.dto.request.GetPublicKeyRequest;
 import com.rockblade.domain.user.dto.request.LoginRequest;
 import com.rockblade.domain.user.dto.request.RegisterRequest;
 import com.rockblade.domain.user.dto.request.ResetPasswordRequest;
-import com.rockblade.domain.user.dto.response.LoginResponse;
+import com.rockblade.domain.user.dto.request.VerifyEmailCodeRequest;
 import com.rockblade.domain.user.dto.response.PublicKeyResponse;
 import com.rockblade.domain.user.service.UserService;
 import com.rockblade.framework.core.base.entity.R;
@@ -55,6 +56,13 @@ public class AuthController {
         return R.ok();
     }
 
+    @PostMapping("/verifyEmailCode")
+    @Operation(summary = "校验邮箱验证码")
+    public R<Void> verifyEmailCode(@Validated @RequestBody VerifyEmailCodeRequest request) {
+        userService.verifyEmailCode(request);
+        return R.ok();
+    }
+
     @PostMapping("/register")
     @Operation(summary = "用户注册")
     public R<Void> register(@Validated @RequestBody RegisterRequest request) {
@@ -71,7 +79,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @Operation(summary = "用户登录")
-    public R<LoginResponse> login(@Validated @RequestBody LoginRequest request) {
+    public R<String> login(@Validated @RequestBody LoginRequest request) {
         return R.ok(userService.login(request));
     }
 
@@ -80,6 +88,12 @@ public class AuthController {
     public R<Void> logout() {
         StpUtil.logout();
         return R.ok();
+    }
+
+    @PostMapping("/emailLogin")
+    @Operation(summary = "邮箱登录")
+    public R<String> login(@Validated @RequestBody EmailLoginRequest request) {
+        return R.ok(userService.emailLogin(request));
     }
 
 }

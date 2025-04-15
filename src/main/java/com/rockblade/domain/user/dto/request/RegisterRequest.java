@@ -3,7 +3,6 @@ package com.rockblade.domain.user.dto.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
@@ -24,16 +23,15 @@ public class RegisterRequest {
     /** 密码 */
     @Schema(description = "密码", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "{validation.password.not.blank}")
-    @Size(min = 6, max = 20, message = "{validation.password.size}")
     private String password;
-
-    /** 验证码 */
-    @Schema(description = "验证码", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "{validation.code.not.blank}")
-    private String code;
 
     /** 随机字符串 */
     @Schema(description = "随机字符串", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "{validation.nonce.not.blank}")
     private String nonce;
+
+    /** 手机号 */
+    @Schema(description = "手机号", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotBlank(message = "{validation.phone.not.blank}")
+    private String phone;
 }

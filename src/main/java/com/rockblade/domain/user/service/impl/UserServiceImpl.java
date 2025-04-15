@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:43:06
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-11 14:52:44
+ * @LastEditTime: 2025-04-13 20:30:09
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/service/impl/UserServiceImpl.java
  * @Description: 用户服务实现类
  * 
@@ -17,11 +17,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import com.rockblade.domain.user.dto.request.EmailCodeRequest;
+import com.rockblade.domain.user.dto.request.EmailLoginRequest;
 import com.rockblade.domain.user.dto.request.GetPublicKeyRequest;
 import com.rockblade.domain.user.dto.request.LoginRequest;
 import com.rockblade.domain.user.dto.request.RegisterRequest;
 import com.rockblade.domain.user.dto.request.ResetPasswordRequest;
-import com.rockblade.domain.user.dto.response.LoginResponse;
+import com.rockblade.domain.user.dto.request.VerifyEmailCodeRequest;
 import com.rockblade.domain.user.dto.response.PublicKeyResponse;
 import com.rockblade.domain.user.dto.response.UserInfoResponse;
 import com.rockblade.domain.user.entity.User;
@@ -79,14 +80,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void register(RegisterRequest request) {
-        // 校验验证码
-        String cacheCode = (String) redisHandler.get(RedisKey.EMAIL_REGISTER_CODE + request.getEmail());
-        if (cacheCode == null) {
-            throw new ServiceException(MessageUtils.message("auth.verification.code.expired"));
-        }
-        if (!cacheCode.equals(request.getCode())) {
-            throw new ServiceException(MessageUtils.message("auth.verification.code.error"));
-        }
 
         // 解密密码
         String password = decryptPassword(request.getPassword(), request.getNonce(), redisHandler);
@@ -104,55 +97,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .email(request.getEmail())
                 .password(BCrypt.hashpw(request.getPassword()))
                 .username(request.getUsername())
+                .phone(request.getPhone())
                 .build();
         this.save(user);
-
-        // 删除验证码缓存
-        redisHandler.del(RedisKey.EMAIL_REGISTER_CODE + request.getEmail());
     }
 
     @Override
-    public LoginResponse login(LoginRequest request) {
+    public String login(LoginRequest request) {
         // 查询用户信息
         User user = this.queryChain().where(USER.USERNAME.eq(request.getUsername())).one();
         if (user == null) {
             throw new ServiceException(MessageUtils.message("auth.user.not.found"));
         }
-
-        // 解密密码
-        String password = decryptPassword(request.getPassword(), request.getNonce(), redisHandler);
-        request.setPassword(password);
-        request.setNonce(null);
-
-        // 校验密码
-        if (!BCrypt.checkpw(request.getPassword(), user.getPassword())) {
-            throw new ServiceException(MessageUtils.message("auth.password.error"));
-        }
-
-        // 登录
-        StpUtil.login(user.getId());
-
-        // 返回用户信息
-        UserInfoResponse userInfo = BeanUtil.toBean(user, UserInfoResponse.class);
-
-        LoginResponse loginResponse = new LoginResponse();
-        loginResponse.setTokenValue(StpUtil.getTokenValue());
-        loginResponse.setUserInfo(userInfo);
-        return loginResponse;
+        return login(user, request.getPassword(), request.getNonce());
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void resetPassword(ResetPasswordRequest request) {
-        // 校验验证码
-        String cacheCode = (String) redisHandler.get(RedisKey.EMAIL_RESET_CODE + request.getEmail());
-        if (cacheCode == null) {
-            throw new ServiceException(MessageUtils.message("auth.verification.code.expired"));
-        }
-        if (!cacheCode.equals(request.getCode())) {
-            throw new ServiceException(MessageUtils.message("auth.verification.code.error"));
-        }
-
         // 查询用户信息
         QueryWrapper queryWrapper = QueryWrapper.create()
                 .where(User::getEmail).eq(request.getEmail());
@@ -162,16 +124,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
 
         // 解密密码
-        String password = decryptPassword(request.getNewPassword(), request.getNonce(), redisHandler);
-        request.setNewPassword(password);
+        String password = decryptPassword(request.getPassword(), request.getNonce(), redisHandler);
+        request.setPassword(password);
         request.setNonce(null);
 
         // 更新密码
-        user.setPassword(BCrypt.hashpw(request.getNewPassword()));
+        user.setPassword(BCrypt.hashpw(request.getPassword()));
         this.updateById(user);
-
-        // 删除验证码缓存
-        redisHandler.del(RedisKey.EMAIL_RESET_CODE + request.getEmail());
 
         // 退出登录
         StpUtil.logout(user.getId());
@@ -240,5 +199,63 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         redisHandler.del(RedisKey.RSA_PRIVATE_KEY + nonce);
 
         return decryptedPassword;
+    }
+
+    @Override
+    public void verifyEmailCode(VerifyEmailCodeRequest request) {
+        String key;
+        switch (request.getType()) {
+            case "register":
+                key = RedisKey.EMAIL_REGISTER_CODE;
+                break;
+            case "reset":
+                key = RedisKey.EMAIL_RESET_CODE;
+                break;
+            default:
+                throw new ServiceException(MessageUtils.message("auth.business.type.not.supported"));
+        }
+        // 校验验证码
+        String cacheCode = (String) redisHandler.get(key + request.getEmail());
+        if (cacheCode == null) {
+            throw new ServiceException(MessageUtils.message("auth.verification.code.expired"));
+        }
+        if (!cacheCode.equals(request.getCode())) {
+            throw new ServiceException(MessageUtils.message("auth.verification.code.error"));
+        }
+        // 删除验证码缓存
+        redisHandler.del(key + request.getEmail());
+    }
+
+    @Override
+    public String emailLogin(EmailLoginRequest request) {
+        // 查询用户信息
+        User user = this.queryChain().where(USER.EMAIL.eq(request.getEmail())).one();
+        if (user == null) {
+            throw new ServiceException(MessageUtils.message("auth.user.not.found"));
+        }
+        return login(user, request.getPassword(), request.getNonce());
+    }
+
+    /**
+     * @description: 登陆
+     * @param {User}   user
+     * @param {String} password
+     * @param {String} nonce
+     * @return {*}
+     */
+    private String login(User user, String password, String nonce) {
+        // 解密密码
+        password = decryptPassword(password, nonce, redisHandler);
+
+        // 校验密码
+        if (!BCrypt.checkpw(password, user.getPassword())) {
+            throw new ServiceException(MessageUtils.message("auth.password.error"));
+        }
+        // 登录
+        StpUtil.login(user.getId());
+        // 返回用户信息
+        UserInfoResponse userInfo = BeanUtil.toBean(user, UserInfoResponse.class);
+        StpUtil.getSession().set("user", userInfo);
+        return StpUtil.getTokenValue();
     }
 }

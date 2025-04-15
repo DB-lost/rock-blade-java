@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 14:43:52
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-11 16:53:18
+ * @LastEditTime: 2025-04-15 16:34:59
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/CommonController.java
  * @Description: 公共接口
  * 
@@ -19,13 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rockblade.domain.user.dto.response.MenuResponse;
 import com.rockblade.domain.user.dto.response.UserInfoResponse;
-import com.rockblade.domain.user.entity.User;
 import com.rockblade.domain.user.service.MenuService;
-import com.rockblade.domain.user.service.UserService;
 import com.rockblade.framework.core.base.entity.R;
 
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.core.bean.BeanUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -37,21 +34,24 @@ import lombok.extern.slf4j.Slf4j;
 public class CommonController {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private MenuService menuService;
 
     @GetMapping("/getUserInfo")
     @Operation(summary = "获取用户信息")
     public R<UserInfoResponse> getUserInfo() {
-        User user = userService.getById(StpUtil.getLoginIdAsLong());
-        return R.ok(BeanUtil.toBean(user, UserInfoResponse.class));
+        UserInfoResponse userInfo = StpUtil.getSession().getModel("user", UserInfoResponse.class);
+        return R.ok(userInfo);
     }
 
     @GetMapping("/getMenuList")
     @Operation(summary = "获取菜单树")
     public R<List<MenuResponse>> getMenuList() {
-        return R.ok(menuService.getMenuTreeByUserId(StpUtil.getLoginIdAsLong()));
+        return R.ok(menuService.getMenuTreeByUserId(StpUtil.getLoginIdAsString()));
+    }
+
+    @GetMapping("/getCodes")
+    @Operation(summary = "获取授权码")
+    public R<List<String>> getCodes() {
+        return R.ok(StpUtil.getPermissionList());
     }
 }

@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-11 16:37:44
+ * @LastEditTime: 2025-04-15 16:22:53
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/user/dto/request/MenuRequest.java
  * @Description: 菜单请求DTO
  * 
@@ -10,75 +10,147 @@
  */
 package com.rockblade.domain.user.dto.request;
 
+import com.rockblade.domain.user.enums.BadgeType;
+import com.rockblade.domain.user.enums.BadgeVariants;
+import com.rockblade.domain.user.enums.MenuType;
+
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Map;
 import lombok.Data;
 
 @Data
-@Schema(description = "菜单请求参数")
+@Schema(description = "菜单请求DTO")
 public class MenuRequest {
+    /** 后端权限标识 */
+    @Schema(description = "后端权限标识")
+    private String authCode;
+
+    /** 子级 */
+    @Schema(description = "子级")
+    private List<MenuRequest> children;
+
+    /** 组件 */
+    @Schema(description = "组件")
+    private String component;
 
     /** 菜单ID */
     @Schema(description = "菜单ID")
-    private Long id;
+    private String id;
+
+    /** 菜单元数据 */
+    @Schema(description = "菜单元数据")
+    private MenuMeta meta;
 
     /** 菜单名称 */
-    @NotBlank(message = "菜单名称不能为空")
-    @Schema(description = "菜单名称", requiredMode = Schema.RequiredMode.REQUIRED)
-    private String menuName;
+    @Schema(description = "菜单名称")
+    private String name;
 
-    /** 父菜单ID */
-    @Schema(description = "父菜单ID")
-    private Long parentId;
-
-    /** 显示顺序 */
-    @NotNull(message = "显示顺序不能为空")
-    @Schema(description = "显示顺序", requiredMode = Schema.RequiredMode.REQUIRED)
-    private Integer orderNum;
-
-    /** 路由地址 */
-    @Schema(description = "路由地址")
+    /** 路由路径 */
+    @Schema(description = "路由路径")
     private String path;
 
-    /** 组件路径 */
-    @Schema(description = "组件路径")
-    private String component;
+    /** 父级ID */
+    @Schema(description = "父级ID")
+    private String pid;
 
-    /** 路由参数 */
-    @Schema(description = "路由参数")
-    private String queryParam;
+    /** 重定向 */
+    @Schema(description = "重定向")
+    private String redirect;
 
-    /** 是否为外链 */
-    @Schema(description = "是否为外链")
-    private Boolean isFrame;
+    /** 菜单类型 */
+    @Schema(description = "菜单类型")
+    private MenuType type;
 
-    /** 是否缓存 */
-    @Schema(description = "是否缓存")
-    private Boolean isCache;
-
-    /** 菜单类型 (M目录 C菜单 F按钮) */
-    @NotBlank(message = "菜单类型不能为空")
-    @Schema(description = "菜单类型 (M目录 C菜单 F按钮)", requiredMode = Schema.RequiredMode.REQUIRED)
-    private String menuType;
-
-    /** 显示状态 (0显示 1隐藏) */
-    @Schema(description = "显示状态 (0显示 1隐藏)")
-    private String visible;
-
-    /** 菜单状态 (0正常 1停用) */
-    @Schema(description = "菜单状态 (0正常 1停用)")
+    /** 状态 */
+    @Schema(description = "状态")
     private String status;
 
-    /** 权限标识 */
-    @Schema(description = "权限标识")
-    private String perms;
+    @Data
+    @Schema(description = "菜单元数据")
+    public static class MenuMeta {
+        /** 激活时显示的图标 */
+        @Schema(description = "激活时显示的图标")
+        private String activeIcon;
 
-    /** 菜单图标 */
-    @Schema(description = "菜单图标")
-    private String icon;
+        /** 作为路由时，需要激活的菜单的Path */
+        @Schema(description = "作为路由时，需要激活的菜单的Path")
+        private String activePath;
 
-    /** 备注 */
-    @Schema(description = "备注")
-    private String remark;
+        /** 固定在标签栏 */
+        @Schema(description = "固定在标签栏")
+        private Boolean affixTab;
+
+        /** 在标签栏固定的顺序 */
+        @Schema(description = "在标签栏固定的顺序")
+        private Integer affixTabOrder;
+
+        /** 徽标内容(当徽标类型为normal时有效) */
+        @Schema(description = "徽标内容(当徽标类型为normal时有效)")
+        private String badge;
+
+        /** 徽标类型 */
+        @Schema(description = "徽标类型")
+        private BadgeType badgeType;
+
+        /** 徽标颜色 */
+        @Schema(description = "徽标颜色")
+        private BadgeVariants badgeVariants;
+
+        /** 在菜单中隐藏下级 */
+        @Schema(description = "在菜单中隐藏下级")
+        private Boolean hideChildrenInMenu;
+
+        /** 在面包屑中隐藏 */
+        @Schema(description = "在面包屑中隐藏")
+        private Boolean hideInBreadcrumb;
+
+        /** 在菜单中隐藏 */
+        @Schema(description = "在菜单中隐藏")
+        private Boolean hideInMenu;
+
+        /** 在标签栏中隐藏 */
+        @Schema(description = "在标签栏中隐藏")
+        private Boolean hideInTab;
+
+        /** 菜单图标 */
+        @Schema(description = "菜单图标")
+        private String icon;
+
+        /** 内嵌Iframe的URL */
+        @Schema(description = "内嵌Iframe的URL")
+        private String iframeSrc;
+
+        /** 是否缓存页面 */
+        @Schema(description = "是否缓存页面")
+        private Boolean keepAlive;
+
+        /** 外链页面的URL */
+        @Schema(description = "外链页面的URL")
+        private String link;
+
+        /** 同一个路由最大打开的标签数 */
+        @Schema(description = "同一个路由最大打开的标签数")
+        private Integer maxNumOfOpenTab;
+
+        /** 无需基础布局 */
+        @Schema(description = "无需基础布局")
+        private Boolean noBasicLayout;
+
+        /** 是否在新窗口打开 */
+        @Schema(description = "是否在新窗口打开")
+        private Boolean openInNewWindow;
+
+        /** 菜单排序 */
+        @Schema(description = "菜单排序")
+        private Integer order;
+
+        /** 额外的路由参数 */
+        @Schema(description = "额外的路由参数")
+        private Map<String, Object> query;
+
+        /** 菜单标题 */
+        @Schema(description = "菜单标题")
+        private String title;
+    }
 }

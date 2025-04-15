@@ -4,7 +4,31 @@ rock-blade:
   name: rock-blade-java
   # 版本
   version: 1.0.0
-  #网关
+  # RBAC配置
+  rbac:
+    # 权限模式: simple/standard
+    mode: simple
+    # 简单模式配置
+    simple:
+      # 默认角色配置
+      default-role-key: user
+      # 基础角色配置
+      roles:
+        - key: super-admin
+          name: 超级管理员
+          description: 系统超级管理员
+        - key: admin
+          name: 管理员
+          description: 系统管理员
+        - key: user
+          name: 普通用户
+          description: 默认用户角色
+      # 功能特性开关
+      features:
+        menu-permission: false
+        data-permission: false
+        dynamic-permission: false
+  # 网关
   gateway:
     rsa-keypair:
       # 加密方式
@@ -100,4 +124,3 @@ logging:
   config: classpath:logback.xml
   level:
     org.springframework.web: INFO
-
