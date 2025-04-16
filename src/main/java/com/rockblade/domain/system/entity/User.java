@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 00:13:16
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:09:27
+ * @LastEditTime: 2025-04-16 14:19:05
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/entity/User.java
  * @Description: 用户信息表
  * 
@@ -38,6 +38,11 @@ public class User extends BaseEntity implements Serializable {
      * 用户名
      */
     private String username;
+
+    /**
+     * 昵称
+     */
+    private String nickname;
 
     /**
      * 密码

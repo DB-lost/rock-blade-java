@@ -2,6 +2,7 @@
 CREATE TABLE sys_user (
     id VARCHAR(32) PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
+    nickname VARCHAR(50),
     password VARCHAR(100) NOT NULL,
     avatar VARCHAR(100),
     phone VARCHAR(20),
@@ -20,6 +21,7 @@ CREATE TABLE sys_user (
 COMMENT ON TABLE sys_user IS '用户信息表';
 COMMENT ON COLUMN sys_user.id IS '主键ID';
 COMMENT ON COLUMN sys_user.username IS '用户名';
+COMMENT ON COLUMN sys_user.nickname IS '昵称';
 COMMENT ON COLUMN sys_user.password IS '密码';
 COMMENT ON COLUMN sys_user.phone IS '手机号';
 COMMENT ON COLUMN sys_user.email IS '邮箱';
@@ -289,3 +291,31 @@ INSERT INTO sys_menu (id, name, pid, "order", path, component, type, auth_code, 
 -- 添加超级管理员用户
 INSERT INTO sys_user (id, username, password, status, created_by) VALUES
 ('1', 'admin', '$2a$10$5kj44kCu2CyuN20/3qTt9eVnA7QoVhDoMumPuoCnCAMU9mEEb94vW', '1', '100');
+
+-- 创建用户-部门关联表
+CREATE TABLE sys_user_dept (
+    user_id VARCHAR(32) NOT NULL,
+    dept_id VARCHAR(32) NOT NULL,
+    is_primary BOOLEAN DEFAULT FALSE,    -- 是否为主部门
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_by VARCHAR(32),
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_by VARCHAR(32),
+    PRIMARY KEY (user_id, dept_id),
+    CONSTRAINT fk_ud_user_id FOREIGN KEY (user_id) REFERENCES sys_user (id),
+    CONSTRAINT fk_ud_dept_id FOREIGN KEY (dept_id) REFERENCES sys_dept (id)
+);
+
+COMMENT ON TABLE sys_user_dept IS '用户和部门关联表';
+COMMENT ON COLUMN sys_user_dept.user_id IS '用户ID';
+COMMENT ON COLUMN sys_user_dept.dept_id IS '部门ID';
+COMMENT ON COLUMN sys_user_dept.is_primary IS '是否为主部门';
+COMMENT ON COLUMN sys_user_dept.created_at IS '创建时间';
+COMMENT ON COLUMN sys_user_dept.created_by IS '创建人ID';
+COMMENT ON COLUMN sys_user_dept.updated_at IS '更新时间';
+COMMENT ON COLUMN sys_user_dept.updated_by IS '更新人ID';
+
+-- 创建用户部门相关索引
+CREATE INDEX idx_sys_user_dept_user_id ON sys_user_dept(user_id);
+CREATE INDEX idx_sys_user_dept_dept_id ON sys_user_dept(dept_id);
+CREATE INDEX idx_sys_user_dept_is_primary ON sys_user_dept(is_primary);
