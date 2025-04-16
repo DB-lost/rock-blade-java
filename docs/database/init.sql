@@ -231,6 +231,7 @@ CREATE TABLE sys_dept (
     email VARCHAR(50),                -- 邮箱
     "order" INTEGER DEFAULT 0,        -- 显示顺序
     status CHAR(1) NOT NULL DEFAULT '1', -- 部门状态（1正常 0停用）
+    remark VARCHAR(500),               -- 备注
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_by VARCHAR(32),
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -254,6 +255,7 @@ COMMENT ON COLUMN sys_dept.created_by IS '创建人ID';
 COMMENT ON COLUMN sys_dept.updated_at IS '更新时间';
 COMMENT ON COLUMN sys_dept.updated_by IS '更新人ID';
 COMMENT ON COLUMN sys_dept.deleted IS '是否删除';
+COMMENT ON COLUMN sys_dept.remark IS '备注';
 
 -- 创建部门相关索引
 CREATE INDEX idx_sys_dept_pid ON sys_dept(pid);

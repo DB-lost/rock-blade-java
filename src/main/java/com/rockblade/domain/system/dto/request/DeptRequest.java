@@ -2,114 +2,64 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-16 10:19:53
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:46:24
+ * @LastEditTime: 2025-04-16 11:16:44
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/dto/request/DeptRequest.java
- * @Description: 
+ * @Description: 部门请求DTO
  * 
  * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
  */
 package com.rockblade.domain.system.dto.request;
 
-import com.rockblade.framework.core.base.entity.PageDomain;
+import java.time.LocalDateTime;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.rockblade.domain.system.dto.response.DeptResponse;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+@Data
+@Schema(description = "部门请求DTO")
 public class DeptRequest {
+    /** 部门ID */
+    @Schema(description = "部门ID")
     private String id;
+
+    /** 部门名称 */
+    @Schema(description = "部门名称")
     private String name;
+
+    /** 上级部门ID */
+    @Schema(description = "上级部门ID")
     private String pid;
-    private String ancestors;
+
+    /** 排序 */
+    @Schema(description = "排序")
     private Integer order;
+
+    /** 部门负责人 */
+    @Schema(description = "部门负责人")
     private String leader;
-    private String phone;
+
+    /** 部门负责人邮箱 */
+    @Schema(description = "部门负责人邮箱")
     private String email;
+
+    /** 部门状态 */
+    @Schema(description = "部门状态")
     private String status;
-    private Integer pageNum = 1;
-    private Integer pageSize = 10;
 
-    public Integer getPageNum() {
-        return pageNum;
-    }
+    /** 子部门 */
+    @Schema(description = "子部门")
+    private List<DeptResponse> children;
 
-    public void setPageNum(Integer pageNum) {
-        this.pageNum = pageNum;
-    }
+    /** 创建时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Schema(description = "创建时间")
+    private LocalDateTime createdAt;
 
-    public Integer getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPid() {
-        return pid;
-    }
-
-    public void setPid(String pid) {
-        this.pid = pid;
-    }
-
-    public String getAncestors() {
-        return ancestors;
-    }
-
-    public void setAncestors(String ancestors) {
-        this.ancestors = ancestors;
-    }
-
-    public Integer getOrder() {
-        return order;
-    }
-
-    public void setOrder(Integer order) {
-        this.order = order;
-    }
-
-    public String getLeader() {
-        return leader;
-    }
-
-    public void setLeader(String leader) {
-        this.leader = leader;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    /** 备注 */
+    @Schema(description = "备注")
+    private String remark;
 }

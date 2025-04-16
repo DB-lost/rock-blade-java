@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-16 10:16:49
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:46:22
+ * @LastEditTime: 2025-04-16 10:51:09
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/impl/DeptService.java
  * @Description: 
  * 
@@ -27,20 +27,12 @@ import java.util.List;
 public interface DeptService extends IService<Dept> {
 
     /**
-     * 查询部门列表
-     *
-     * @param request 查询参数
-     * @return 部门列表
-     */
-    Page<DeptResponse> listDepts(DeptRequest request);
-
-    /**
      * 查询部门树结构
      *
      * @param request 查询参数
      * @return 部门树
      */
-    List<DeptResponse> listDeptTree(DeptRequest request);
+    List<DeptResponse> listDeptTree();
 
     /**
      * 根据ID查询部门

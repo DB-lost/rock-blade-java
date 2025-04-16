@@ -1,3 +1,13 @@
+/*
+ * @Author: DB 2502523450@qq.com
+ * @Date: 2025-04-16 10:16:49
+ * @LastEditors: DB 2502523450@qq.com
+ * @LastEditTime: 2025-04-16 11:47:10
+ * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/DeptController.java
+ * @Description: 部门管理接口
+ * 
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ */
 package com.rockblade.interfaces.controller;
 
 import com.mybatisflex.core.paginate.Page;
@@ -10,17 +20,10 @@ import com.rockblade.domain.system.service.impl.DeptService;
 import com.rockblade.framework.core.base.entity.R;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import java.util.List;
 
-/**
- * 部门管理
- *
- * @author rockblade
- * @since 2025-04-16
- */
 @RestController
-@RequestMapping("/system/dept")
+@RequestMapping("/dept")
 @Tag(name = "部门管理接口")
 public class DeptController {
 
@@ -32,27 +35,9 @@ public class DeptController {
      */
     @GetMapping("/list")
     @Operation(summary = "获取部门列表（树形结构）")
-    public R<List<DeptResponse>> list(DeptRequest request) {
-        List<DeptResponse> depts = deptService.listDeptTree(request);
+    public R<List<DeptResponse>> list() {
+        List<DeptResponse> depts = deptService.listDeptTree();
         return R.ok(depts);
-    }
-
-    /**
-     * 获取部门列表（分页）
-     */
-    @GetMapping("/list/page")
-    @Operation(summary = "获取部门列表（分页）")
-    public R<Page<DeptResponse>> listPage(DeptRequest request) {
-        return R.ok(deptService.listDepts(request));
-    }
-
-    /**
-     * 获取部门信息
-     */
-    @GetMapping(value = "/{deptId}")
-    @Operation(summary = "获取部门信息")
-    public R<DeptResponse> getInfo(@PathVariable("deptId") String deptId) {
-        return R.ok(deptService.getDeptById(deptId));
     }
 
     /**
@@ -82,15 +67,4 @@ public class DeptController {
         return R.ok(deptService.deleteDept(deptId));
     }
 
-    /**
-     * 校验部门名称是否唯一
-     */
-    @GetMapping("/check/{deptName}/{parentId}")
-    @Operation(summary = "校验部门名称是否唯一")
-    public R<Boolean> checkDeptNameUnique(
-            @PathVariable("deptName") String deptName,
-            @PathVariable(value = "parentId", required = false) String parentId,
-            @RequestParam(value = "deptId", required = false) String deptId) {
-        return R.ok(deptService.checkDeptNameUnique(deptName, parentId, deptId));
-    }
 }

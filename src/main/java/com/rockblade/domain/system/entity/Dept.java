@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-16 10:40:28
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:46:26
+ * @LastEditTime: 2025-04-16 11:10:21
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/entity/Dept.java
  * @Description: 
  * 
@@ -85,5 +85,10 @@ public class Dept extends BaseEntity implements Serializable {
      * 是否删除
      */
     private Boolean deleted;
+
+    /**
+     * 备注
+     */
+    private String remark;
 
 }

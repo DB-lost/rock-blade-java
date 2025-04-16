@@ -12,10 +12,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.rockblade.domain.system.entity.table.DeptTableDef.DEPT;
@@ -30,45 +28,8 @@ import static com.rockblade.domain.system.entity.table.DeptTableDef.DEPT;
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements DeptService {
 
     @Override
-    public Page<DeptResponse> listDepts(DeptRequest request) {
-        Page<Dept> page = new Page<>(request.getPageNum(), request.getPageSize());
-
-        // 执行分页查询
-        Page<Dept> deptPage = QueryChain.of(getMapper())
-                .select()
-                .from(DEPT)
-                .where(DEPT.DELETED.eq(false))
-                .and(DEPT.NAME.like(request.getName()).when(StringUtils.hasText(request.getName())))
-                .and(DEPT.STATUS.eq(request.getStatus()).when(Objects.nonNull(request.getStatus())))
-                .orderBy(DEPT.ORDER.asc())
-                .page(page);
-
-        // 转换结果
-        List<DeptResponse> records = deptPage.getRecords()
-                .stream()
-                .map(this::convertToResponse)
-                .collect(Collectors.toList());
-
-        // 创建新的分页对象并设置值
-        Page<DeptResponse> result = new Page<>();
-        result.setRecords(records);
-        result.setTotalRow(deptPage.getTotalRow());
-        result.setPageSize(deptPage.getPageSize());
-        result.setPageNumber(deptPage.getPageNumber());
-
-        return result;
-    }
-
-    @Override
-    public List<DeptResponse> listDeptTree(DeptRequest request) {
-        List<Dept> depts = QueryChain.of(getMapper())
-                .select()
-                .from(DEPT)
-                .where(DEPT.DELETED.eq(false))
-                .and(DEPT.NAME.like(request.getName()).when(StringUtils.hasText(request.getName())))
-                .and(DEPT.STATUS.eq(request.getStatus()).when(Objects.nonNull(request.getStatus())))
-                .list();
-
+    public List<DeptResponse> listDeptTree() {
+        List<Dept> depts = queryChain().list();
         return buildDeptTree(depts);
     }
 
