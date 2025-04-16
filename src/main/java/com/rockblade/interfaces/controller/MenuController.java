@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 22:21:37
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-15 16:34:57
+ * @LastEditTime: 2025-04-16 10:10:21
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/MenuController.java
  * @Description: 
  * 
@@ -10,9 +10,9 @@
  */
 package com.rockblade.interfaces.controller;
 
-import com.rockblade.domain.user.dto.request.MenuRequest;
-import com.rockblade.domain.user.dto.response.MenuResponse;
-import com.rockblade.domain.user.service.MenuService;
+import com.rockblade.domain.system.dto.request.MenuRequest;
+import com.rockblade.domain.system.dto.response.MenuResponse;
+import com.rockblade.domain.system.service.MenuService;
 import com.rockblade.framework.core.base.entity.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;

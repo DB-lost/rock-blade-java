@@ -220,6 +220,55 @@ CREATE INDEX idx_sys_role_deleted ON sys_role(deleted);
 CREATE INDEX idx_sys_menu_pid ON sys_menu(pid);
 CREATE INDEX idx_sys_menu_deleted ON sys_menu(deleted);
 
+-- 创建部门表
+CREATE TABLE sys_dept (
+    id VARCHAR(32) PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,        -- 部门名称
+    pid VARCHAR(32),                  -- 父级ID
+    ancestors VARCHAR(500),           -- 祖级列表
+    leader VARCHAR(20),               -- 负责人
+    phone VARCHAR(11),                -- 联系电话
+    email VARCHAR(50),                -- 邮箱
+    "order" INTEGER DEFAULT 0,        -- 显示顺序
+    status CHAR(1) NOT NULL DEFAULT '1', -- 部门状态（1正常 0停用）
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_by VARCHAR(32),
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_by VARCHAR(32),
+    deleted BOOLEAN DEFAULT FALSE,
+    CONSTRAINT fk_dept_pid FOREIGN KEY (pid) REFERENCES sys_dept (id)
+);
+
+COMMENT ON TABLE sys_dept IS '部门表';
+COMMENT ON COLUMN sys_dept.id IS '部门ID';
+COMMENT ON COLUMN sys_dept.name IS '部门名称';
+COMMENT ON COLUMN sys_dept.pid IS '父部门ID';
+COMMENT ON COLUMN sys_dept.ancestors IS '祖级列表';
+COMMENT ON COLUMN sys_dept.leader IS '负责人';
+COMMENT ON COLUMN sys_dept.phone IS '联系电话';
+COMMENT ON COLUMN sys_dept.email IS '邮箱';
+COMMENT ON COLUMN sys_dept."order" IS '显示顺序';
+COMMENT ON COLUMN sys_dept.status IS '部门状态（1正常 0停用）';
+COMMENT ON COLUMN sys_dept.created_at IS '创建时间';
+COMMENT ON COLUMN sys_dept.created_by IS '创建人ID';
+COMMENT ON COLUMN sys_dept.updated_at IS '更新时间';
+COMMENT ON COLUMN sys_dept.updated_by IS '更新人ID';
+COMMENT ON COLUMN sys_dept.deleted IS '是否删除';
+
+-- 创建部门相关索引
+CREATE INDEX idx_sys_dept_pid ON sys_dept(pid);
+CREATE INDEX idx_sys_dept_deleted ON sys_dept(deleted);
+CREATE INDEX idx_sys_dept_status ON sys_dept(status);
+
+-- 添加初始部门数据
+INSERT INTO sys_dept (id, name, pid, ancestors, "order", status, created_by) VALUES
+('1', '总公司', NULL, '0', 0, '1', '100'),
+('2', '研发部门', '1', '0,1', 1, '1', '100'),
+('3', '市场部门', '1', '0,1', 2, '1', '100'),
+('4', '测试部门', '1', '0,1', 3, '1', '100'),
+('5', '财务部门', '1', '0,1', 4, '1', '100'),
+('6', '运维部门', '1', '0,1', 5, '1', '100');
+
 -- 添加初始化菜单数据
 INSERT INTO sys_menu (id, name, pid, "order", path, component, type, auth_code, icon, title, created_by) VALUES
 -- Dashboard
