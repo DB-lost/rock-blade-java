@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:43:06
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:11:50
+ * @LastEditTime: 2025-04-16 10:14:16
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/impl/UserServiceImpl.java
  * @Description: 用户服务实现类
  * 
@@ -44,7 +44,7 @@ import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
 import lombok.extern.slf4j.Slf4j;
 
-import static com.rockblade.domain.user.entity.table.UserTableDef.USER;
+import static com.rockblade.domain.system.entity.table.UserTableDef.USER;
 
 @Slf4j
 @Service

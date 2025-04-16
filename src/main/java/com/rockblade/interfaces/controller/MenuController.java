@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 22:21:37
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:10:21
+ * @LastEditTime: 2025-04-16 10:14:12
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/MenuController.java
  * @Description: 
  * 
@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-import static com.rockblade.domain.user.entity.table.MenuTableDef.MENU;
+import static com.rockblade.domain.system.entity.table.MenuTableDef.MENU;
 
 import java.util.List;
 

@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:10:05
+ * @LastEditTime: 2025-04-16 10:15:04
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/impl/MenuServiceImpl.java
  * @Description: 菜单权限表 服务实现层。
  * 
@@ -28,8 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.rockblade.domain.user.entity.table.MenuTableDef.MENU;
-import static com.rockblade.domain.user.entity.table.RoleMenuTableDef.ROLE_MENU;
+import static com.rockblade.domain.system.entity.table.MenuTableDef.MENU;
+import static com.rockblade.domain.system.entity.table.RoleMenuTableDef.ROLE_MENU;
 
 @Service
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {

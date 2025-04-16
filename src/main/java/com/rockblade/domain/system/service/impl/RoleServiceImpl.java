@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:10:00
+ * @LastEditTime: 2025-04-16 10:15:15
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/impl/RoleServiceImpl.java
  * @Description: 角色信息表 服务层实现。
  * 
@@ -31,8 +31,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.rockblade.domain.user.entity.table.RoleMenuTableDef.ROLE_MENU;
-import static com.rockblade.domain.user.entity.table.RoleTableDef.ROLE;
+import static com.rockblade.domain.system.entity.table.RoleMenuTableDef.ROLE_MENU;
+import static com.rockblade.domain.system.entity.table.RoleTableDef.ROLE;
 
 @Service("roleService")
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
