@@ -2,13 +2,15 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:10:01
+ * @LastEditTime: 2025-04-16 14:43:57
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/RoleService.java
  * @Description: 角色信息表 服务层。
  * 
  * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
  */
 package com.rockblade.domain.system.service;
+
+import java.util.List;
 
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.service.IService;
@@ -62,5 +64,13 @@ public interface RoleService extends IService<Role> {
      * @return 角色详情
      */
     RoleResponse getRoleDetail(String id);
+
+    /**
+     * 获取用户的角色列表
+     * 
+     * @param userId 用户ID
+     * @return 角色列表
+     */
+    List<Role> getRolesByUserId(String userId);
 
 }

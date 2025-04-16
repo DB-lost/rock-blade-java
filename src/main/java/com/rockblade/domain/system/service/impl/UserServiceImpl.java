@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:43:06
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:14:16
+ * @LastEditTime: 2025-04-16 20:28:22
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/impl/UserServiceImpl.java
  * @Description: 用户服务实现类
  * 
@@ -10,10 +10,12 @@
  */
 package com.rockblade.domain.system.service.impl;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import com.rockblade.domain.system.dto.request.EmailCodeRequest;
@@ -22,16 +24,25 @@ import com.rockblade.domain.system.dto.request.GetPublicKeyRequest;
 import com.rockblade.domain.system.dto.request.LoginRequest;
 import com.rockblade.domain.system.dto.request.RegisterRequest;
 import com.rockblade.domain.system.dto.request.ResetPasswordRequest;
+import com.rockblade.domain.system.dto.request.UserPageRequest;
+import com.rockblade.domain.system.dto.request.UserRequest;
 import com.rockblade.domain.system.dto.request.VerifyEmailCodeRequest;
 import com.rockblade.domain.system.dto.response.PublicKeyResponse;
 import com.rockblade.domain.system.dto.response.UserInfoResponse;
+import com.rockblade.domain.system.dto.response.UserPageResponse;
 import com.rockblade.domain.system.entity.User;
+import com.rockblade.domain.system.entity.UserRole;
+import com.rockblade.domain.system.entity.UserDept;
+import com.rockblade.domain.system.service.UserDeptService;
+import com.rockblade.domain.system.service.UserRoleService;
 import com.rockblade.domain.system.service.UserService;
+import com.rockblade.framework.core.base.entity.PageDomain;
 import com.rockblade.framework.core.base.exception.ServiceException;
 import com.rockblade.framework.core.constants.RedisKey;
 import com.rockblade.framework.handler.EmailHandler;
 import com.rockblade.framework.handler.RedisHandler;
 import com.rockblade.framework.utils.MessageUtils;
+import com.rockblade.framework.utils.SqlUtils;
 import com.rockblade.infrastructure.mapper.UserMapper;
 
 import cn.dev33.satoken.secure.BCrypt;
@@ -42,9 +53,20 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
+import cn.hutool.extra.spring.SpringUtil;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.rockblade.domain.system.entity.table.UserRoleTableDef.USER_ROLE;
+import static com.rockblade.domain.system.entity.table.UserDeptTableDef.USER_DEPT;
 import static com.rockblade.domain.system.entity.table.UserTableDef.USER;
+import static com.rockblade.domain.system.entity.table.RoleTableDef.ROLE;
+import static com.rockblade.domain.system.entity.table.DeptTableDef.DEPT;
+import static com.mybatisflex.core.query.QueryMethods.groupConcat;
+import static com.mybatisflex.core.query.QueryMethods.distinct;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -80,7 +102,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void register(RegisterRequest request) {
-
         // 解密密码
         String password = decryptPassword(request.getPassword(), request.getNonce(), redisHandler);
         request.setPassword(password);
@@ -173,34 +194,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         redisHandler.set(key + request.getEmail(), code, RedisKey.CAPTCHA_EXPIRE_MINUTES * 60);
     }
 
-    /**
-     * 解密密码并删除私钥缓存
-     * 
-     * @param password     加密的密码
-     * @param nonce        随机字符串
-     * @param redisHandler Redis工具类
-     * @return 解密后的密码
-     */
-    private String decryptPassword(String password, String nonce, RedisHandler redisHandler) {
-        // 获取私钥
-        String privateKey = (String) redisHandler.get(RedisKey.RSA_PRIVATE_KEY + nonce);
-        if (privateKey == null) {
-            throw new ServiceException(MessageUtils.message("auth.private.key.expired"));
-        }
-
-        // 解密密码
-        RSA rsa = new RSA(privateKey, null);
-        String decryptedPassword = rsa.decryptStr(password, KeyType.PrivateKey);
-        if (decryptedPassword == null) {
-            throw new ServiceException(MessageUtils.message("auth.password.decrypt.failed"));
-        }
-
-        // 删除私钥缓存
-        redisHandler.del(RedisKey.RSA_PRIVATE_KEY + nonce);
-
-        return decryptedPassword;
-    }
-
     @Override
     public void verifyEmailCode(VerifyEmailCodeRequest request) {
         String key;
@@ -257,5 +250,225 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         UserInfoResponse userInfo = BeanUtil.toBean(user, UserInfoResponse.class);
         StpUtil.getSession().set("user", userInfo);
         return StpUtil.getTokenValue();
+    }
+
+    /**
+     * 解密密码并删除私钥缓存
+     * 
+     * @param password     加密的密码
+     * @param nonce        随机字符串
+     * @param redisHandler Redis工具类
+     * @return 解密后的密码
+     */
+    private String decryptPassword(String password, String nonce, RedisHandler redisHandler) {
+        // 获取私钥
+        String privateKey = (String) redisHandler.get(RedisKey.RSA_PRIVATE_KEY + nonce);
+        if (privateKey == null) {
+            throw new ServiceException(MessageUtils.message("auth.private.key.expired"));
+        }
+
+        // 解密密码
+        RSA rsa = new RSA(privateKey, null);
+        String decryptedPassword = rsa.decryptStr(password, KeyType.PrivateKey);
+        if (decryptedPassword == null) {
+            throw new ServiceException(MessageUtils.message("auth.password.decrypt.failed"));
+        }
+
+        // 删除私钥缓存
+        redisHandler.del(RedisKey.RSA_PRIVATE_KEY + nonce);
+
+        return decryptedPassword;
+    }
+
+    @Override
+    public Page<UserPageResponse> page(UserPageRequest request) {
+        // 分页查询
+        PageDomain pageDomain = SqlUtils.getInstance().getPageDomain();
+        // 转换为详细信息响应对象
+        return this.mapper.paginateWithRelationsAs(
+                Page.of(pageDomain.getPage(), pageDomain.getPageSize()),
+                QueryWrapper.create().select(USER.ALL_COLUMNS)
+                        .from(USER)
+                        .leftJoin(USER_ROLE).on(USER_ROLE.USER_ID.eq(USER.ID))
+                        .leftJoin(USER_DEPT).on(USER_DEPT.USER_ID.eq(USER.ID))
+                        .and(USER.STATUS.eq(request.getStatus()))
+                        .and(USER.NICKNAME.likeLeft(request.getNickname()))
+                        .and(USER.EMAIL.eq(request.getEmail()))
+                        .and(USER_ROLE.ROLE_ID.eq(request.getRoleId()))
+                        .and(USER_DEPT.DEPT_ID.eq(request.getDeptId())),
+                UserPageResponse.class,
+                deptInfo -> deptInfo.field(UserPageResponse::getDeptInfo)
+                        .queryWrapper(userDetailResponse -> QueryWrapper.create()
+                                .select("STRING_AGG(DISTINCT \"sys_dept\".\"id\", ',') AS \"deptIds\"",
+                                        "STRING_AGG(DISTINCT \"sys_dept\".\"name\", ',') AS \"depts\"")
+                                .from(USER_DEPT)
+                                .leftJoin(DEPT).on(DEPT.ID.eq(USER_DEPT.DEPT_ID))
+                                .from(USER_DEPT)
+                                .where(USER_DEPT.USER_ID.eq(userDetailResponse.getId()))),
+                roleInfo -> roleInfo.field(UserPageResponse::getRoleInfo)
+                        .queryWrapper(userDetailResponse -> QueryWrapper.create()
+                                .select("STRING_AGG(DISTINCT \"sys_role\".\"id\", ',') AS \"roleIds\"",
+                                        "STRING_AGG(DISTINCT \"sys_role\".\"role_name\", ',') AS \"roles\"")
+                                .from(USER_ROLE)
+                                .leftJoin(ROLE).on(ROLE.ID.eq(USER_ROLE.ROLE_ID))
+                                .from(USER_ROLE)
+                                .where(USER_ROLE.USER_ID.eq(userDetailResponse.getId()))));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void add(UserRequest request) {
+        // 校验用户名是否存在
+        // long count =
+        // this.count(QueryWrapper.create().where(USER.USERNAME.eq(request.getUsername())));
+        // if (count > 0) {
+        // throw new ServiceException(MessageUtils.message("user.username.exists"));
+        // }
+
+        // // 校验手机号是否存在
+        // if (StrUtil.isNotBlank(request.getPhone())) {
+        // count =
+        // this.count(QueryWrapper.create().where(USER.PHONE.eq(request.getPhone())));
+        // if (count > 0) {
+        // throw new ServiceException(MessageUtils.message("user.phone.exists"));
+        // }
+        // }
+
+        // // 校验邮箱是否存在
+        // if (StrUtil.isNotBlank(request.getEmail())) {
+        // count =
+        // this.count(QueryWrapper.create().where(USER.EMAIL.eq(request.getEmail())));
+        // if (count > 0) {
+        // throw new ServiceException(MessageUtils.message("user.email.exists"));
+        // }
+        // }
+
+        User user = new User();
+        BeanUtils.copyProperties(request, user);
+        user.setId(IdUtil.fastSimpleUUID());
+
+        // 如果密码为空，设置默认密码
+        if (StrUtil.isBlank(user.getPassword())) {
+            user.setPassword(BCrypt.hashpw("123456"));
+        }
+
+        this.save(user);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void edit(UserRequest request) {
+        // 校验用户是否存在
+        User existUser = this.getById(request.getId());
+        if (existUser == null) {
+            throw new ServiceException(MessageUtils.message("user.not.exists"));
+        }
+
+        // 校验用户名是否存在
+        User user = this.getOne(QueryWrapper.create()
+                // .where(USER.USERNAME.eq(request.getUsername()))
+                .and(USER.ID.ne(request.getId())));
+        if (user != null) {
+            throw new ServiceException(MessageUtils.message("user.username.exists"));
+        }
+
+        // // 校验手机号是否存在
+        // if (StrUtil.isNotBlank(request.getPhone())) {
+        // user = this.getOne(QueryWrapper.create()
+        // .where(USER.PHONE.eq(request.getPhone()))
+        // .and(USER.ID.ne(request.getId())));
+        // if (user != null) {
+        // throw new ServiceException(MessageUtils.message("user.phone.exists"));
+        // }
+        // }
+
+        // // 校验邮箱是否存在
+        // if (StrUtil.isNotBlank(request.getEmail())) {
+        // user = this.getOne(QueryWrapper.create()
+        // .where(USER.EMAIL.eq(request.getEmail()))
+        // .and(USER.ID.ne(request.getId())));
+        // if (user != null) {
+        // throw new ServiceException(MessageUtils.message("user.email.exists"));
+        // }
+        // }
+
+        user = new User();
+        BeanUtils.copyProperties(request, user);
+
+        // 如果密码为空，不更新密码字段
+        if (StrUtil.isBlank(user.getPassword())) {
+            user.setPassword(null);
+        } else {
+            user.setPassword(BCrypt.hashpw(user.getPassword()));
+        }
+
+        this.updateById(user);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void remove(String[] ids) {
+        // 批量逻辑删除
+        List<User> users = new ArrayList<>();
+        Arrays.asList(ids).forEach(id -> {
+            User user = new User();
+            user.setId(id);
+            users.add(user);
+        });
+        this.updateBatch(users);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void assignDept(String userId, String deptId, Boolean isPrimary) {
+        // 校验用户是否存在
+        User user = this.getById(userId);
+        if (user == null) {
+            throw new ServiceException(MessageUtils.message("user.not.exists"));
+        }
+
+        // 如果是设置主部门，先将其他部门设置为非主部门
+        if (Boolean.TRUE.equals(isPrimary)) {
+            SpringUtil.getBean(UserDeptService.class).resetPrimaryDept(userId);
+        }
+
+        // 保存用户部门关联
+        UserDept userDept = new UserDept();
+        userDept.setUserId(userId);
+        userDept.setDeptId(deptId);
+        userDept.setIsPrimary(isPrimary);
+        SpringUtil.getBean(UserDeptService.class).save(userDept);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void removeDept(String userId, String deptId) {
+        SpringUtil.getBean(UserDeptService.class).remove(QueryWrapper.create()
+                .where(UserDept::getUserId).eq(userId)
+                .and(UserDept::getDeptId).eq(deptId));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void assignRole(String userId, String roleId) {
+        // 校验用户是否存在
+        User user = this.getById(userId);
+        if (user == null) {
+            throw new ServiceException(MessageUtils.message("user.not.exists"));
+        }
+
+        // 保存用户角色关联
+        UserRole userRole = new UserRole();
+        userRole.setUserId(userId);
+        userRole.setRoleId(roleId);
+        SpringUtil.getBean(UserRoleService.class).save(userRole);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void removeRole(String userId, String roleId) {
+        SpringUtil.getBean(UserRoleService.class).remove(QueryWrapper.create()
+                .where(UserRole::getUserId).eq(userId)
+                .and(UserRole::getRoleId).eq(roleId));
     }
 }

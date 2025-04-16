@@ -2,15 +2,14 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-16 10:16:49
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:51:09
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/impl/DeptService.java
- * @Description: 
+ * @LastEditTime: 2025-04-16 14:49:55
+ * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/DeptService.java
+ * @Description: 部门表 服务层。
  * 
  * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
  */
-package com.rockblade.domain.system.service.impl;
+package com.rockblade.domain.system.service;
 
-import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.service.IService;
 import com.rockblade.domain.system.dto.request.DeptRequest;
 import com.rockblade.domain.system.dto.response.DeptResponse;
@@ -18,12 +17,6 @@ import com.rockblade.domain.system.entity.Dept;
 
 import java.util.List;
 
-/**
- * 部门表 服务层。
- *
- * @author rockblade
- * @since 2025-04-16
- */
 public interface DeptService extends IService<Dept> {
 
     /**
@@ -83,4 +76,12 @@ public interface DeptService extends IService<Dept> {
      * @return 结果
      */
     boolean hasChildDept(String deptId);
+
+    /**
+     * 根据用户ID获取部门信息列表
+     * 
+     * @param userId 用户ID
+     * @return 部门信息列表
+     */
+    List<DeptResponse> getDeptsByUserId(String userId);
 }

@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:15:15
+ * @LastEditTime: 2025-04-16 14:44:41
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/impl/RoleServiceImpl.java
  * @Description: 角色信息表 服务层实现。
  * 
@@ -18,8 +18,10 @@ import com.rockblade.domain.system.dto.request.RoleRequest;
 import com.rockblade.domain.system.dto.response.RoleResponse;
 import com.rockblade.domain.system.entity.Role;
 import com.rockblade.domain.system.entity.RoleMenu;
+import com.rockblade.domain.system.entity.UserRole;
 import com.rockblade.domain.system.service.RoleMenuService;
 import com.rockblade.domain.system.service.RoleService;
+import com.rockblade.domain.system.service.UserRoleService;
 import com.rockblade.framework.core.base.entity.PageDomain;
 import com.rockblade.framework.core.base.exception.ServiceException;
 import com.rockblade.framework.utils.SqlUtils;
@@ -33,6 +35,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static com.rockblade.domain.system.entity.table.RoleMenuTableDef.ROLE_MENU;
 import static com.rockblade.domain.system.entity.table.RoleTableDef.ROLE;
+import static com.rockblade.domain.system.entity.table.UserRoleTableDef.USER_ROLE;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("roleService")
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
@@ -160,6 +166,29 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
                 .stream()
                 .map(RoleMenu::getMenuId)
                 .toArray(String[]::new);
+    }
+
+    @Override
+    public List<Role> getRolesByUserId(String userId) {
+        // 查询用户的角色关联
+        List<UserRole> userRoles = SpringUtil.getBean(UserRoleService.class).list(
+                QueryWrapper.create()
+                        .where(USER_ROLE.USER_ID.eq(userId)));
+
+        if (userRoles.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        // 提取角色ID列表
+        List<String> roleIds = userRoles.stream()
+                .map(UserRole::getRoleId)
+                .toList();
+
+        // 查询角色信息
+        return this.list(QueryWrapper.create()
+                .where(ROLE.ID.in(roleIds))
+                .and(ROLE.DELETED.eq(false))
+                .orderBy(ROLE.ROLE_NAME.asc()));
     }
 
 }

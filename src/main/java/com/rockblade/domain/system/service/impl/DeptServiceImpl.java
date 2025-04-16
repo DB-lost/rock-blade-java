@@ -2,11 +2,17 @@ package com.rockblade.domain.system.service.impl;
 
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryChain;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import com.rockblade.domain.system.dto.request.DeptRequest;
 import com.rockblade.domain.system.dto.response.DeptResponse;
 import com.rockblade.domain.system.entity.Dept;
+import com.rockblade.domain.system.entity.UserDept;
+import com.rockblade.domain.system.service.DeptService;
+import com.rockblade.domain.system.service.UserDeptService;
 import com.rockblade.infrastructure.mapper.DeptMapper;
+
+import cn.hutool.extra.spring.SpringUtil;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -16,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.rockblade.domain.system.entity.table.UserDeptTableDef.USER_DEPT;
 import static com.rockblade.domain.system.entity.table.DeptTableDef.DEPT;
 
 /**
@@ -177,5 +184,38 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
             child.setAncestors(child.getAncestors().replace(oldAncestors, newAncestors));
             updateById(child);
         }
+    }
+
+    @Override
+    public List<DeptResponse> getDeptsByUserId(String userId) {
+        // 查询用户关联的部门ID列表
+        List<UserDept> userDepts = SpringUtil.getBean(UserDeptService.class).list(
+                QueryWrapper.create()
+                        .where(USER_DEPT.USER_ID.eq(userId)));
+
+        if (userDepts.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        // 提取部门ID列表
+        List<String> deptIds = userDepts.stream()
+                .map(UserDept::getDeptId)
+                .toList();
+
+        // 查询部门信息
+        List<Dept> depts = this.list(QueryWrapper.create()
+                .where(DEPT.ID.in(deptIds))
+                .and(DEPT.DELETED.eq(false))
+                .orderBy(DEPT.ORDER.asc()));
+
+        // 转换为响应对象
+        List<DeptResponse> responses = new ArrayList<>();
+        for (Dept dept : depts) {
+            DeptResponse response = new DeptResponse();
+            BeanUtils.copyProperties(dept, response);
+            responses.add(response);
+        }
+
+        return responses;
     }
 }

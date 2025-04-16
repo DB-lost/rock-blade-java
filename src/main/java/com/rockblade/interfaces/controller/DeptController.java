@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-16 10:16:49
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 11:47:10
+ * @LastEditTime: 2025-04-16 14:50:29
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/DeptController.java
  * @Description: 部门管理接口
  * 
@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.rockblade.domain.system.dto.request.DeptRequest;
 import com.rockblade.domain.system.dto.response.DeptResponse;
-import com.rockblade.domain.system.service.impl.DeptService;
+import com.rockblade.domain.system.service.DeptService;
 import com.rockblade.framework.core.base.entity.R;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
