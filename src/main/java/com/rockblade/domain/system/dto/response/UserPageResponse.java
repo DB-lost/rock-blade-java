@@ -2,7 +2,7 @@
  * @Author: DB
  * @Date: 2025-04-16 14:30:00
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 16:45:31
+ * @LastEditTime: 2025-04-16 21:26:52
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/dto/response/UserPageResponse.java
  * @Description: 用户详细信息响应实体
  */
@@ -83,6 +83,7 @@ public class UserPageResponse {
     @Data
     @Schema(description = "角色信息")
     public static class RoleInfo {
+
         /** 角色信息 */
         @Schema(description = "角色信息")
         private List<String> roles;

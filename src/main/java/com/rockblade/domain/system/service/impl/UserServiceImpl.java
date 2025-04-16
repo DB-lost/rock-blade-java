@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:43:06
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 20:28:22
+ * @LastEditTime: 2025-04-16 21:33:08
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/impl/UserServiceImpl.java
  * @Description: 用户服务实现类
  * 
@@ -48,6 +48,7 @@ import com.rockblade.infrastructure.mapper.UserMapper;
 import cn.dev33.satoken.secure.BCrypt;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
@@ -298,21 +299,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                         .and(USER_DEPT.DEPT_ID.eq(request.getDeptId())),
                 UserPageResponse.class,
                 deptInfo -> deptInfo.field(UserPageResponse::getDeptInfo)
-                        .queryWrapper(userDetailResponse -> QueryWrapper.create()
-                                .select("STRING_AGG(DISTINCT \"sys_dept\".\"id\", ',') AS \"deptIds\"",
-                                        "STRING_AGG(DISTINCT \"sys_dept\".\"name\", ',') AS \"depts\"")
+                        .queryWrapper(UserPageResponse -> QueryWrapper.create()
+                                .select("STRING_AGG(DISTINCT \"sys_dept\".\"id\", ',') AS \"dept_ids\"")
+                                .select("STRING_AGG(DISTINCT \"sys_dept\".\"name\", ',') AS \"depts\"")
                                 .from(USER_DEPT)
                                 .leftJoin(DEPT).on(DEPT.ID.eq(USER_DEPT.DEPT_ID))
-                                .from(USER_DEPT)
-                                .where(USER_DEPT.USER_ID.eq(userDetailResponse.getId()))),
+                                .where(USER_DEPT.USER_ID.eq(UserPageResponse.getId()))),
                 roleInfo -> roleInfo.field(UserPageResponse::getRoleInfo)
-                        .queryWrapper(userDetailResponse -> QueryWrapper.create()
-                                .select("STRING_AGG(DISTINCT \"sys_role\".\"id\", ',') AS \"roleIds\"",
+                        .queryWrapper(UserPageResponse -> QueryWrapper.create()
+                                .select("STRING_AGG(DISTINCT \"sys_role\".\"id\", ',') AS \"role_ids\"",
                                         "STRING_AGG(DISTINCT \"sys_role\".\"role_name\", ',') AS \"roles\"")
                                 .from(USER_ROLE)
                                 .leftJoin(ROLE).on(ROLE.ID.eq(USER_ROLE.ROLE_ID))
-                                .from(USER_ROLE)
-                                .where(USER_ROLE.USER_ID.eq(userDetailResponse.getId()))));
+                                .where(USER_ROLE.USER_ID.eq(UserPageResponse.getId()))));
     }
 
     @Override
@@ -358,20 +357,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void edit(UserRequest request) {
-        // 校验用户是否存在
-        User existUser = this.getById(request.getId());
-        if (existUser == null) {
-            throw new ServiceException(MessageUtils.message("user.not.exists"));
-        }
-
-        // 校验用户名是否存在
-        User user = this.getOne(QueryWrapper.create()
-                // .where(USER.USERNAME.eq(request.getUsername()))
-                .and(USER.ID.ne(request.getId())));
-        if (user != null) {
-            throw new ServiceException(MessageUtils.message("user.username.exists"));
-        }
-
         // // 校验手机号是否存在
         // if (StrUtil.isNotBlank(request.getPhone())) {
         // user = this.getOne(QueryWrapper.create()
@@ -391,15 +376,34 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // throw new ServiceException(MessageUtils.message("user.email.exists"));
         // }
         // }
+        User user = BeanUtil.toBean(request, User.class);
 
-        user = new User();
-        BeanUtils.copyProperties(request, user);
+        // 部门不为空
+        if (CollectionUtil.isNotEmpty(request.getDeptIds())) {
+            // 删除原有部门
+            SpringUtil.getBean(UserDeptService.class).remove(QueryWrapper.create()
+                    .where(USER_DEPT.USER_ID.eq(user.getId())));
+            // 添加新部门
+            request.getDeptIds().forEach(deptId -> {
+                UserDept userDept = new UserDept();
+                userDept.setUserId(user.getId());
+                userDept.setDeptId(deptId);
+                SpringUtil.getBean(UserDeptService.class).save(userDept);
+            });
+        }
 
-        // 如果密码为空，不更新密码字段
-        if (StrUtil.isBlank(user.getPassword())) {
-            user.setPassword(null);
-        } else {
-            user.setPassword(BCrypt.hashpw(user.getPassword()));
+        // 角色不为空
+        if (CollectionUtil.isNotEmpty(request.getRoleIds())) {
+            // 删除原有角色
+            SpringUtil.getBean(UserRoleService.class).remove(QueryWrapper.create()
+                    .where(USER_ROLE.USER_ID.eq(user.getId())));
+            // 添加新角色
+            request.getRoleIds().forEach(roleId -> {
+                UserRole userRole = new UserRole();
+                userRole.setUserId(user.getId());
+                userRole.setRoleId(roleId);
+                SpringUtil.getBean(UserRoleService.class).save(userRole);
+            });
         }
 
         this.updateById(user);

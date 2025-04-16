@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 00:13:16
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 20:28:59
+ * @LastEditTime: 2025-04-16 20:47:49
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/UserController.java
  * @Description: 用户信息接口
  * 
@@ -33,7 +33,6 @@ import com.rockblade.framework.core.base.entity.R;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @Tag(name = "用户信息接口")
@@ -65,7 +64,7 @@ public class UserController {
     @GetMapping("/getDeptList")
     @Operation(summary = "获取部门列表")
     public R<List<DeptResponse>> getDeptList() {
-        return R.ok(deptService.listAs(QueryWrapper.create().eq(Dept::getStatus, "1"), DeptResponse.class));
+        return R.ok(deptService.listDeptTree());
     }
 
     @GetMapping("/getRoleList")
