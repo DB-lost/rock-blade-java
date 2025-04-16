@@ -1,4 +1,14 @@
-package com.rockblade.domain.user.entity;
+/*
+ * @Author: DB 2502523450@qq.com
+ * @Date: 2025-04-16 10:40:28
+ * @LastEditors: DB 2502523450@qq.com
+ * @LastEditTime: 2025-04-16 10:46:26
+ * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/entity/Dept.java
+ * @Description: 
+ * 
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ */
+package com.rockblade.domain.system.entity;
 
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
@@ -12,11 +22,11 @@ import lombok.experimental.Accessors;
 /**
  * 部门表 实体类。
  *
- * @author 
+ * @author
  * @since 2025-04-16
  */
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

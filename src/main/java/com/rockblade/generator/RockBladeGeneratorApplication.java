@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-16 21:43:20
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-11 00:14:34
+ * @LastEditTime: 2025-04-16 10:47:02
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/generator/RockBladeGeneratorApplication.java
  * @Description: 代码生成器
  *
@@ -113,10 +113,10 @@ public class RockBladeGeneratorApplication {
         .setSourceDir(System.getProperty("user.dir") + EXPORT_URL + "/src/main/java")
         .setMapperXmlPath(
             System.getProperty("user.dir") + EXPORT_URL + "/src/main/resources/mapper");
-    globalConfig.setEntityPackage("com.rockblade.domain" + ".user.entity");
+    globalConfig.setEntityPackage("com.rockblade.domain" + ".system.entity");
     globalConfig.setMapperPackage("com.rockblade.infrastructure" + ".mapper");
-    globalConfig.setServicePackage("com.rockblade.domain" + ".user.service");
-    globalConfig.setServiceImplPackage("com.rockblade.domain" + ".user.service.impl");
+    globalConfig.setServicePackage("com.rockblade.domain" + ".system.service");
+    globalConfig.setServiceImplPackage("com.rockblade.domain" + ".system.service.impl");
     globalConfig.setControllerPackage("com.rockblade.interfaces" + ".controller");
     // 设置策略配置
     globalConfig
