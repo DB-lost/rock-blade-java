@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 10:04:57
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-13 20:26:28
+ * @LastEditTime: 2025-04-16 10:10:23
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/AuthController.java
  * @Description: 认证接口
  * 
@@ -18,15 +18,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rockblade.domain.user.dto.request.EmailCodeRequest;
-import com.rockblade.domain.user.dto.request.EmailLoginRequest;
-import com.rockblade.domain.user.dto.request.GetPublicKeyRequest;
-import com.rockblade.domain.user.dto.request.LoginRequest;
-import com.rockblade.domain.user.dto.request.RegisterRequest;
-import com.rockblade.domain.user.dto.request.ResetPasswordRequest;
-import com.rockblade.domain.user.dto.request.VerifyEmailCodeRequest;
-import com.rockblade.domain.user.dto.response.PublicKeyResponse;
-import com.rockblade.domain.user.service.UserService;
+import com.rockblade.domain.system.dto.request.EmailCodeRequest;
+import com.rockblade.domain.system.dto.request.EmailLoginRequest;
+import com.rockblade.domain.system.dto.request.GetPublicKeyRequest;
+import com.rockblade.domain.system.dto.request.LoginRequest;
+import com.rockblade.domain.system.dto.request.RegisterRequest;
+import com.rockblade.domain.system.dto.request.ResetPasswordRequest;
+import com.rockblade.domain.system.dto.request.VerifyEmailCodeRequest;
+import com.rockblade.domain.system.dto.response.PublicKeyResponse;
+import com.rockblade.domain.system.service.UserService;
 import com.rockblade.framework.core.base.entity.R;
 
 import cn.dev33.satoken.stp.StpUtil;

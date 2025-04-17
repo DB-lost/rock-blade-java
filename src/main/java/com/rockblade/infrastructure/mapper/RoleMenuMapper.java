@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-11 09:33:54
+ * @LastEditTime: 2025-04-16 10:10:15
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/infrastructure/mapper/RoleMenuMapper.java
  * @Description: 角色和菜单关联表 映射层。
  * 
@@ -11,7 +11,7 @@
 package com.rockblade.infrastructure.mapper;
 
 import com.mybatisflex.core.BaseMapper;
-import com.rockblade.domain.user.entity.RoleMenu;
+import com.rockblade.domain.system.entity.RoleMenu;
 
 public interface RoleMenuMapper extends BaseMapper<RoleMenu> {
 

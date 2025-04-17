@@ -2,6 +2,7 @@
 CREATE TABLE sys_user (
     id VARCHAR(32) PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
+    nickname VARCHAR(50),
     password VARCHAR(100) NOT NULL,
     avatar VARCHAR(100),
     phone VARCHAR(20),
@@ -20,6 +21,7 @@ CREATE TABLE sys_user (
 COMMENT ON TABLE sys_user IS '用户信息表';
 COMMENT ON COLUMN sys_user.id IS '主键ID';
 COMMENT ON COLUMN sys_user.username IS '用户名';
+COMMENT ON COLUMN sys_user.nickname IS '昵称';
 COMMENT ON COLUMN sys_user.password IS '密码';
 COMMENT ON COLUMN sys_user.phone IS '手机号';
 COMMENT ON COLUMN sys_user.email IS '邮箱';
@@ -220,6 +222,57 @@ CREATE INDEX idx_sys_role_deleted ON sys_role(deleted);
 CREATE INDEX idx_sys_menu_pid ON sys_menu(pid);
 CREATE INDEX idx_sys_menu_deleted ON sys_menu(deleted);
 
+-- 创建部门表
+CREATE TABLE sys_dept (
+    id VARCHAR(32) PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,        -- 部门名称
+    pid VARCHAR(32),                  -- 父级ID
+    ancestors VARCHAR(500),           -- 祖级列表
+    leader VARCHAR(20),               -- 负责人
+    phone VARCHAR(11),                -- 联系电话
+    email VARCHAR(50),                -- 邮箱
+    "order" INTEGER DEFAULT 0,        -- 显示顺序
+    status CHAR(1) NOT NULL DEFAULT '1', -- 部门状态（1正常 0停用）
+    remark VARCHAR(500),               -- 备注
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_by VARCHAR(32),
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_by VARCHAR(32),
+    deleted BOOLEAN DEFAULT FALSE,
+    CONSTRAINT fk_dept_pid FOREIGN KEY (pid) REFERENCES sys_dept (id)
+);
+
+COMMENT ON TABLE sys_dept IS '部门表';
+COMMENT ON COLUMN sys_dept.id IS '部门ID';
+COMMENT ON COLUMN sys_dept.name IS '部门名称';
+COMMENT ON COLUMN sys_dept.pid IS '父部门ID';
+COMMENT ON COLUMN sys_dept.ancestors IS '祖级列表';
+COMMENT ON COLUMN sys_dept.leader IS '负责人';
+COMMENT ON COLUMN sys_dept.phone IS '联系电话';
+COMMENT ON COLUMN sys_dept.email IS '邮箱';
+COMMENT ON COLUMN sys_dept."order" IS '显示顺序';
+COMMENT ON COLUMN sys_dept.status IS '部门状态（1正常 0停用）';
+COMMENT ON COLUMN sys_dept.created_at IS '创建时间';
+COMMENT ON COLUMN sys_dept.created_by IS '创建人ID';
+COMMENT ON COLUMN sys_dept.updated_at IS '更新时间';
+COMMENT ON COLUMN sys_dept.updated_by IS '更新人ID';
+COMMENT ON COLUMN sys_dept.deleted IS '是否删除';
+COMMENT ON COLUMN sys_dept.remark IS '备注';
+
+-- 创建部门相关索引
+CREATE INDEX idx_sys_dept_pid ON sys_dept(pid);
+CREATE INDEX idx_sys_dept_deleted ON sys_dept(deleted);
+CREATE INDEX idx_sys_dept_status ON sys_dept(status);
+
+-- 添加初始部门数据
+INSERT INTO sys_dept (id, name, pid, ancestors, "order", status, created_by) VALUES
+('1', '总公司', NULL, '0', 0, '1', '100'),
+('2', '研发部门', '1', '0,1', 1, '1', '100'),
+('3', '市场部门', '1', '0,1', 2, '1', '100'),
+('4', '测试部门', '1', '0,1', 3, '1', '100'),
+('5', '财务部门', '1', '0,1', 4, '1', '100'),
+('6', '运维部门', '1', '0,1', 5, '1', '100');
+
 -- 添加初始化菜单数据
 INSERT INTO sys_menu (id, name, pid, "order", path, component, type, auth_code, icon, title, created_by) VALUES
 -- Dashboard
@@ -238,3 +291,31 @@ INSERT INTO sys_menu (id, name, pid, "order", path, component, type, auth_code, 
 -- 添加超级管理员用户
 INSERT INTO sys_user (id, username, password, status, created_by) VALUES
 ('1', 'admin', '$2a$10$5kj44kCu2CyuN20/3qTt9eVnA7QoVhDoMumPuoCnCAMU9mEEb94vW', '1', '100');
+
+-- 创建用户-部门关联表
+CREATE TABLE sys_user_dept (
+    user_id VARCHAR(32) NOT NULL,
+    dept_id VARCHAR(32) NOT NULL,
+    is_primary BOOLEAN DEFAULT FALSE,    -- 是否为主部门
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_by VARCHAR(32),
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_by VARCHAR(32),
+    PRIMARY KEY (user_id, dept_id),
+    CONSTRAINT fk_ud_user_id FOREIGN KEY (user_id) REFERENCES sys_user (id),
+    CONSTRAINT fk_ud_dept_id FOREIGN KEY (dept_id) REFERENCES sys_dept (id)
+);
+
+COMMENT ON TABLE sys_user_dept IS '用户和部门关联表';
+COMMENT ON COLUMN sys_user_dept.user_id IS '用户ID';
+COMMENT ON COLUMN sys_user_dept.dept_id IS '部门ID';
+COMMENT ON COLUMN sys_user_dept.is_primary IS '是否为主部门';
+COMMENT ON COLUMN sys_user_dept.created_at IS '创建时间';
+COMMENT ON COLUMN sys_user_dept.created_by IS '创建人ID';
+COMMENT ON COLUMN sys_user_dept.updated_at IS '更新时间';
+COMMENT ON COLUMN sys_user_dept.updated_by IS '更新人ID';
+
+-- 创建用户部门相关索引
+CREATE INDEX idx_sys_user_dept_user_id ON sys_user_dept(user_id);
+CREATE INDEX idx_sys_user_dept_dept_id ON sys_user_dept(dept_id);
+CREATE INDEX idx_sys_user_dept_is_primary ON sys_user_dept(is_primary);
