@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:43:06
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 16:47:19
+ * @LastEditTime: 2025-04-17 09:52:22
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/UserService.java
  * @Description: 用户服务接口
  * 
@@ -18,6 +18,7 @@ import com.rockblade.domain.system.dto.request.GetPublicKeyRequest;
 import com.rockblade.domain.system.dto.request.LoginRequest;
 import com.rockblade.domain.system.dto.request.RegisterRequest;
 import com.rockblade.domain.system.dto.request.ResetPasswordRequest;
+import com.rockblade.domain.system.dto.request.UserDetailsInfoRequest;
 import com.rockblade.domain.system.dto.request.UserPageRequest;
 import com.rockblade.domain.system.dto.request.UserRequest;
 import com.rockblade.domain.system.dto.request.VerifyEmailCodeRequest;
@@ -140,4 +141,11 @@ public interface UserService extends IService<User> {
      * @param roleId 角色ID
      */
     void removeRole(String userId, String roleId);
+
+    /**
+     * 更新用户详情
+     * 
+     * @param request 用户状态请求参数
+     */
+    void updateUserDetails(UserDetailsInfoRequest request);
 }

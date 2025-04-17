@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 14:43:52
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:10:22
+ * @LastEditTime: 2025-04-17 10:21:14
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/CommonController.java
  * @Description: 公共接口
  * 
@@ -14,12 +14,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rockblade.domain.system.dto.request.UserDetailsInfoRequest;
 import com.rockblade.domain.system.dto.response.MenuResponse;
 import com.rockblade.domain.system.dto.response.UserInfoResponse;
 import com.rockblade.domain.system.service.MenuService;
+import com.rockblade.domain.system.service.UserService;
 import com.rockblade.framework.core.base.entity.R;
 
 import cn.dev33.satoken.stp.StpUtil;
@@ -35,6 +39,9 @@ public class CommonController {
 
     @Autowired
     private MenuService menuService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/getUserInfo")
     @Operation(summary = "获取用户信息")
@@ -53,5 +60,12 @@ public class CommonController {
     @Operation(summary = "获取授权码")
     public R<List<String>> getCodes() {
         return R.ok(StpUtil.getPermissionList());
+    }
+
+    @PostMapping("/updateUserDetails")
+    @Operation(summary = "更新用户详情")
+    public R<Void> updateUserDetails(@RequestBody UserDetailsInfoRequest request) {
+        userService.updateUserDetails(request);
+        return R.ok();
     }
 }

@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:43:06
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 21:33:08
+ * @LastEditTime: 2025-04-17 10:01:06
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/impl/UserServiceImpl.java
  * @Description: 用户服务实现类
  * 
@@ -24,6 +24,7 @@ import com.rockblade.domain.system.dto.request.GetPublicKeyRequest;
 import com.rockblade.domain.system.dto.request.LoginRequest;
 import com.rockblade.domain.system.dto.request.RegisterRequest;
 import com.rockblade.domain.system.dto.request.ResetPasswordRequest;
+import com.rockblade.domain.system.dto.request.UserDetailsInfoRequest;
 import com.rockblade.domain.system.dto.request.UserPageRequest;
 import com.rockblade.domain.system.dto.request.UserRequest;
 import com.rockblade.domain.system.dto.request.VerifyEmailCodeRequest;
@@ -474,5 +475,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         SpringUtil.getBean(UserRoleService.class).remove(QueryWrapper.create()
                 .where(UserRole::getUserId).eq(userId)
                 .and(UserRole::getRoleId).eq(roleId));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateUserDetails(UserDetailsInfoRequest request) {
+        User user = this.getById(StpUtil.getLoginIdAsString());
+        user.setAvatar(request.getAvatar())
+                .setEmail(request.getEmail())
+                .setNickname(request.getNickname())
+                .setPhone(request.getPhone());
+        this.updateById(user);
+
+        // 更新用户信息到Session
+        UserInfoResponse userInfo = BeanUtil.toBean(user, UserInfoResponse.class);
+        StpUtil.getSession().set("user", userInfo);
     }
 }
