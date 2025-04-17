@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-15 17:14:22
+ * @LastEditTime: 2025-04-16 10:10:17
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/RoleController.java
  * @Description: 角色接口
  * 
@@ -11,10 +11,10 @@
 package com.rockblade.interfaces.controller;
 
 import com.mybatisflex.core.paginate.Page;
-import com.rockblade.domain.user.dto.request.RolePageRequest;
-import com.rockblade.domain.user.dto.request.RoleRequest;
-import com.rockblade.domain.user.dto.response.RoleResponse;
-import com.rockblade.domain.user.service.RoleService;
+import com.rockblade.domain.system.dto.request.RolePageRequest;
+import com.rockblade.domain.system.dto.request.RoleRequest;
+import com.rockblade.domain.system.dto.response.RoleResponse;
+import com.rockblade.domain.system.service.RoleService;
 import com.rockblade.framework.core.base.entity.R;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
