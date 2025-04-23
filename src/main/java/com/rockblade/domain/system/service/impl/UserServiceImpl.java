@@ -1,8 +1,8 @@
 /*
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:43:06
- * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-17 10:01:06
+ * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @LastEditTime: 2025-04-23 23:38:00
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/impl/UserServiceImpl.java
  * @Description: 用户服务实现类
  * 
@@ -37,6 +37,8 @@ import com.rockblade.domain.system.entity.UserDept;
 import com.rockblade.domain.system.service.UserDeptService;
 import com.rockblade.domain.system.service.UserRoleService;
 import com.rockblade.domain.system.service.UserService;
+import com.rockblade.framework.config.RockBladeConfig;
+import com.rockblade.framework.config.RockBladeConfig.Gateway;
 import com.rockblade.framework.core.base.entity.PageDomain;
 import com.rockblade.framework.core.base.exception.ServiceException;
 import com.rockblade.framework.core.constants.RedisKey;
@@ -49,10 +51,12 @@ import com.rockblade.infrastructure.mapper.UserMapper;
 import cn.dev33.satoken.secure.BCrypt;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.codec.Base64;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
 import cn.hutool.extra.spring.SpringUtil;
@@ -62,10 +66,12 @@ import static com.rockblade.domain.system.entity.table.UserRoleTableDef.USER_ROL
 import static com.rockblade.domain.system.entity.table.UserDeptTableDef.USER_DEPT;
 import static com.rockblade.domain.system.entity.table.UserTableDef.USER;
 import static com.rockblade.domain.system.entity.table.RoleTableDef.ROLE;
+import static com.mybatisflex.core.query.QueryMethods.null_;
 import static com.rockblade.domain.system.entity.table.DeptTableDef.DEPT;
-import static com.mybatisflex.core.query.QueryMethods.groupConcat;
-import static com.mybatisflex.core.query.QueryMethods.distinct;
 
+import java.security.KeyPair;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -80,23 +86,28 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private RedisHandler redisHandler;
 
+    @Autowired
+    private RockBladeConfig rockBladeConfig;
+
     @Override
     public PublicKeyResponse getPublicKey(GetPublicKeyRequest request) {
         String nonce = request.getNonce();
         if (StrUtil.isBlank(nonce)) {
             nonce = IdUtil.fastSimpleUUID();
         }
-
+        Gateway gateway = rockBladeConfig.getGateway();
         // 生成RSA密钥对
-        RSA rsa = new RSA();
-        String publicKey = rsa.getPublicKeyBase64();
-        String privateKey = rsa.getPrivateKeyBase64();
+        KeyPair rsa = SecureUtil.generateKeyPair(
+                gateway.getRsaKeypair().getAlgorithm(), gateway.getRsaKeypair().getKeySize());
+        PublicKey publicKey = rsa.getPublic();
+        PrivateKey privateKey = rsa.getPrivate();
 
-        // 将私钥存入Redis，用于后续解密
-        redisHandler.set(RedisKey.RSA_PRIVATE_KEY + nonce, privateKey, RedisKey.CAPTCHA_EXPIRE_MINUTES * 60);
+        // 将私钥Base64编码后存入Redis，用于后续解密
+        String privateKeyStr = Base64.encodeStr(privateKey.getEncoded(), true, false);
+        redisHandler.set(RedisKey.RSA_PRIVATE_KEY + nonce, privateKeyStr, RedisKey.CAPTCHA_EXPIRE_MINUTES * 60);
 
         return PublicKeyResponse.builder()
-                .publicKey(publicKey)
+                .publicKey(Base64.encodeStr(publicKey.getEncoded(), true, false))
                 .nonce(nonce)
                 .build();
     }
@@ -263,23 +274,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return 解密后的密码
      */
     private String decryptPassword(String password, String nonce, RedisHandler redisHandler) {
-        // 获取私钥
-        String privateKey = (String) redisHandler.get(RedisKey.RSA_PRIVATE_KEY + nonce);
-        if (privateKey == null) {
+        // 获取Base64编码的私钥
+        String privateKeyStr = (String) redisHandler.get(RedisKey.RSA_PRIVATE_KEY + nonce);
+        if (privateKeyStr == null) {
             throw new ServiceException(MessageUtils.message("auth.private.key.expired"));
         }
 
-        // 解密密码
-        RSA rsa = new RSA(privateKey, null);
-        String decryptedPassword = rsa.decryptStr(password, KeyType.PrivateKey);
-        if (decryptedPassword == null) {
-            throw new ServiceException(MessageUtils.message("auth.password.decrypt.failed"));
+        try {
+            // 使用Base64编码的私钥创建RSA实例
+            RSA rsa = SecureUtil.rsa(privateKeyStr, null);
+            String decryptedPassword = rsa.decryptStr(password, KeyType.PrivateKey);
+            if (decryptedPassword == null) {
+                throw new ServiceException(MessageUtils.message("auth.password.decrypt.failed"));
+            }
+            return decryptedPassword;
+        } finally {
+            // 确保删除私钥缓存
+            redisHandler.del(RedisKey.RSA_PRIVATE_KEY + nonce);
         }
-
-        // 删除私钥缓存
-        redisHandler.del(RedisKey.RSA_PRIVATE_KEY + nonce);
-
-        return decryptedPassword;
     }
 
     @Override
