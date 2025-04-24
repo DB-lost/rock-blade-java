@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:15:04
+ * @LastEditTime: 2025-04-24 09:23:27
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/impl/MenuServiceImpl.java
  * @Description: 菜单权限表 服务实现层。
  * 
@@ -79,7 +79,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
                 })
                 .toList();
 
-        return buildMenuTree(authorizedMenus, "0");
+        return buildMenuTree(authorizedMenus, null);
     }
 
     @Override
