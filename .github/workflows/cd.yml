@@ -1,0 +1,183 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches: [ master, feature/CI-CD ]
+    tags: [ 'v*' ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+          
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+        
+      - name: List Files
+        run: |
+          echo "检查构建文件："
+          ls -la target/
+        
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-package
+          path: target/*.jar
+          retention-days: 1
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 配置腾讯云COSCLI
+      - name: Setup COSCLI
+        run: |
+          # 下载最新版本的 COSCLI
+          wget https://github.com/tencentyun/coscli/releases/download/v1.0.3/coscli-v1.0.3-linux-amd64
+          # 添加执行权限
+          chmod +x coscli-v1.0.3-linux-amd64
+          # 移动到 PATH 目录
+          sudo mv coscli-v1.0.3-linux-amd64 /usr/local/bin/coscli
+          # 初始化配置（使用全局参数）
+          coscli config init  
+          # 设置存储桶配置
+          coscli config set --secret_id ${{ secrets.COS_SECRET_ID }} --secret_key ${{ secrets.COS_SECRET_KEY }}
+          coscli config add -b ${{ secrets.COS_BUCKET }} -r ${{ secrets.COS_REGION }}
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-package
+          path: ./dist
+          
+      - name: List Downloaded Files
+        run: |
+          echo "检查下载的文件："
+          ls -la ./dist/
+
+      # 压缩构建产物
+      - name: Compress artifacts
+        run: |
+          cd dist
+          # 上传到腾讯云COS
+          coscli cp -r ./*.jar cos://${{ secrets.COS_BUCKET }}/deployments/rock-blade-java/
+                
+      # 清理远程目录并从COS下载文件
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            set -e
+            echo "开始部署..."
+            
+            # 设置应用目录
+            APP_BASE="/opt/java_project/rock-blade-java"
+            
+            # 从 COS 下载文件
+            coscli cp -r cos://${{ secrets.COS_BUCKET }}/deployments/rock-blade-java/ ${APP_BASE}/
+            cd ${APP_BASE}
+            
+            # 删除远程目录
+            coscli rm cos://${{ secrets.COS_BUCKET }}/deployments/rock-blade-java -rf --include ".*\.jar$"
+
+            # 准备新的部署目录
+            echo "准备新的部署目录..."
+            DEPLOY_TIME=$(date +%Y%m%d_%H%M%S)
+            NEW_APP_DIR="${APP_BASE}/releases/${DEPLOY_TIME}"
+            
+            # 创建目录结构
+            mkdir -p ${NEW_APP_DIR}
+            
+            # 复制新的jar包到新目录
+            cp ${APP_BASE}/*.jar ${NEW_APP_DIR}/
+            rm -rf ${APP_BASE}/*.jar
+
+            # 替换环境变量
+            echo "获取当前环境变量 CODE_DIR..."
+            CURRENT_CODE_DIR=$(grep -oP 'CODE_DIR="\K[^"]+' .env)
+            echo "当前 CODE_DIR: ${CURRENT_CODE_DIR}"
+            echo "更新环境变量中的 CODE_DIR..."
+            sed -i "s|CODE_DIR=.*|CODE_DIR=\"${NEW_APP_DIR}\"|" .env
+            
+            # 显示更新后的环境变量
+            echo "更新后的环境变量内容："
+            cat .env
+            CONTAINER_NAME="rock-blade-java"
+            echo "删除旧服务..."
+            docker stop ${CONTAINER_NAME}
+            # 删除旧容器
+            docker rm ${CONTAINER_NAME}       
+
+            # 启动新服务
+            echo "启动新服务..."
+            source .env
+            echo "检查JAR文件："
+            ls -l ${NEW_APP_DIR}/*.jar
+            docker-compose up -d
+
+            # 等待服务启动
+            echo "等待服务启动..."
+            for i in {1..30}; do
+              echo "第 $i 次检查..."
+              
+              # 检查容器是否运行
+              if ! docker ps | grep -q ${CONTAINER_NAME}; then
+                echo "容器未运行，查看容器日志："
+                docker logs ${CONTAINER_NAME}
+                docker-compose down
+                exit 1
+              fi
+              
+              # 检查端口是否可访问
+              if nc -z ${HOST_IP} ${PANEL_APP_PORT_HTTP}; then
+                echo "服务端口已就绪"
+                echo "容器状态："
+                docker ps | grep ${CONTAINER_NAME}
+                echo "服务启动成功！"
+                break
+              fi
+              
+              if [ $i -eq 30 ]; then
+                echo "服务启动超时"
+                echo "容器日志："
+                docker logs ${CONTAINER_NAME}
+                docker-compose down
+                # 更新环境变量
+                sed -i "s|CODE_DIR=.*|CODE_DIR=\"${CURRENT_CODE_DIR}\"|" .env
+                # 删除旧容器
+                docker rm ${CONTAINER_NAME}
+                # 启用旧包
+                docker-compose up -d
+                exit 1
+              fi
+              sleep 2
+            done
+            
+            # 清理旧版本（保留最近3个版本）
+            cd ${APP_BASE}/releases
+            ls -t | tail -n +4 | xargs -r rm -rf
+            
+            echo "部署完成！"
+            
+      # 如果是发布版本,创建GitHub Release
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: "./dist/*.jar"
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
