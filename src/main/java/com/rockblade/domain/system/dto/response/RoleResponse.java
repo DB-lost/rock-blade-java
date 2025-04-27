@@ -5,8 +5,8 @@
  * @LastEditTime: 2025-04-16 10:09:37
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/dto/response/RoleResponse.java
  * @Description: 角色响应DTO
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.domain.system.dto.response;
 
@@ -17,27 +17,27 @@ import lombok.Data;
 @Schema(description = "角色响应数据")
 public class RoleResponse {
 
-    /** 角色ID */
-    @Schema(description = "角色ID")
-    private String id;
+  /** 角色ID */
+  @Schema(description = "角色ID")
+  private String id;
 
-    /** 角色名称 */
-    @Schema(description = "角色名称")
-    private String roleName;
+  /** 角色名称 */
+  @Schema(description = "角色名称")
+  private String roleName;
 
-    /** 角色标识 */
-    @Schema(description = "角色标识")
-    private String roleKey;
+  /** 角色标识 */
+  @Schema(description = "角色标识")
+  private String roleKey;
 
-    /** 状态：0 */
-    @Schema(description = "状态：0-禁用，1-启用")
-    private String status;
+  /** 状态：0 */
+  @Schema(description = "状态：0-禁用，1-启用")
+  private String status;
 
-    /** 权限列表 */
-    @Schema(description = "权限列表")
-    private String[] permissions;
+  /** 权限列表 */
+  @Schema(description = "权限列表")
+  private String[] permissions;
 
-    /** 备注 */
-    @Schema(description = "备注")
-    private String remark;
+  /** 备注 */
+  @Schema(description = "备注")
+  private String remark;
 }

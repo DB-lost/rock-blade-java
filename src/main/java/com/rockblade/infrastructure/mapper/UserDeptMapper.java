@@ -6,9 +6,7 @@ import com.rockblade.domain.system.entity.UserDept;
 /**
  * 用户和部门关联表 映射层。
  *
- * @author 
+ * @author
  * @since 2025-04-16
  */
-public interface UserDeptMapper extends BaseMapper<UserDept> {
-
-}
+public interface UserDeptMapper extends BaseMapper<UserDept> {}

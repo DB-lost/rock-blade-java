@@ -10,27 +10,10 @@
  */
 package com.rockblade.framework.config;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.Key;
-import java.security.KeyPair;
-import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.stereotype.Component;
 
-import com.rockblade.framework.core.base.exception.UtilException;
-
-import cn.hutool.core.codec.Base64;
-import cn.hutool.crypto.SecureUtil;
-import cn.hutool.crypto.asymmetric.RSA;
 import lombok.Data;
 import lombok.Getter;
 
@@ -50,8 +33,7 @@ public class RockBladeConfig {
   private static String profile;
 
   /** 验证码类型 */
-  @Getter
-  private static String captchaType;
+  @Getter private static String captchaType;
 
   /** jwt */
   private Jwt jwt;
@@ -82,8 +64,7 @@ public class RockBladeConfig {
   }
 
   /** 网关配置 */
-  @Getter
-  private Gateway gateway;
+  @Getter private Gateway gateway;
 
   /**
    * 设置网关
@@ -124,7 +105,6 @@ public class RockBladeConfig {
 
       /** 关键尺寸 */
       private Integer keySize;
-
     }
   }
 
@@ -226,5 +206,4 @@ public class RockBladeConfig {
   public String getUploadPath() {
     return getProfile() + "/upload";
   }
-
 }

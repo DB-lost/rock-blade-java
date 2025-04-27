@@ -5,8 +5,8 @@
  * @LastEditTime: 2025-04-16 11:16:44
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/dto/request/DeptRequest.java
  * @Description: 部门请求DTO
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.domain.system.dto.request;
 
@@ -22,44 +22,44 @@ import lombok.Data;
 @Data
 @Schema(description = "部门请求DTO")
 public class DeptRequest {
-    /** 部门ID */
-    @Schema(description = "部门ID")
-    private String id;
+  /** 部门ID */
+  @Schema(description = "部门ID")
+  private String id;
 
-    /** 部门名称 */
-    @Schema(description = "部门名称")
-    private String name;
+  /** 部门名称 */
+  @Schema(description = "部门名称")
+  private String name;
 
-    /** 上级部门ID */
-    @Schema(description = "上级部门ID")
-    private String pid;
+  /** 上级部门ID */
+  @Schema(description = "上级部门ID")
+  private String pid;
 
-    /** 排序 */
-    @Schema(description = "排序")
-    private Integer order;
+  /** 排序 */
+  @Schema(description = "排序")
+  private Integer order;
 
-    /** 部门负责人 */
-    @Schema(description = "部门负责人")
-    private String leader;
+  /** 部门负责人 */
+  @Schema(description = "部门负责人")
+  private String leader;
 
-    /** 部门负责人邮箱 */
-    @Schema(description = "部门负责人邮箱")
-    private String email;
+  /** 部门负责人邮箱 */
+  @Schema(description = "部门负责人邮箱")
+  private String email;
 
-    /** 部门状态 */
-    @Schema(description = "部门状态")
-    private String status;
+  /** 部门状态 */
+  @Schema(description = "部门状态")
+  private String status;
 
-    /** 子部门 */
-    @Schema(description = "子部门")
-    private List<DeptResponse> children;
+  /** 子部门 */
+  @Schema(description = "子部门")
+  private List<DeptResponse> children;
 
-    /** 创建时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Schema(description = "创建时间")
-    private LocalDateTime createdAt;
+  /** 创建时间 */
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @Schema(description = "创建时间")
+  private LocalDateTime createdAt;
 
-    /** 备注 */
-    @Schema(description = "备注")
-    private String remark;
+  /** 备注 */
+  @Schema(description = "备注")
+  private String remark;
 }
