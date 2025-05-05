@@ -2,7 +2,7 @@ name: Continuous Deployment
 
 on:
   push:
-    #branches: [ master ]
+    branches: [ master, develop ]
     tags: [ 'v*' ]
 
 jobs:
@@ -93,7 +93,7 @@ jobs:
             
             # 备份现有jar包（如果存在）
             if ls ${APP_BASE}/*.jar 1> /dev/null 2>&1; then
-              sudo mv ${APP_BASE}/*.jar ${APP_BASE}/backup/app-${DEPLOY_TIME}.jar
+              sudo mv ${APP_BASE}/*.jar ${APP_BASE}/backup/${CONTAINER_NAME}-${DEPLOY_TIME}.jar
               echo "已备份现有jar包到 backup/${CONTAINER_NAME}-${DEPLOY_TIME}.jar"
             fi
             
