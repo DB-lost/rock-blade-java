@@ -2,7 +2,7 @@ name: Continuous Deployment
 
 on:
   push:
-    branches: [ master, feature/CI-CD ]
+    #branches: [ master ]
     tags: [ 'v*' ]
 
 jobs:
@@ -85,7 +85,7 @@ jobs:
             
             # 设置应用目录
             APP_BASE="${{ secrets.APP_BASE }}"
-            CONTAINER_NAME="rock-blade-java"
+            CONTAINER_NAME="${{ secrets.DOCKER_NAME }}"
             DEPLOY_TIME=$(date +%Y%m%d_%H%M%S)
             
             # 创建备份目录
@@ -94,7 +94,7 @@ jobs:
             # 备份现有jar包（如果存在）
             if ls ${APP_BASE}/*.jar 1> /dev/null 2>&1; then
               sudo mv ${APP_BASE}/*.jar ${APP_BASE}/backup/app-${DEPLOY_TIME}.jar
-              echo "已备份现有jar包到 backup/app-${DEPLOY_TIME}.jar"
+              echo "已备份现有jar包到 backup/${CONTAINER_NAME}-${DEPLOY_TIME}.jar"
             fi
             
             # 从COS下载新jar包并清理远程文件
