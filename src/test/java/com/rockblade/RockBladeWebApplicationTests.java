@@ -15,6 +15,4 @@ import org.springframework.context.annotation.Profile;
 
 @SpringBootTest
 @Profile("dev")
-class RockBladeWebApplicationTests {
-
-}
+class RockBladeWebApplicationTests {}

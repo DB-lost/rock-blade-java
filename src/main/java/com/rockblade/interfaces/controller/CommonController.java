@@ -5,8 +5,8 @@
  * @LastEditTime: 2025-04-17 10:21:14
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/CommonController.java
  * @Description: 公共接口
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.interfaces.controller;
 
@@ -37,35 +37,33 @@ import lombok.extern.slf4j.Slf4j;
 @Tag(name = "公共接口")
 public class CommonController {
 
-    @Autowired
-    private MenuService menuService;
+  @Autowired private MenuService menuService;
 
-    @Autowired
-    private UserService userService;
+  @Autowired private UserService userService;
 
-    @GetMapping("/getUserInfo")
-    @Operation(summary = "获取用户信息")
-    public R<UserInfoResponse> getUserInfo() {
-        UserInfoResponse userInfo = StpUtil.getSession().getModel("user", UserInfoResponse.class);
-        return R.ok(userInfo);
-    }
+  @GetMapping("/getUserInfo")
+  @Operation(summary = "获取用户信息")
+  public R<UserInfoResponse> getUserInfo() {
+    UserInfoResponse userInfo = StpUtil.getSession().getModel("user", UserInfoResponse.class);
+    return R.ok(userInfo);
+  }
 
-    @GetMapping("/getMenuList")
-    @Operation(summary = "获取菜单树")
-    public R<List<MenuResponse>> getMenuList() {
-        return R.ok(menuService.getMenuTreeByUserId(StpUtil.getLoginIdAsString()));
-    }
+  @GetMapping("/getMenuList")
+  @Operation(summary = "获取菜单树")
+  public R<List<MenuResponse>> getMenuList() {
+    return R.ok(menuService.getMenuTreeByUserId(StpUtil.getLoginIdAsString()));
+  }
 
-    @GetMapping("/getCodes")
-    @Operation(summary = "获取授权码")
-    public R<List<String>> getCodes() {
-        return R.ok(StpUtil.getPermissionList());
-    }
+  @GetMapping("/getCodes")
+  @Operation(summary = "获取授权码")
+  public R<List<String>> getCodes() {
+    return R.ok(StpUtil.getPermissionList());
+  }
 
-    @PostMapping("/updateUserDetails")
-    @Operation(summary = "更新用户详情")
-    public R<Void> updateUserDetails(@RequestBody UserDetailsInfoRequest request) {
-        userService.updateUserDetails(request);
-        return R.ok();
-    }
+  @PostMapping("/updateUserDetails")
+  @Operation(summary = "更新用户详情")
+  public R<Void> updateUserDetails(@RequestBody UserDetailsInfoRequest request) {
+    userService.updateUserDetails(request);
+    return R.ok();
+  }
 }

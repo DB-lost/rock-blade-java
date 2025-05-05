@@ -5,19 +5,18 @@
  * @LastEditTime: 2025-04-16 10:09:54
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/impl/UserRoleServiceImpl.java
  * @Description: 用户和角色关联表 服务层实现。
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.domain.system.service.impl;
+
+import org.springframework.stereotype.Service;
 
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import com.rockblade.domain.system.entity.UserRole;
 import com.rockblade.domain.system.service.UserRoleService;
 import com.rockblade.infrastructure.mapper.UserRoleMapper;
 
-import org.springframework.stereotype.Service;
-
 @Service("userRoleService")
-public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> implements UserRoleService {
-
-}
+public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole>
+    implements UserRoleService {}

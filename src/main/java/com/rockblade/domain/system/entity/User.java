@@ -5,17 +5,19 @@
  * @LastEditTime: 2025-04-16 14:19:05
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/entity/User.java
  * @Description: 用户信息表
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.domain.system.entity;
+
+import java.io.Serializable;
 
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
 import com.rockblade.framework.core.base.entity.BaseEntity;
 import com.rockblade.framework.core.base.entity.BaseInsertListener;
 import com.rockblade.framework.core.base.entity.BaseUpdateListener;
-import java.io.Serializable;
+
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -25,49 +27,37 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(value = "sys_user", onInsert = BaseInsertListener.class, onUpdate = BaseUpdateListener.class, mapperGenerateEnable = false)
+@Table(
+    value = "sys_user",
+    onInsert = BaseInsertListener.class,
+    onUpdate = BaseUpdateListener.class,
+    mapperGenerateEnable = false)
 public class User extends BaseEntity implements Serializable {
 
-    /**
-     * 主键ID
-     */
-    @Id
-    private String id;
+  /** 主键ID */
+  @Id private String id;
 
-    /**
-     * 用户名
-     */
-    private String username;
+  /** 用户名 */
+  private String username;
 
-    /**
-     * 昵称
-     */
-    private String nickname;
+  /** 昵称 */
+  private String nickname;
 
-    /**
-     * 密码
-     */
-    private String password;
+  /** 密码 */
+  private String password;
 
-    /**
-     * 手机号
-     */
-    private String phone;
+  /** 手机号 */
+  private String phone;
 
-    /**
-     * 邮箱
-     */
-    private String email;
+  /** 邮箱 */
+  private String email;
 
-    /** 头像 */
-    private String avatar;
+  /** 头像 */
+  private String avatar;
 
-    /** 状态 */
-    private String status;
+  /** 状态 */
+  private String status;
 
-    /**
-     * 是否删除
-     */
-    private Boolean deleted;
-
+  /** 是否删除 */
+  private Boolean deleted;
 }

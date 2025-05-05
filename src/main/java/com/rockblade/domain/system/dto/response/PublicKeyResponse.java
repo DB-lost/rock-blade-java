@@ -4,9 +4,9 @@
  * @LastEditors: DB 2502523450@qq.com
  * @LastEditTime: 2025-04-16 10:09:38
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/dto/response/PublicKeyResponse.java
- * @Description: 
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ * @Description:
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.domain.system.dto.response;
 
@@ -23,11 +23,11 @@ import lombok.NoArgsConstructor;
 @Schema(description = "公钥响应")
 public class PublicKeyResponse {
 
-    /** 公钥 */
-    @Schema(description = "公钥")
-    private String publicKey;
+  /** 公钥 */
+  @Schema(description = "公钥")
+  private String publicKey;
 
-    /** 随机字符串 */
-    @Schema(description = "随机字符串")
-    private String nonce;
+  /** 随机字符串 */
+  @Schema(description = "随机字符串")
+  private String nonce;
 }

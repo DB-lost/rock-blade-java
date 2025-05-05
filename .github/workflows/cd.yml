@@ -1,0 +1,123 @@
+name: Continuous Deployment
+
+on:
+  push:
+    #branches: [ master ]
+    tags: [ 'v*' ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+          
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+        
+      - name: List Files
+        run: |
+          echo "检查构建文件："
+          ls -la target/
+        
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-package
+          path: target/*.jar
+          retention-days: 1
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 配置腾讯云COSCLI
+      - name: Setup COSCLI
+        run: |
+          # 下载最新版本的 COSCLI
+          wget https://github.com/tencentyun/coscli/releases/download/v1.0.3/coscli-v1.0.3-linux-amd64
+          # 添加执行权限
+          chmod +x coscli-v1.0.3-linux-amd64
+          # 移动到 PATH 目录
+          sudo mv coscli-v1.0.3-linux-amd64 /usr/local/bin/coscli
+          # 初始化配置（使用全局参数）
+          coscli config init  
+          # 设置存储桶配置
+          coscli config set --secret_id ${{ secrets.COS_SECRET_ID }} --secret_key ${{ secrets.COS_SECRET_KEY }}
+          coscli config add -b ${{ secrets.COS_BUCKET }} -r ${{ secrets.COS_REGION }}
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-package
+          path: ./dist
+          
+      - name: List Downloaded Files
+        run: |
+          echo "检查下载的文件："
+          ls -la ./dist/
+
+      # 压缩构建产物
+      - name: Compress artifacts
+        run: |
+          cd dist
+          # 上传到腾讯云COS
+          coscli cp -r ./*.jar cos://${{ secrets.COS_BUCKET }}/deployments/rock-blade-java/
+                
+      # 清理远程目录并从COS下载文件
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            set -e
+            echo "开始部署..."
+            
+            # 设置应用目录
+            APP_BASE="${{ secrets.APP_BASE }}"
+            CONTAINER_NAME="${{ secrets.DOCKER_NAME }}"
+            DEPLOY_TIME=$(date +%Y%m%d_%H%M%S)
+            
+            # 创建备份目录
+            sudo mkdir -p ${APP_BASE}/backup
+            
+            # 备份现有jar包（如果存在）
+            if ls ${APP_BASE}/*.jar 1> /dev/null 2>&1; then
+              sudo mv ${APP_BASE}/*.jar ${APP_BASE}/backup/app-${DEPLOY_TIME}.jar
+              echo "已备份现有jar包到 backup/${CONTAINER_NAME}-${DEPLOY_TIME}.jar"
+            fi
+            
+            # 从COS下载新jar包并清理远程文件
+            echo "从COS下载新jar包..."
+            sudo coscli cp -r cos://${{ secrets.COS_BUCKET }}/deployments/rock-blade-java/ ${APP_BASE}/ && \
+            sudo coscli rm cos://${{ secrets.COS_BUCKET }}/deployments/rock-blade-java -rf --include ".*\.jar$"
+            
+            # 重启服务
+            echo "重启服务..."
+            sudo docker restart ${CONTAINER_NAME}
+            
+            # 清理过期备份（保留最近5个备份）
+            cd ${APP_BASE}/backup
+            sudo ls -t | tail -n +6 | xargs -r sudo rm -rf
+            
+            echo "部署完成！"
+            
+      # # 如果是发布版本,创建GitHub Release
+      # - name: Create Release
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     files: "./dist/*.jar"
+      #     generate_release_notes: true
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

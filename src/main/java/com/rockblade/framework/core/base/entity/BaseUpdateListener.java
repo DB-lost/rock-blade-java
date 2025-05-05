@@ -32,9 +32,10 @@ public class BaseUpdateListener implements UpdateListener {
     BaseEntity baseEntity = (BaseEntity) entity;
     String userId;
     try {
-      userId = StpUtil.getLoginIdDefaultNull() == null
-          ? Constants.SUPER_ADMIN_ID
-          : StpUtil.getLoginIdAsString();
+      userId =
+          StpUtil.getLoginIdDefaultNull() == null
+              ? Constants.SUPER_ADMIN_ID
+              : StpUtil.getLoginIdAsString();
     } catch (SaTokenContextException e) {
       userId = Constants.SUPER_ADMIN_ID;
     }
