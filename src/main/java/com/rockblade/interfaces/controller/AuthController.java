@@ -5,8 +5,8 @@
  * @LastEditTime: 2025-04-16 10:10:23
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/AuthController.java
  * @Description: 认证接口
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.interfaces.controller;
 
@@ -40,60 +40,58 @@ import lombok.extern.slf4j.Slf4j;
 @Tag(name = "认证接口")
 public class AuthController {
 
-    @Autowired
-    private UserService userService;
+  @Autowired private UserService userService;
 
-    @PostMapping("/getPublicKey")
-    @Operation(summary = "获取公钥")
-    public R<PublicKeyResponse> getPublicKey(@RequestBody GetPublicKeyRequest request) {
-        return R.ok(userService.getPublicKey(request));
-    }
+  @PostMapping("/getPublicKey")
+  @Operation(summary = "获取公钥")
+  public R<PublicKeyResponse> getPublicKey(@RequestBody GetPublicKeyRequest request) {
+    return R.ok(userService.getPublicKey(request));
+  }
 
-    @PostMapping("/sendEmailCode")
-    @Operation(summary = "发送邮箱验证码")
-    public R<Void> sendEmailCode(@Validated @RequestBody EmailCodeRequest request) {
-        userService.sendEmailCode(request);
-        return R.ok();
-    }
+  @PostMapping("/sendEmailCode")
+  @Operation(summary = "发送邮箱验证码")
+  public R<Void> sendEmailCode(@Validated @RequestBody EmailCodeRequest request) {
+    userService.sendEmailCode(request);
+    return R.ok();
+  }
 
-    @PostMapping("/verifyEmailCode")
-    @Operation(summary = "校验邮箱验证码")
-    public R<Void> verifyEmailCode(@Validated @RequestBody VerifyEmailCodeRequest request) {
-        userService.verifyEmailCode(request);
-        return R.ok();
-    }
+  @PostMapping("/verifyEmailCode")
+  @Operation(summary = "校验邮箱验证码")
+  public R<Void> verifyEmailCode(@Validated @RequestBody VerifyEmailCodeRequest request) {
+    userService.verifyEmailCode(request);
+    return R.ok();
+  }
 
-    @PostMapping("/register")
-    @Operation(summary = "用户注册")
-    public R<Void> register(@Validated @RequestBody RegisterRequest request) {
-        userService.register(request);
-        return R.ok();
-    }
+  @PostMapping("/register")
+  @Operation(summary = "用户注册")
+  public R<Void> register(@Validated @RequestBody RegisterRequest request) {
+    userService.register(request);
+    return R.ok();
+  }
 
-    @PostMapping("/resetPassword")
-    @Operation(summary = "重置密码")
-    public R<Void> resetPassword(@Validated @RequestBody ResetPasswordRequest request) {
-        userService.resetPassword(request);
-        return R.ok();
-    }
+  @PostMapping("/resetPassword")
+  @Operation(summary = "重置密码")
+  public R<Void> resetPassword(@Validated @RequestBody ResetPasswordRequest request) {
+    userService.resetPassword(request);
+    return R.ok();
+  }
 
-    @PostMapping("/login")
-    @Operation(summary = "用户登录")
-    public R<String> login(@Validated @RequestBody LoginRequest request) {
-        return R.ok(userService.login(request));
-    }
+  @PostMapping("/login")
+  @Operation(summary = "用户登录")
+  public R<String> login(@Validated @RequestBody LoginRequest request) {
+    return R.ok(userService.login(request));
+  }
 
-    @GetMapping("/logout")
-    @Operation(summary = "退出登录")
-    public R<Void> logout() {
-        StpUtil.logout();
-        return R.ok();
-    }
+  @GetMapping("/logout")
+  @Operation(summary = "退出登录")
+  public R<Void> logout() {
+    StpUtil.logout();
+    return R.ok();
+  }
 
-    @PostMapping("/emailLogin")
-    @Operation(summary = "邮箱登录")
-    public R<String> login(@Validated @RequestBody EmailLoginRequest request) {
-        return R.ok(userService.emailLogin(request));
-    }
-
+  @PostMapping("/emailLogin")
+  @Operation(summary = "邮箱登录")
+  public R<String> login(@Validated @RequestBody EmailLoginRequest request) {
+    return R.ok(userService.emailLogin(request));
+  }
 }

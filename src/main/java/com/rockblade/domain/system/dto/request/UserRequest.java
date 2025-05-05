@@ -17,20 +17,19 @@ import lombok.Data;
 @Schema(description = "用户请求实体")
 public class UserRequest {
 
-    /** 用户id */
-    @Schema(description = "用户ID")
-    private String id;
+  /** 用户id */
+  @Schema(description = "用户ID")
+  private String id;
 
-    /** 角色id */
-    @Schema(description = "角色id")
-    private List<String> roleIds;
+  /** 角色id */
+  @Schema(description = "角色id")
+  private List<String> roleIds;
 
-    /** 部门id */
-    @Schema(description = "部门id")
-    private List<String> deptIds;
+  /** 部门id */
+  @Schema(description = "部门id")
+  private List<String> deptIds;
 
-    /** 状态 */
-    @Schema(description = "状态（1正常 0停用）")
-    private String status;
-
+  /** 状态 */
+  @Schema(description = "状态（1正常 0停用）")
+  private String status;
 }

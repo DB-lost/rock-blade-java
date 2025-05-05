@@ -20,8 +20,7 @@ import lombok.Getter;
 @Getter
 public class R<T> implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   /** 成功 */
   public static final int SUCCESS = HttpStatus.SUCCESS;
@@ -64,7 +63,7 @@ public class R<T> implements Serializable {
   /**
    * 成功
    *
-   * @param data    结果
+   * @param data 结果
    * @param message 消息
    * @return {@link R }<{@link T }>
    * @author DB
@@ -112,7 +111,7 @@ public class R<T> implements Serializable {
   /**
    * 失败
    *
-   * @param data    结果
+   * @param data 结果
    * @param message 消息
    * @return {@link R }<{@link T }>
    * @author DB
@@ -125,7 +124,7 @@ public class R<T> implements Serializable {
   /**
    * 失败
    *
-   * @param code    代码
+   * @param code 代码
    * @param message 消息
    * @return {@link R }<{@link T }>
    * @author DB
@@ -138,8 +137,8 @@ public class R<T> implements Serializable {
   /**
    * 其他结果
    *
-   * @param data    结果
-   * @param code    代码
+   * @param data 结果
+   * @param code 代码
    * @param message 消息
    * @return {@link R }<{@link T }>
    * @author DB

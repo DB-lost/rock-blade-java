@@ -125,8 +125,10 @@ public class RockBladeGeneratorApplication {
     // 设置模板配置
     globalConfig
         .getTemplateConfig()
-        .setEntity(System.getProperty("user.dir") + "/src/main/resources/templates/enjoy/entity.tpl")
-        .setMapper(System.getProperty("user.dir") + "/src/main/resources/templates/enjoy/mapper.tpl")
+        .setEntity(
+            System.getProperty("user.dir") + "/src/main/resources/templates/enjoy/entity.tpl")
+        .setMapper(
+            System.getProperty("user.dir") + "/src/main/resources/templates/enjoy/mapper.tpl")
         .setService(
             System.getProperty("user.dir") + "/src/main/resources/templates/enjoy/service.tpl")
         .setServiceImpl(
