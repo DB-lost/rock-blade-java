@@ -111,8 +111,8 @@ public interface UserService extends IService<User> {
   /**
    * 给用户分配部门
    *
-   * @param userId    用户ID
-   * @param deptId    部门ID
+   * @param userId 用户ID
+   * @param deptId 部门ID
    * @param isPrimary 是否为主部门
    */
   void assignDept(String userId, String deptId, Boolean isPrimary);
