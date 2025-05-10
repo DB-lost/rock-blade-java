@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 14:43:57
+ * @LastEditTime: 2025-05-09 18:14:48
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/RoleService.java
  * @Description: 角色信息表 服务层。
  *
@@ -34,7 +34,7 @@ public interface RoleService extends IService<Role> {
    * @param request 参数
    * @return 角色列表
    */
-  Page<RoleResponse> getRoleList(RolePageRequest request);
+  Page<RoleResponse> getRolePage(RolePageRequest request);
 
   /**
    * 创建角色

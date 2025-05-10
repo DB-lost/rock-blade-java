@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:10:17
+ * @LastEditTime: 2025-05-09 18:14:28
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/RoleController.java
  * @Description: 角色接口
  *
@@ -31,10 +31,10 @@ public class RoleController {
 
   @Autowired private RoleService roleService;
 
-  @GetMapping("/list")
+  @GetMapping("/page")
   @Operation(summary = "获取角色列表")
-  public R<Page<RoleResponse>> getRoleList(RolePageRequest request) {
-    return R.ok(roleService.getRoleList(request));
+  public R<Page<RoleResponse>> getRolePage(RolePageRequest request) {
+    return R.ok(roleService.getRolePage(request));
   }
 
   @PostMapping

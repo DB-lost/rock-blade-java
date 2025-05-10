@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 14:44:41
+ * @LastEditTime: 2025-05-09 18:14:56
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/impl/RoleServiceImpl.java
  * @Description: 角色信息表 服务层实现。
  *
@@ -49,7 +49,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
   }
 
   @Override
-  public Page<RoleResponse> getRoleList(RolePageRequest request) {
+  public Page<RoleResponse> getRolePage(RolePageRequest request) {
     // 执行分页查询
     PageDomain pageDomain = SqlUtils.getInstance().getPageDomain();
     return this.mapper.paginateWithRelationsAs(

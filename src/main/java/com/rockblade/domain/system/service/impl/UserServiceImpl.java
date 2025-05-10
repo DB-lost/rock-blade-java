@@ -1,8 +1,8 @@
 /*
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:43:06
- * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @LastEditTime: 2025-04-23 23:38:00
+ * @LastEditors: DB 2502523450@qq.com
+ * @LastEditTime: 2025-05-09 17:44:27
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/impl/UserServiceImpl.java
  * @Description: 用户服务实现类
  *
@@ -33,7 +33,6 @@ import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import com.rockblade.domain.system.dto.request.EmailCodeRequest;
 import com.rockblade.domain.system.dto.request.EmailLoginRequest;
-import com.rockblade.domain.system.dto.request.GetPublicKeyRequest;
 import com.rockblade.domain.system.dto.request.LoginRequest;
 import com.rockblade.domain.system.dto.request.RegisterRequest;
 import com.rockblade.domain.system.dto.request.ResetPasswordRequest;
@@ -86,8 +85,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   @Autowired private RockBladeConfig rockBladeConfig;
 
   @Override
-  public PublicKeyResponse getPublicKey(GetPublicKeyRequest request) {
-    String nonce = request.getNonce();
+  public PublicKeyResponse getPublicKey(String nonce) {
     if (StrUtil.isBlank(nonce)) {
       nonce = IdUtil.fastSimpleUUID();
     }

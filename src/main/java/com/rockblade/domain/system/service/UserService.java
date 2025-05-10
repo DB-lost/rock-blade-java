@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:43:06
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-17 09:52:22
+ * @LastEditTime: 2025-05-09 17:44:17
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/UserService.java
  * @Description: 用户服务接口
  *
@@ -14,7 +14,6 @@ import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.service.IService;
 import com.rockblade.domain.system.dto.request.EmailCodeRequest;
 import com.rockblade.domain.system.dto.request.EmailLoginRequest;
-import com.rockblade.domain.system.dto.request.GetPublicKeyRequest;
 import com.rockblade.domain.system.dto.request.LoginRequest;
 import com.rockblade.domain.system.dto.request.RegisterRequest;
 import com.rockblade.domain.system.dto.request.ResetPasswordRequest;
@@ -34,7 +33,7 @@ public interface UserService extends IService<User> {
    * @param request 请求参数
    * @return PublicKeyResponse
    */
-  PublicKeyResponse getPublicKey(GetPublicKeyRequest request);
+  PublicKeyResponse getPublicKey(String nonce);
 
   /**
    * 注册
