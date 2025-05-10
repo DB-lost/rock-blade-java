@@ -29,8 +29,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/role")
 public class RoleController {
 
-  @Autowired
-  private RoleService roleService;
+  @Autowired private RoleService roleService;
 
   @GetMapping("/page")
   @Operation(summary = "获取角色列表")

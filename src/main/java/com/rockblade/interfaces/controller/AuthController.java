@@ -41,13 +41,13 @@ import lombok.extern.slf4j.Slf4j;
 @Tag(name = "认证接口")
 public class AuthController {
 
-  @Autowired
-  private UserService userService;
+  @Autowired private UserService userService;
 
   @GetMapping("/getPublicKey")
   @Operation(summary = "获取公钥")
   public R<PublicKeyResponse> getPublicKey(
-      @Parameter(description = "随机字符串") @RequestParam(name = "nonce", required = false) String nonce) {
+      @Parameter(description = "随机字符串") @RequestParam(name = "nonce", required = false)
+          String nonce) {
     return R.ok(userService.getPublicKey(nonce));
   }
 
