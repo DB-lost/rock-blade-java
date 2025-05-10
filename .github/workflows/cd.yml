@@ -2,7 +2,7 @@ name: Continuous Deployment
 
 on:
   push:
-    branches: [ master, develop, feature/CI-CD ]
+    branches: [ master, develop, feature/rock-blade-react ]
     tags: [ 'v*' ]
 
 jobs:
