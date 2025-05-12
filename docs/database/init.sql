@@ -8,6 +8,7 @@ CREATE TABLE sys_user (
     phone VARCHAR(20),
     email VARCHAR(100),
     status CHAR(1) NOT NULL DEFAULT '1',           -- 角色状态（1正常 0停用）
+    user_type VARCHAR(20) DEFAULT 'GUEST',         -- 用户类型（ADMIN/USER/GUEST）
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_by VARCHAR(32),
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -25,6 +26,7 @@ COMMENT ON COLUMN sys_user.nickname IS '昵称';
 COMMENT ON COLUMN sys_user.password IS '密码';
 COMMENT ON COLUMN sys_user.phone IS '手机号';
 COMMENT ON COLUMN sys_user.email IS '邮箱';
+COMMENT ON COLUMN sys_user.user_type IS '用户类型（admin/user/guest）';
 COMMENT ON COLUMN sys_user.created_at IS '创建时间';
 COMMENT ON COLUMN sys_user.created_by IS '创建人ID';
 COMMENT ON COLUMN sys_user.updated_at IS '更新时间';
@@ -72,6 +74,7 @@ CREATE TABLE sys_role (
     id VARCHAR(32) PRIMARY KEY,
     role_name VARCHAR(30) NOT NULL,
     role_key VARCHAR(100) NOT NULL,    -- 角色标识符，如：admin、user
+    user_type VARCHAR(20) DEFAULT 'guest',    -- 用户类型（admin/user/guest）
     status CHAR(1) NOT NULL DEFAULT '1',           -- 角色状态（1正常 0停用）
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_by VARCHAR(32),
@@ -86,6 +89,7 @@ COMMENT ON TABLE sys_role IS '角色信息表';
 COMMENT ON COLUMN sys_role.id IS '主键ID';
 COMMENT ON COLUMN sys_role.role_name IS '角色名称';
 COMMENT ON COLUMN sys_role.role_key IS '角色标识符';
+COMMENT ON COLUMN sys_role.user_type IS '用户类型（admin/user/guest）';
 COMMENT ON COLUMN sys_role.status IS '角色状态';
 COMMENT ON COLUMN sys_role.created_at IS '创建时间';
 COMMENT ON COLUMN sys_role.created_by IS '创建人ID';
@@ -289,8 +293,8 @@ INSERT INTO sys_menu (id, name, pid, "order", path, component, type, auth_code, 
 ('7', '菜单删除', '3', 4, '', '', 'BUTTON', 'system:menu:remove', '#', '菜单删除', '100');
 
 -- 添加超级管理员用户
-INSERT INTO sys_user (id, username, password, status, created_by) VALUES
-('1', 'admin', '$2a$10$5kj44kCu2CyuN20/3qTt9eVnA7QoVhDoMumPuoCnCAMU9mEEb94vW', '1', '100');
+INSERT INTO sys_user (id, username, password, status, user_type, created_by) VALUES
+('1', 'admin', '$2a$10$5kj44kCu2CyuN20/3qTt9eVnA7QoVhDoMumPuoCnCAMU9mEEb94vW', '1', 'admin', '100');
 
 -- 创建用户-部门关联表
 CREATE TABLE sys_user_dept (

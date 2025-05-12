@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:43:06
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-09 17:44:27
+ * @LastEditTime: 2025-05-12 18:30:54
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/impl/UserServiceImpl.java
  * @Description: 用户服务实现类
  *
@@ -43,9 +43,12 @@ import com.rockblade.domain.system.dto.request.VerifyEmailCodeRequest;
 import com.rockblade.domain.system.dto.response.PublicKeyResponse;
 import com.rockblade.domain.system.dto.response.UserInfoResponse;
 import com.rockblade.domain.system.dto.response.UserPageResponse;
+import com.rockblade.domain.system.entity.Role;
 import com.rockblade.domain.system.entity.User;
 import com.rockblade.domain.system.entity.UserDept;
 import com.rockblade.domain.system.entity.UserRole;
+import com.rockblade.domain.system.enums.UserType;
+import com.rockblade.domain.system.service.RoleService;
 import com.rockblade.domain.system.service.UserDeptService;
 import com.rockblade.domain.system.service.UserRoleService;
 import com.rockblade.domain.system.service.UserService;
@@ -78,11 +81,14 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
-  @Autowired private EmailHandler emailHandler;
+  @Autowired
+  private EmailHandler emailHandler;
 
-  @Autowired private RedisHandler redisHandler;
+  @Autowired
+  private RedisHandler redisHandler;
 
-  @Autowired private RockBladeConfig rockBladeConfig;
+  @Autowired
+  private RockBladeConfig rockBladeConfig;
 
   @Override
   public PublicKeyResponse getPublicKey(String nonce) {
@@ -91,9 +97,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
     Gateway gateway = rockBladeConfig.getGateway();
     // 生成RSA密钥对
-    KeyPair rsa =
-        SecureUtil.generateKeyPair(
-            gateway.getRsaKeypair().getAlgorithm(), gateway.getRsaKeypair().getKeySize());
+    KeyPair rsa = SecureUtil.generateKeyPair(
+        gateway.getRsaKeypair().getAlgorithm(), gateway.getRsaKeypair().getKeySize());
     PublicKey publicKey = rsa.getPublic();
     PrivateKey privateKey = rsa.getPrivate();
 
@@ -123,13 +128,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     // 保存用户信息
-    User user =
-        User.builder()
-            .email(request.getEmail())
-            .password(BCrypt.hashpw(request.getPassword()))
-            .username(request.getUsername())
-            .phone(request.getPhone())
-            .build();
+    User user = User.builder()
+        .email(request.getEmail())
+        .password(BCrypt.hashpw(request.getPassword()))
+        .username(request.getUsername())
+        .phone(request.getPhone())
+        .userType(UserType.USER) // 设置用户类型为user
+        .build();
     this.save(user);
   }
 
@@ -176,8 +181,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     switch (request.getType()) {
       case "register":
         // 校验邮箱是否已注册
-        QueryWrapper queryWrapper =
-            QueryWrapper.create().where(User::getEmail).eq(request.getEmail());
+        QueryWrapper queryWrapper = QueryWrapper.create().where(User::getEmail).eq(request.getEmail());
         if (this.count(queryWrapper) > 0) {
           throw new ServiceException(MessageUtils.message("auth.email.registered"));
         }
@@ -239,7 +243,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
   /**
    * @description: 登陆
-   * @param {User} user
+   * @param {User}   user
    * @param {String} password
    * @param {String} nonce
    * @return {*}
@@ -263,8 +267,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   /**
    * 解密密码并删除私钥缓存
    *
-   * @param password 加密的密码
-   * @param nonce 随机字符串
+   * @param password     加密的密码
+   * @param nonce        随机字符串
    * @param redisHandler Redis工具类
    * @return 解密后的密码
    */
@@ -309,31 +313,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             .and(USER_ROLE.ROLE_ID.eq(request.getRoleId()))
             .and(USER_DEPT.DEPT_ID.eq(request.getDeptId())),
         UserPageResponse.class,
-        deptInfo ->
-            deptInfo
-                .field(UserPageResponse::getDeptInfo)
-                .queryWrapper(
-                    UserPageResponse ->
-                        QueryWrapper.create()
-                            .select("STRING_AGG(DISTINCT \"sys_dept\".\"id\", ',') AS \"dept_ids\"")
-                            .select("STRING_AGG(DISTINCT \"sys_dept\".\"name\", ',') AS \"depts\"")
-                            .from(USER_DEPT)
-                            .leftJoin(DEPT)
-                            .on(DEPT.ID.eq(USER_DEPT.DEPT_ID))
-                            .where(USER_DEPT.USER_ID.eq(UserPageResponse.getId()))),
-        roleInfo ->
-            roleInfo
-                .field(UserPageResponse::getRoleInfo)
-                .queryWrapper(
-                    UserPageResponse ->
-                        QueryWrapper.create()
-                            .select(
-                                "STRING_AGG(DISTINCT \"sys_role\".\"id\", ',') AS \"role_ids\"",
-                                "STRING_AGG(DISTINCT \"sys_role\".\"role_name\", ',') AS \"roles\"")
-                            .from(USER_ROLE)
-                            .leftJoin(ROLE)
-                            .on(ROLE.ID.eq(USER_ROLE.ROLE_ID))
-                            .where(USER_ROLE.USER_ID.eq(UserPageResponse.getId()))));
+        deptInfo -> deptInfo
+            .field(UserPageResponse::getDeptInfo)
+            .queryWrapper(
+                UserPageResponse -> QueryWrapper.create()
+                    .select("STRING_AGG(DISTINCT \"sys_dept\".\"id\", ',') AS \"dept_ids\"")
+                    .select("STRING_AGG(DISTINCT \"sys_dept\".\"name\", ',') AS \"depts\"")
+                    .from(USER_DEPT)
+                    .leftJoin(DEPT)
+                    .on(DEPT.ID.eq(USER_DEPT.DEPT_ID))
+                    .where(USER_DEPT.USER_ID.eq(UserPageResponse.getId()))),
+        roleInfo -> roleInfo
+            .field(UserPageResponse::getRoleInfo)
+            .queryWrapper(
+                UserPageResponse -> QueryWrapper.create()
+                    .select(
+                        "STRING_AGG(DISTINCT \"sys_role\".\"id\", ',') AS \"role_ids\"",
+                        "STRING_AGG(DISTINCT \"sys_role\".\"role_name\", ',') AS \"roles\"")
+                    .from(USER_ROLE)
+                    .leftJoin(ROLE)
+                    .on(ROLE.ID.eq(USER_ROLE.ROLE_ID))
+                    .where(USER_ROLE.USER_ID.eq(UserPageResponse.getId()))));
   }
 
   @Override
