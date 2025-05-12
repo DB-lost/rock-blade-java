@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 14:43:52
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-12 17:43:02
+ * @LastEditTime: 2025-05-12 18:43:05
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/CommonController.java
  * @Description: 公共接口
  *
@@ -63,6 +63,7 @@ public class CommonController {
     PermissionsResponse permissionsResponse = new PermissionsResponse();
     permissionsResponse.setPermissions(StpUtil.getPermissionList());
     // TODO: 后续支持多角色
+    permissionsResponse.setRoles(StpUtil.getRoleList());
     return R.ok(permissionsResponse);
   }
 

@@ -294,7 +294,7 @@ INSERT INTO sys_menu (id, name, pid, "order", path, component, type, auth_code, 
 
 -- 添加超级管理员用户
 INSERT INTO sys_user (id, username, password, status, user_type, created_by) VALUES
-('1', 'admin', '$2a$10$5kj44kCu2CyuN20/3qTt9eVnA7QoVhDoMumPuoCnCAMU9mEEb94vW', '1', 'admin', '100');
+('1', 'admin', '$2a$10$5kj44kCu2CyuN20/3qTt9eVnA7QoVhDoMumPuoCnCAMU9mEEb94vW', '1', 'ADMIN', '100');
 
 -- 创建用户-部门关联表
 CREATE TABLE sys_user_dept (
