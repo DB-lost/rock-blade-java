@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 00:13:16
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 14:19:05
+ * @LastEditTime: 2025-05-12 18:30:42
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/entity/User.java
  * @Description: 用户信息表
  *
@@ -14,6 +14,7 @@ import java.io.Serializable;
 
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
+import com.rockblade.domain.system.enums.UserType;
 import com.rockblade.framework.core.base.entity.BaseEntity;
 import com.rockblade.framework.core.base.entity.BaseInsertListener;
 import com.rockblade.framework.core.base.entity.BaseUpdateListener;
@@ -57,6 +58,9 @@ public class User extends BaseEntity implements Serializable {
 
   /** 状态 */
   private String status;
+
+  /** 用户类型(admin/user/guest) */
+  private UserType userType;
 
   /** 是否删除 */
   private Boolean deleted;
