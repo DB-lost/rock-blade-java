@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 14:43:52
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-17 10:21:14
+ * @LastEditTime: 2025-05-12 18:43:05
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/CommonController.java
  * @Description: 公共接口
  *
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rockblade.domain.system.dto.request.UserDetailsInfoRequest;
 import com.rockblade.domain.system.dto.response.MenuResponse;
+import com.rockblade.domain.system.dto.response.PermissionsResponse;
 import com.rockblade.domain.system.dto.response.UserInfoResponse;
 import com.rockblade.domain.system.service.MenuService;
 import com.rockblade.domain.system.service.UserService;
@@ -54,10 +55,14 @@ public class CommonController {
     return R.ok(menuService.getMenuTreeByUserId(StpUtil.getLoginIdAsString()));
   }
 
-  @GetMapping("/getCodes")
-  @Operation(summary = "获取授权码")
-  public R<List<String>> getCodes() {
-    return R.ok(StpUtil.getPermissionList());
+  @GetMapping("/getPermissions")
+  @Operation(summary = "获取角色和权限码")
+  public R<PermissionsResponse> getPermissions() {
+    PermissionsResponse permissionsResponse = new PermissionsResponse();
+    permissionsResponse.setPermissions(StpUtil.getPermissionList());
+    // TODO: 后续支持多角色
+    permissionsResponse.setRoles(StpUtil.getRoleList());
+    return R.ok(permissionsResponse);
   }
 
   @PostMapping("/updateUserDetails")

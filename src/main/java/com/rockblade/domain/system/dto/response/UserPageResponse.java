@@ -2,7 +2,7 @@
  * @Author: DB
  * @Date: 2025-04-16 14:30:00
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 21:26:52
+ * @LastEditTime: 2025-05-13 16:30:28
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/dto/response/UserPageResponse.java
  * @Description: 用户详细信息响应实体
  */
@@ -61,11 +61,11 @@ public class UserPageResponse {
 
   /** 部门信息 */
   @Schema(description = "部门信息")
-  private DeptInfo deptInfo;
+  private List<DeptInfo> deptInfo;
 
   /** 角色信息 */
   @Schema(description = "角色信息")
-  private RoleInfo roleInfo;
+  private List<RoleInfo> roleInfo;
 
   @Data
   @Schema(description = "部门信息")
@@ -73,11 +73,11 @@ public class UserPageResponse {
 
     /** 部门信息 */
     @Schema(description = "部门信息")
-    private List<String> depts;
+    private String name;
 
     /** 部门IDs */
-    @Schema(description = "部门IDs")
-    private List<String> deptIds;
+    @Schema(description = "部门ID")
+    private String id;
   }
 
   @Data
@@ -86,10 +86,10 @@ public class UserPageResponse {
 
     /** 角色信息 */
     @Schema(description = "角色信息")
-    private List<String> roles;
+    private String roleName;
 
     /** 角色IDs */
-    @Schema(description = "角色IDs")
-    private List<String> roleIds;
+    @Schema(description = "角色ID")
+    private String id;
   }
 }

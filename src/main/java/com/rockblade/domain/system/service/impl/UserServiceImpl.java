@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:43:06
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-09 17:44:27
+ * @LastEditTime: 2025-05-13 17:18:16
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/impl/UserServiceImpl.java
  * @Description: 用户服务实现类
  *
@@ -46,6 +46,7 @@ import com.rockblade.domain.system.dto.response.UserPageResponse;
 import com.rockblade.domain.system.entity.User;
 import com.rockblade.domain.system.entity.UserDept;
 import com.rockblade.domain.system.entity.UserRole;
+import com.rockblade.domain.system.enums.UserType;
 import com.rockblade.domain.system.service.UserDeptService;
 import com.rockblade.domain.system.service.UserRoleService;
 import com.rockblade.domain.system.service.UserService;
@@ -129,6 +130,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             .password(BCrypt.hashpw(request.getPassword()))
             .username(request.getUsername())
             .phone(request.getPhone())
+            .userType(UserType.USER) // 设置用户类型为user
             .build();
     this.save(user);
   }
@@ -315,8 +317,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .queryWrapper(
                     UserPageResponse ->
                         QueryWrapper.create()
-                            .select("STRING_AGG(DISTINCT \"sys_dept\".\"id\", ',') AS \"dept_ids\"")
-                            .select("STRING_AGG(DISTINCT \"sys_dept\".\"name\", ',') AS \"depts\"")
+                            .select(DEPT.ID, DEPT.NAME)
                             .from(USER_DEPT)
                             .leftJoin(DEPT)
                             .on(DEPT.ID.eq(USER_DEPT.DEPT_ID))
@@ -327,9 +328,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .queryWrapper(
                     UserPageResponse ->
                         QueryWrapper.create()
-                            .select(
-                                "STRING_AGG(DISTINCT \"sys_role\".\"id\", ',') AS \"role_ids\"",
-                                "STRING_AGG(DISTINCT \"sys_role\".\"role_name\", ',') AS \"roles\"")
+                            .select(ROLE.ID, ROLE.ROLE_NAME)
                             .from(USER_ROLE)
                             .leftJoin(ROLE)
                             .on(ROLE.ID.eq(USER_ROLE.ROLE_ID))
