@@ -6,9 +6,7 @@ import com.rockblade.domain.system.entity.RolePermission;
 /**
  * 角色和菜单关联表 映射层。
  *
- * @author 
+ * @author
  * @since 2025-05-12
  */
-public interface RolePermissionMapper extends BaseMapper<RolePermission> {
-
-}
+public interface RolePermissionMapper extends BaseMapper<RolePermission> {}

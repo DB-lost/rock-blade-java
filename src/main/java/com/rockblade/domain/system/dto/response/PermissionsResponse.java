@@ -5,8 +5,8 @@
  * @LastEditTime: 2025-05-12 17:39:19
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/dto/response/PermissionsResponse.java
  * @Description: 角色和权限码响应
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.domain.system.dto.response;
 
@@ -19,11 +19,11 @@ import lombok.Data;
 @Schema(description = "角色和权限码响应")
 public class PermissionsResponse {
 
-    /** 角色 */
-    @Schema(description = "角色")
-    private List<String> roles;
+  /** 角色 */
+  @Schema(description = "角色")
+  private List<String> roles;
 
-    /** 权限码 */
-    @Schema(description = "权限码")
-    private List<String> permissions;
+  /** 权限码 */
+  @Schema(description = "权限码")
+  private List<String> permissions;
 }
