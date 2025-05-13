@@ -26,7 +26,7 @@ COMMENT ON COLUMN sys_user.nickname IS '昵称';
 COMMENT ON COLUMN sys_user.password IS '密码';
 COMMENT ON COLUMN sys_user.phone IS '手机号';
 COMMENT ON COLUMN sys_user.email IS '邮箱';
-COMMENT ON COLUMN sys_user.user_type IS '用户类型（admin/user/guest）';
+COMMENT ON COLUMN sys_user.user_type IS '用户类型（ADMIN/USER/GUEST）';
 COMMENT ON COLUMN sys_user.created_at IS '创建时间';
 COMMENT ON COLUMN sys_user.created_by IS '创建人ID';
 COMMENT ON COLUMN sys_user.updated_at IS '更新时间';
@@ -171,6 +171,29 @@ COMMENT ON COLUMN sys_menu.created_by IS '创建人ID';
 COMMENT ON COLUMN sys_menu.updated_at IS '更新时间';
 COMMENT ON COLUMN sys_menu.updated_by IS '更新人ID';
 COMMENT ON COLUMN sys_menu.deleted IS '是否删除';
+
+-- 创建角色权限表
+CREATE TABLE sys_role_permission (
+    role_id VARCHAR(32) NOT NULL,
+    permission VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_by VARCHAR(32),
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_by VARCHAR(32),
+    PRIMARY KEY (role_id, permission),
+    CONSTRAINT fk_rp_role_id FOREIGN KEY (role_id) REFERENCES sys_role (id)
+);
+
+COMMENT ON TABLE sys_role_permission IS '角色权限关联表';
+COMMENT ON COLUMN sys_role_permission.role_id IS '角色ID';
+COMMENT ON COLUMN sys_role_permission.permission IS '权限标识符';
+COMMENT ON COLUMN sys_role_permission.created_at IS '创建时间';
+COMMENT ON COLUMN sys_role_permission.created_by IS '创建人ID';
+COMMENT ON COLUMN sys_role_permission.updated_at IS '更新时间';
+COMMENT ON COLUMN sys_role_permission.updated_by IS '更新人ID';
+
+-- 创建角色权限相关索引
+CREATE INDEX idx_sys_role_permission_role_id ON sys_role_permission(role_id);
 
 -- 创建用户-角色关联表
 CREATE TABLE sys_user_role (

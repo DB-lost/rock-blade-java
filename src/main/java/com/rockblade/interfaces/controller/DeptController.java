@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-16 10:16:49
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 14:50:29
+ * @LastEditTime: 2025-05-13 17:19:47
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/DeptController.java
  * @Description: 部门管理接口
  *
@@ -28,7 +28,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "部门管理接口")
 public class DeptController {
 
-  @Autowired private DeptService deptService;
+  @Autowired
+  private DeptService deptService;
 
   /** 获取部门列表（树形结构） */
   @GetMapping("/list")
@@ -57,5 +58,12 @@ public class DeptController {
   @Operation(summary = "删除部门")
   public R<Boolean> remove(@PathVariable String deptId) {
     return R.ok(deptService.deleteDept(deptId));
+  }
+
+  /** 获取部门详情 */
+  @GetMapping("/detail/{deptId}")
+  @Operation(summary = "获取部门详情")
+  public R<DeptResponse> getDeptById(@PathVariable String deptId) {
+    return R.ok(deptService.getDeptById(deptId));
   }
 }
