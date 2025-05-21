@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-20 11:55:49
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-21 11:03:10
- * @FilePath: /rock-blade-ITOM-Backstage/home/db/WorkSpace/Template-WorkSpace/rock-blade-java/src/main/java/com/rockblade/framework/config/MonitorConfig.java
+ * @LastEditTime: 2025-05-21 11:15:49
+ * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/config/MonitorConfig.java
  * @Description: 监控配置类 配置系统资源监控指标
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package main.java.com.rockblade.framework.config;
+package com.rockblade.framework.config;
 
 import java.io.File;
 import java.lang.management.GarbageCollectorMXBean;
