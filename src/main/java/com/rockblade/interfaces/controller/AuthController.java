@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 10:04:57
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-09 17:44:01
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/AuthController.java
+ * @LastEditTime: 2025-05-21 11:04:25
+ * @FilePath: /rock-blade-ITOM-Backstage/home/db/WorkSpace/Template-WorkSpace/rock-blade-java/src/main/java/com/rockblade/interfaces/controller/AuthController.java
  * @Description: 认证接口
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -28,8 +28,11 @@ import com.rockblade.domain.system.dto.request.VerifyEmailCodeRequest;
 import com.rockblade.domain.system.dto.response.PublicKeyResponse;
 import com.rockblade.domain.system.service.UserService;
 import com.rockblade.framework.core.base.entity.R;
+import com.rockblade.framework.utils.IpUtils;
+import com.rockblade.framework.utils.ServletUtils;
 
 import cn.dev33.satoken.stp.StpUtil;
+import io.micrometer.core.instrument.MeterRegistry;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,6 +45,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthController {
 
   @Autowired private UserService userService;
+  @Autowired private MeterRegistry meterRegistry;
 
   @GetMapping("/getPublicKey")
   @Operation(summary = "获取公钥")
@@ -55,6 +59,7 @@ public class AuthController {
   @Operation(summary = "发送邮箱验证码")
   public R<Void> sendEmailCode(@Validated @RequestBody EmailCodeRequest request) {
     userService.sendEmailCode(request);
+    meterRegistry.counter("auth.email.code.sent").increment();
     return R.ok();
   }
 
@@ -62,6 +67,7 @@ public class AuthController {
   @Operation(summary = "校验邮箱验证码")
   public R<Void> verifyEmailCode(@Validated @RequestBody VerifyEmailCodeRequest request) {
     userService.verifyEmailCode(request);
+    meterRegistry.counter("auth.email.code.verify", "result", "success").increment();
     return R.ok();
   }
 
@@ -76,13 +82,23 @@ public class AuthController {
   @Operation(summary = "重置密码")
   public R<Void> resetPassword(@Validated @RequestBody ResetPasswordRequest request) {
     userService.resetPassword(request);
+    meterRegistry.counter("security.password.reset").increment();
     return R.ok();
   }
 
   @PostMapping("/login")
   @Operation(summary = "用户登录")
   public R<String> login(@Validated @RequestBody LoginRequest request) {
-    return R.ok(userService.login(request));
+    meterRegistry.counter("auth.login.total").increment();
+    try {
+      String token = userService.login(request);
+      meterRegistry.counter("auth.login.success").increment();
+      updateDeviceMetrics(request);
+      return R.ok(token);
+    } catch (Exception e) {
+      meterRegistry.counter("auth.login.failure").increment();
+      throw e;
+    }
   }
 
   @GetMapping("/logout")
@@ -90,6 +106,47 @@ public class AuthController {
   public R<Void> logout() {
     StpUtil.logout();
     return R.ok();
+  }
+
+  /** 记录设备和浏览器指标 */
+  private void updateDeviceMetrics(LoginRequest request) {
+    // 从User-Agent获取设备类型和浏览器信息
+    String userAgent = ServletUtils.getRequest().getHeader("User-Agent");
+    String deviceType = getDeviceType(userAgent);
+    String browser = getBrowserType(userAgent);
+    String location = IpUtils.getIpLocation(IpUtils.getIpAddr());
+
+    meterRegistry.counter("client.device", "type", deviceType).increment();
+    meterRegistry.counter("client.browser", "type", browser).increment();
+    meterRegistry.counter("client.location", "location", location).increment();
+  }
+
+  private String getDeviceType(String userAgent) {
+    if (userAgent == null) return "unknown";
+    userAgent = userAgent.toLowerCase();
+    if (userAgent.contains("mobile")
+        || userAgent.contains("android")
+        || userAgent.contains("iphone")) {
+      return "mobile";
+    } else if (userAgent.contains("tablet") || userAgent.contains("ipad")) {
+      return "tablet";
+    }
+    return "desktop";
+  }
+
+  private String getBrowserType(String userAgent) {
+    if (userAgent == null) return "unknown";
+    userAgent = userAgent.toLowerCase();
+    if (userAgent.contains("chrome")) {
+      return "chrome";
+    } else if (userAgent.contains("firefox")) {
+      return "firefox";
+    } else if (userAgent.contains("safari")) {
+      return "safari";
+    } else if (userAgent.contains("edge")) {
+      return "edge";
+    }
+    return "other";
   }
 
   @PostMapping("/emailLogin")
