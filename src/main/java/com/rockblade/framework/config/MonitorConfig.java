@@ -75,7 +75,8 @@ public class MonitorConfig {
 
     // CPU使用率
     if (osBean instanceof com.sun.management.OperatingSystemMXBean) {
-      com.sun.management.OperatingSystemMXBean sunOsBean = (com.sun.management.OperatingSystemMXBean) osBean;
+      com.sun.management.OperatingSystemMXBean sunOsBean =
+          (com.sun.management.OperatingSystemMXBean) osBean;
       Gauge.builder("system.cpu.usage", sunOsBean::getCpuLoad)
           .description(MessageUtils.message("monitor.system.cpu.usage"))
           .register(registry);

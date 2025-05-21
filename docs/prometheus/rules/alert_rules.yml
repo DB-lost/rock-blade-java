@@ -104,3 +104,123 @@ groups:
         annotations:
           summary: "网络IO过高"
           description: "网络总IO速率超过10MB/s (当前值: {{ $value }} bytes/s)"
+
+  - name: api_monitoring
+    rules:
+      # 接口响应时间告警
+      - alert: APIHighLatency
+        expr: histogram_quantile(0.95, sum(rate(http_server_requests_duration_seconds_bucket[5m])) by (endpoint, le)) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "接口响应时间过高"
+          description: "接口 {{ $labels.endpoint }} 的95%响应时间超过1秒 (当前值: {{ $value }}s)"
+
+      # 接口错误率告警
+      - alert: APIHighErrorRate
+        expr: sum(rate(http_server_requests_errors_total[5m])) by (endpoint) / sum(rate(http_server_requests_total[5m])) by (endpoint) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "接口错误率过高"
+          description: "接口 {{ $labels.endpoint }} 的错误率超过10% (当前值: {{ $value | humanize }}%)"
+
+      # 接口请求量突增告警
+      - alert: APIHighRequestRate
+        expr: sum(rate(http_server_requests_total[5m])) by (endpoint) > 100
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "接口请求量突增"
+          description: "接口 {{ $labels.endpoint }} 的请求量超过每秒100次 (当前值: {{ $value | humanize }}请求/秒)"
+
+      # 接口请求量突降告警（可能表示服务异常）
+      - alert: APILowRequestRate
+        expr: sum(rate(http_server_requests_total[5m])) by (endpoint) < 0.1 and sum(rate(http_server_requests_total[24h] offset 24h)) by (endpoint) > 1
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "接口请求量异常降低"
+          description: "接口 {{ $labels.endpoint }} 的请求量异常降低 (当前值: {{ $value | humanize }}请求/秒)"
+
+  - name: database_monitoring
+    rules:
+      # 慢查询告警
+      - alert: PostgresHighSlowQueryCount
+        expr: sum(rate(postgres_slow_query_execution_count[5m])) by (query) > 10
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "慢查询数量过高"
+          description: "查询 {{ $labels.query }} 在5分钟内执行次数过多 (当前值: {{ $value }}次/秒)"
+
+      - alert: PostgresLongQueryLatency
+        expr: postgres_slow_query_avg_latency > 2000
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "查询平均延迟过高"
+          description: "查询 {{ $labels.query }} 的平均响应时间超过2秒 (当前值: {{ $value }}ms)"
+
+      # 数据库性能告警
+      - alert: PostgresHighTableScanRate
+        expr: rate(postgres_table_seq_scan[5m]) > 100
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "表扫描次数过多"
+          description: "表 {{ $labels.table }} 的顺序扫描次数过多，建议检查索引 (当前值: {{ $value }}次/秒)"
+
+      - alert: PostgresDeadTuplesRatio
+        expr: postgres_table_dead_rows / (postgres_table_live_rows + postgres_table_dead_rows) * 100 > 20
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "死元组比例过高"
+          description: "表 {{ $labels.table }} 的死元组比例超过20%，建议执行VACUUM (当前值: {{ $value | humanize }}%)"
+
+      # 事务和缓存告警
+      - alert: PostgresHighRollbackRate
+        expr: rate(postgres_stats_rollbacks[5m]) / (rate(postgres_stats_commits[5m]) + rate(postgres_stats_rollbacks[5m])) * 100 > 10
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "回滚率过高"
+          description: "数据库 {{ $labels.database }} 的事务回滚率超过10% (当前值: {{ $value | humanize }}%)"
+
+      - alert: PostgresLowCacheHitRate
+        expr: rate(postgres_stats_blocks_hit[5m]) / (rate(postgres_stats_blocks_hit[5m]) + rate(postgres_stats_blocks_read[5m])) * 100 < 90
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "缓存命中率过低"
+          description: "数据库 {{ $labels.database }} 的缓存命中率低于90% (当前值: {{ $value | humanize }}%)"
+
+      # 连接数告警
+      - alert: PostgresHighActiveConnections
+        expr: postgres_connections_active > postgres_connections_total * 0.8
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "活动连接数过高"
+          description: "数据库当前活动连接数占总连接数的比例超过80% (当前值: {{ $value }}%)"
+
+      - alert: PostgresLowIdleConnections
+        expr: postgres_connections_idle < 5 and postgres_connections_total > 20
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "空闲连接数过低"
+          description: "数据库空闲连接数过低，可能影响新请求处理 (当前空闲连接: {{ $value }})"
