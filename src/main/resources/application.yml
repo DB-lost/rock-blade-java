@@ -74,6 +74,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     #hikari数据源特性配置
     hikari:
+      pool-name: RockBladeHikariPool
       #最大连接数,默认值10.
       maximum-pool-size: 10
       #最小空闲连接，默认值10.
@@ -120,6 +121,27 @@ mybatis-flex:
     deleted-value-of-logic-delete: true
     # 全局默认逻辑删除字段
     logic-delete-column: deleted
+
+# Actuator配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+    prometheus:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    enable:
+      jvm: true
+      process: true
+      system: true
+      logback: true
 
 #日志
 logging:
