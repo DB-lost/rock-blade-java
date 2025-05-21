@@ -1,4 +1,41 @@
 groups:
+  - name: system_resources
+    rules:
+      - alert: HighSystemLoad
+        expr: system_load_average > 3
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High system load detected"
+          description: "System load average is {{ $value }} over the last 5 minutes"
+
+      - alert: HighHeapMemoryUsage
+        expr: jvm_memory_heap_used / jvm_memory_heap_max * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High heap memory usage"
+          description: "JVM heap memory usage is {{ $value }}%"
+
+      - alert: HighNonHeapMemoryUsage
+        expr: jvm_memory_nonheap_used / jvm_memory_nonheap_max * 100 > 90
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High non-heap memory usage"
+          description: "JVM non-heap memory usage is {{ $value }}%"
+
+      - alert: SystemCpuUsageHigh
+        expr: system_cpu_usage > 0.85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage"
+          description: "System CPU usage is {{ $value }}%"
   - name: rock-blade-alerts
     rules:
       # 系统资源告警规则

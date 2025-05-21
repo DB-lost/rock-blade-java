@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-20 11:55:49
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-21 11:15:49
+ * @LastEditTime: 2025-05-21 12:15:58
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/config/MonitorConfig.java
  * @Description: 监控配置类 配置系统资源监控指标
  *
@@ -16,6 +16,8 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.lang.management.OperatingSystemMXBean;
 import java.net.NetworkInterface;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -66,23 +68,38 @@ public class MonitorConfig {
     OperatingSystemMXBean osBean = ManagementFactory.getOperatingSystemMXBean();
     MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
 
+    // 系统负载
+    Gauge.builder("system.load.average", osBean::getSystemLoadAverage)
+        .description(MessageUtils.message("monitor.system.load.average"))
+        .register(registry);
+
     // CPU使用率
     if (osBean instanceof com.sun.management.OperatingSystemMXBean) {
-      com.sun.management.OperatingSystemMXBean sunOsBean =
-          (com.sun.management.OperatingSystemMXBean) osBean;
+      com.sun.management.OperatingSystemMXBean sunOsBean = (com.sun.management.OperatingSystemMXBean) osBean;
       Gauge.builder("system.cpu.usage", sunOsBean::getCpuLoad)
           .description(MessageUtils.message("monitor.system.cpu.usage"))
           .register(registry);
     }
 
-    // 系统内存使用情况
-    Gauge.builder("system.memory.used", () -> memoryBean.getHeapMemoryUsage().getUsed())
-        .description(MessageUtils.message("monitor.system.memory.used"))
+    // 堆内存使用情况
+    Gauge.builder("jvm.memory.heap.used", () -> memoryBean.getHeapMemoryUsage().getUsed())
+        .description(MessageUtils.message("monitor.jvm.memory.heap.used"))
         .baseUnit("bytes")
         .register(registry);
 
-    Gauge.builder("system.memory.max", () -> memoryBean.getHeapMemoryUsage().getMax())
-        .description(MessageUtils.message("monitor.system.memory.max"))
+    Gauge.builder("jvm.memory.heap.max", () -> memoryBean.getHeapMemoryUsage().getMax())
+        .description(MessageUtils.message("monitor.jvm.memory.heap.max"))
+        .baseUnit("bytes")
+        .register(registry);
+
+    // 非堆内存使用情况
+    Gauge.builder("jvm.memory.nonheap.used", () -> memoryBean.getNonHeapMemoryUsage().getUsed())
+        .description(MessageUtils.message("monitor.jvm.memory.nonheap.used"))
+        .baseUnit("bytes")
+        .register(registry);
+
+    Gauge.builder("jvm.memory.nonheap.max", () -> memoryBean.getNonHeapMemoryUsage().getMax())
+        .description(MessageUtils.message("monitor.jvm.memory.nonheap.max"))
         .baseUnit("bytes")
         .register(registry);
 
@@ -185,8 +202,7 @@ public class MonitorConfig {
 
   private String getNetworkStatLine(String interfaceName) {
     try {
-      List<String> lines =
-          java.nio.file.Files.readAllLines(java.nio.file.Paths.get("/proc/net/dev"));
+      List<String> lines = Files.readAllLines(Paths.get("/proc/net/dev"));
       return lines.stream()
           .filter(line -> line.trim().startsWith(interfaceName + ":"))
           .findFirst()
