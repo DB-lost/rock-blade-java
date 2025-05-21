@@ -57,6 +57,8 @@ sa-token:
 
 #Spring
 spring:
+  application:
+    name: rock-blade-java
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
