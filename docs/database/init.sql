@@ -427,3 +427,36 @@ CREATE INDEX idx_sys_alert_rule_deleted ON sys_alert_rule(deleted);
 CREATE INDEX idx_sys_alert_history_rule_id ON sys_alert_history(rule_id);
 CREATE INDEX idx_sys_alert_history_status ON sys_alert_history(status);
 CREATE INDEX idx_sys_alert_history_fire_time ON sys_alert_history(fire_time);
+
+-- 创建数据导出任务表
+CREATE TABLE sys_export_task (
+    id VARCHAR(32) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,            -- 任务名称
+    export_type VARCHAR(20) NOT NULL,      -- 导出类型(METRICS/ALERT)
+    params TEXT,                           -- 导出参数(JSON格式)
+    status VARCHAR(20) NOT NULL,           -- 状态(PENDING/PROCESSING/COMPLETED/FAILED)
+    file_path VARCHAR(200),                -- 导出文件路径
+    progress INTEGER DEFAULT 0,             -- 导出进度(0-100)
+    error_message TEXT,                    -- 错误信息
+    user_id VARCHAR(32) NOT NULL,          -- 创建用户ID
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_by VARCHAR(32),
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_by VARCHAR(32),
+    CONSTRAINT fk_export_task_user_id FOREIGN KEY (user_id) REFERENCES sys_user (id)
+);
+
+COMMENT ON TABLE sys_export_task IS '数据导出任务表';
+COMMENT ON COLUMN sys_export_task.id IS '任务ID';
+COMMENT ON COLUMN sys_export_task.name IS '任务名称';
+COMMENT ON COLUMN sys_export_task.export_type IS '导出类型';
+COMMENT ON COLUMN sys_export_task.params IS '导出参数';
+COMMENT ON COLUMN sys_export_task.status IS '状态';
+COMMENT ON COLUMN sys_export_task.file_path IS '导出文件路径';
+COMMENT ON COLUMN sys_export_task.progress IS '导出进度';
+COMMENT ON COLUMN sys_export_task.error_message IS '错误信息';
+
+-- 创建索引
+CREATE INDEX idx_sys_export_task_user_id ON sys_export_task(user_id);
+CREATE INDEX idx_sys_export_task_status ON sys_export_task(status);
+CREATE INDEX idx_sys_export_task_created_at ON sys_export_task(created_at);
