@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-20 11:55:49
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-21 12:15:58
+ * @LastEditTime: 2025-05-22 15:54:59
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/config/MonitorConfig.java
  * @Description: 监控配置类 配置系统资源监控指标
  *
@@ -73,12 +73,22 @@ public class MonitorConfig {
         .description(MessageUtils.message("monitor.system.load.average"))
         .register(registry);
 
-    // CPU使用率
+    // CPU使用率和系统内存
     if (osBean instanceof com.sun.management.OperatingSystemMXBean) {
-      com.sun.management.OperatingSystemMXBean sunOsBean =
-          (com.sun.management.OperatingSystemMXBean) osBean;
+      com.sun.management.OperatingSystemMXBean sunOsBean = (com.sun.management.OperatingSystemMXBean) osBean;
       Gauge.builder("system.cpu.usage", sunOsBean::getCpuLoad)
           .description(MessageUtils.message("monitor.system.cpu.usage"))
+          .register(registry);
+
+      // 系统内存监控
+      Gauge.builder("system.memory.used.bytes", () -> sunOsBean.getTotalMemorySize() - sunOsBean.getFreeMemorySize())
+          .description("System memory used")
+          .baseUnit("bytes")
+          .register(registry);
+
+      Gauge.builder("system.memory.max.bytes", sunOsBean::getTotalMemorySize)
+          .description("System memory maximum")
+          .baseUnit("bytes")
           .register(registry);
     }
 
