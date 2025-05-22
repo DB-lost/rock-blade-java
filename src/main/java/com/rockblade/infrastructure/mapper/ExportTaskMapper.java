@@ -6,9 +6,7 @@ import com.rockblade.domain.system.entity.ExportTask;
 /**
  * 数据导出任务表 映射层。
  *
- * @author 
+ * @author
  * @since 2025-05-21
  */
-public interface ExportTaskMapper extends BaseMapper<ExportTask> {
-
-}
+public interface ExportTaskMapper extends BaseMapper<ExportTask> {}

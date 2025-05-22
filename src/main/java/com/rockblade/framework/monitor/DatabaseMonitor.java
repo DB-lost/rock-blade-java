@@ -13,10 +13,7 @@ import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * 数据库监控服务
- * 用于收集PostgreSQL数据库性能指标、慢查询统计等
- */
+/** 数据库监控服务 用于收集PostgreSQL数据库性能指标、慢查询统计等 */
 @Slf4j
 @Component
 public class DatabaseMonitor {
@@ -25,7 +22,8 @@ public class DatabaseMonitor {
   private final JdbcTemplate jdbcTemplate;
   private final HikariDataSource dataSource;
 
-  public DatabaseMonitor(MeterRegistry meterRegistry, JdbcTemplate jdbcTemplate, HikariDataSource dataSource) {
+  public DatabaseMonitor(
+      MeterRegistry meterRegistry, JdbcTemplate jdbcTemplate, HikariDataSource dataSource) {
     this.meterRegistry = meterRegistry;
     this.jdbcTemplate = jdbcTemplate;
     this.dataSource = dataSource;
@@ -34,30 +32,33 @@ public class DatabaseMonitor {
 
   private void initializeMetrics() {
     // 连接池指标
-    meterRegistry.gauge("hikaricp.connections.max", dataSource, HikariDataSource::getMaximumPoolSize);
+    meterRegistry.gauge(
+        "hikaricp.connections.max", dataSource, HikariDataSource::getMaximumPoolSize);
     meterRegistry.gauge("hikaricp.connections.min", dataSource, HikariDataSource::getMinimumIdle);
-    meterRegistry.gauge("hikaricp.connections.timeout", dataSource, HikariDataSource::getConnectionTimeout);
-    meterRegistry.gauge("hikaricp.connections.active",
+    meterRegistry.gauge(
+        "hikaricp.connections.timeout", dataSource, HikariDataSource::getConnectionTimeout);
+    meterRegistry.gauge(
+        "hikaricp.connections.active",
         dataSource.getHikariPoolMXBean(),
         bean -> bean.getActiveConnections());
-    meterRegistry.gauge("hikaricp.connections.idle",
+    meterRegistry.gauge(
+        "hikaricp.connections.idle",
         dataSource.getHikariPoolMXBean(),
         bean -> bean.getIdleConnections());
   }
 
-  /**
-   * 每5分钟收集一次慢查询统计
-   * 需要在PostgreSQL中启用pg_stat_statements扩展
-   */
+  /** 每5分钟收集一次慢查询统计 需要在PostgreSQL中启用pg_stat_statements扩展 */
   @Scheduled(fixedRate = 300000)
   public void collectSlowQueryMetrics() {
     try {
       // 首先确保pg_stat_statements扩展已安装
-      String checkExtensionSql = "SELECT EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'pg_stat_statements')";
+      String checkExtensionSql =
+          "SELECT EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'pg_stat_statements')";
       Boolean extensionExists = jdbcTemplate.queryForObject(checkExtensionSql, Boolean.class);
 
       if (Boolean.TRUE.equals(extensionExists)) {
-        String slowQuerySql = """
+        String slowQuerySql =
+            """
             SELECT datname as schema_name,
                    query as query_pattern,
                    calls as execution_count,
@@ -96,14 +97,13 @@ public class DatabaseMonitor {
     }
   }
 
-  /**
-   * 每分钟收集一次数据库性能指标
-   */
+  /** 每分钟收集一次数据库性能指标 */
   @Scheduled(fixedRate = 60000)
   public void collectPerformanceMetrics() {
     try {
       // 收集数据库统计信息
-      String dbStatsSql = """
+      String dbStatsSql =
+          """
           SELECT * FROM pg_stat_database
           WHERE datname = current_database()
           """;
@@ -115,19 +115,33 @@ public class DatabaseMonitor {
         Tags dbTags = Tags.of("database", (String) stats.get("datname"));
 
         // 记录数据库级别的统计信息
-        meterRegistry.gauge("postgres.stats.commits", dbTags, ((Number) stats.get("xact_commit")).longValue());
-        meterRegistry.gauge("postgres.stats.rollbacks", dbTags, ((Number) stats.get("xact_rollback")).longValue());
-        meterRegistry.gauge("postgres.stats.blocks_read", dbTags, ((Number) stats.get("blks_read")).longValue());
-        meterRegistry.gauge("postgres.stats.blocks_hit", dbTags, ((Number) stats.get("blks_hit")).longValue());
-        meterRegistry.gauge("postgres.stats.rows_returned", dbTags, ((Number) stats.get("tup_returned")).longValue());
-        meterRegistry.gauge("postgres.stats.rows_fetched", dbTags, ((Number) stats.get("tup_fetched")).longValue());
-        meterRegistry.gauge("postgres.stats.rows_inserted", dbTags, ((Number) stats.get("tup_inserted")).longValue());
-        meterRegistry.gauge("postgres.stats.rows_updated", dbTags, ((Number) stats.get("tup_updated")).longValue());
-        meterRegistry.gauge("postgres.stats.rows_deleted", dbTags, ((Number) stats.get("tup_deleted")).longValue());
+        meterRegistry.gauge(
+            "postgres.stats.commits", dbTags, ((Number) stats.get("xact_commit")).longValue());
+        meterRegistry.gauge(
+            "postgres.stats.rollbacks", dbTags, ((Number) stats.get("xact_rollback")).longValue());
+        meterRegistry.gauge(
+            "postgres.stats.blocks_read", dbTags, ((Number) stats.get("blks_read")).longValue());
+        meterRegistry.gauge(
+            "postgres.stats.blocks_hit", dbTags, ((Number) stats.get("blks_hit")).longValue());
+        meterRegistry.gauge(
+            "postgres.stats.rows_returned",
+            dbTags,
+            ((Number) stats.get("tup_returned")).longValue());
+        meterRegistry.gauge(
+            "postgres.stats.rows_fetched", dbTags, ((Number) stats.get("tup_fetched")).longValue());
+        meterRegistry.gauge(
+            "postgres.stats.rows_inserted",
+            dbTags,
+            ((Number) stats.get("tup_inserted")).longValue());
+        meterRegistry.gauge(
+            "postgres.stats.rows_updated", dbTags, ((Number) stats.get("tup_updated")).longValue());
+        meterRegistry.gauge(
+            "postgres.stats.rows_deleted", dbTags, ((Number) stats.get("tup_deleted")).longValue());
       }
 
       // 收集连接统计
-      String connectionStatsSql = """
+      String connectionStatsSql =
+          """
           SELECT count(*) as total,
                  count(*) FILTER (WHERE state = 'active') as active,
                  count(*) FILTER (WHERE state = 'idle') as idle
@@ -137,15 +151,22 @@ public class DatabaseMonitor {
 
       Map<String, Object> connStats = jdbcTemplate.queryForMap(connectionStatsSql);
 
-      meterRegistry.gauge("postgres.connections.total", Tags.of("type", "total"),
+      meterRegistry.gauge(
+          "postgres.connections.total",
+          Tags.of("type", "total"),
           ((Number) connStats.get("total")).intValue());
-      meterRegistry.gauge("postgres.connections.active", Tags.of("type", "active"),
+      meterRegistry.gauge(
+          "postgres.connections.active",
+          Tags.of("type", "active"),
           ((Number) connStats.get("active")).intValue());
-      meterRegistry.gauge("postgres.connections.idle", Tags.of("type", "idle"),
+      meterRegistry.gauge(
+          "postgres.connections.idle",
+          Tags.of("type", "idle"),
           ((Number) connStats.get("idle")).intValue());
 
       // 收集表统计信息
-      String tableStatsSql = """
+      String tableStatsSql =
+          """
           SELECT schemaname, relname,
                  seq_scan, seq_tup_read,
                  idx_scan, idx_tup_fetch,
@@ -161,19 +182,29 @@ public class DatabaseMonitor {
         String tableName = (String) tableStat.get("relname");
         Tags tableTags = Tags.of("schema", schemaName, "table", tableName);
 
-        meterRegistry.gauge("postgres.table.seq_scan", tableTags,
-            ((Number) tableStat.get("seq_scan")).longValue());
-        meterRegistry.gauge("postgres.table.idx_scan", tableTags,
-            ((Number) tableStat.get("idx_scan")).longValue());
-        meterRegistry.gauge("postgres.table.rows_inserted", tableTags,
+        meterRegistry.gauge(
+            "postgres.table.seq_scan", tableTags, ((Number) tableStat.get("seq_scan")).longValue());
+        meterRegistry.gauge(
+            "postgres.table.idx_scan", tableTags, ((Number) tableStat.get("idx_scan")).longValue());
+        meterRegistry.gauge(
+            "postgres.table.rows_inserted",
+            tableTags,
             ((Number) tableStat.get("n_tup_ins")).longValue());
-        meterRegistry.gauge("postgres.table.rows_updated", tableTags,
+        meterRegistry.gauge(
+            "postgres.table.rows_updated",
+            tableTags,
             ((Number) tableStat.get("n_tup_upd")).longValue());
-        meterRegistry.gauge("postgres.table.rows_deleted", tableTags,
+        meterRegistry.gauge(
+            "postgres.table.rows_deleted",
+            tableTags,
             ((Number) tableStat.get("n_tup_del")).longValue());
-        meterRegistry.gauge("postgres.table.live_rows", tableTags,
+        meterRegistry.gauge(
+            "postgres.table.live_rows",
+            tableTags,
             ((Number) tableStat.get("n_live_tup")).longValue());
-        meterRegistry.gauge("postgres.table.dead_rows", tableTags,
+        meterRegistry.gauge(
+            "postgres.table.dead_rows",
+            tableTags,
             ((Number) tableStat.get("n_dead_tup")).longValue());
       }
 

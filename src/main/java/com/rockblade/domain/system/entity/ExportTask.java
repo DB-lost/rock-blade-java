@@ -1,66 +1,55 @@
 package com.rockblade.domain.system.entity;
 
+import java.io.Serializable;
+
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
 import com.rockblade.framework.core.base.entity.BaseEntity;
 import com.rockblade.framework.core.base.entity.BaseInsertListener;
 import com.rockblade.framework.core.base.entity.BaseUpdateListener;
-import java.io.Serializable;
+
 import lombok.*;
 import lombok.experimental.Accessors;
 
 /**
  * 数据导出任务表 实体类。
  *
- * @author 
+ * @author
  * @since 2025-05-21
  */
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(value = "sys_export_task", onInsert = BaseInsertListener.class, onUpdate = BaseUpdateListener.class, mapperGenerateEnable = false)
-
+@Table(
+    value = "sys_export_task",
+    onInsert = BaseInsertListener.class,
+    onUpdate = BaseUpdateListener.class,
+    mapperGenerateEnable = false)
 public class ExportTask extends BaseEntity implements Serializable {
 
-    /**
-     * 任务ID
-     */
-    @Id
-    private String id;
+  /** 任务ID */
+  @Id private String id;
 
-    /**
-     * 任务名称
-     */
-    private String name;
+  /** 任务名称 */
+  private String name;
 
-    /**
-     * 导出类型
-     */
-    private String exportType;
+  /** 导出类型 */
+  private String exportType;
 
-    /**
-     * 状态
-     */
-    private String status;
+  /** 状态 */
+  private String status;
 
-    /**
-     * 导出文件路径
-     */
-    private String filePath;
+  /** 导出文件路径 */
+  private String filePath;
 
-    /**
-     * 导出进度
-     */
-    private Integer progress;
+  /** 导出进度 */
+  private Integer progress;
 
-    /**
-     * 错误信息
-     */
-    private String errorMessage;
+  /** 错误信息 */
+  private String errorMessage;
 
-    private String userId;
-
+  private String userId;
 }
