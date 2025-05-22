@@ -55,6 +55,15 @@ sa-token:
   # token前缀
   token-prefix: Bearer
 
+# Alert配置
+alert:
+  # 默认接收人邮箱列表，多个用逗号分隔
+  receivers: ${ALERT_RECEIVERS}
+  # 发件人显示名称
+  from: "运维告警系统 <${spring.mail.username}>"
+  # 邮件主题
+  subject: "系统告警通知"
+
 #Spring
 spring:
   application:

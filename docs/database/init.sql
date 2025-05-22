@@ -347,48 +347,9 @@ CREATE INDEX idx_sys_user_dept_user_id ON sys_user_dept(user_id);
 CREATE INDEX idx_sys_user_dept_dept_id ON sys_user_dept(dept_id);
 CREATE INDEX idx_sys_user_dept_is_primary ON sys_user_dept(is_primary);
 
--- 创建告警规则表
-CREATE TABLE sys_alert_rule (
-    id VARCHAR(32) PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,               -- 规则名称
-    metric VARCHAR(100) NOT NULL,             -- 监控指标
-    operator VARCHAR(10) NOT NULL,            -- 运算符
-    threshold DOUBLE PRECISION NOT NULL,      -- 阈值
-    duration VARCHAR(20) NOT NULL,            -- 持续时间
-    severity VARCHAR(20) NOT NULL,            -- 严重程度
-    enabled BOOLEAN DEFAULT TRUE,             -- 是否启用
-    receivers TEXT,                           -- 告警接收人(邮箱列表)
-    template TEXT,                           -- 告警通知模板
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    created_by VARCHAR(32),
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_by VARCHAR(32),
-    deleted BOOLEAN DEFAULT FALSE,
-    remark VARCHAR(500)                      -- 备注
-);
-
-COMMENT ON TABLE sys_alert_rule IS '告警规则表';
-COMMENT ON COLUMN sys_alert_rule.id IS '规则ID';
-COMMENT ON COLUMN sys_alert_rule.name IS '规则名称';
-COMMENT ON COLUMN sys_alert_rule.metric IS '监控指标';
-COMMENT ON COLUMN sys_alert_rule.operator IS '运算符';
-COMMENT ON COLUMN sys_alert_rule.threshold IS '阈值';
-COMMENT ON COLUMN sys_alert_rule.duration IS '持续时间';
-COMMENT ON COLUMN sys_alert_rule.severity IS '严重程度';
-COMMENT ON COLUMN sys_alert_rule.enabled IS '是否启用';
-COMMENT ON COLUMN sys_alert_rule.receivers IS '告警接收人';
-COMMENT ON COLUMN sys_alert_rule.template IS '告警通知模板';
-COMMENT ON COLUMN sys_alert_rule.created_at IS '创建时间';
-COMMENT ON COLUMN sys_alert_rule.created_by IS '创建人ID';
-COMMENT ON COLUMN sys_alert_rule.updated_at IS '更新时间';
-COMMENT ON COLUMN sys_alert_rule.updated_by IS '更新人ID';
-COMMENT ON COLUMN sys_alert_rule.deleted IS '是否删除';
-COMMENT ON COLUMN sys_alert_rule.remark IS '备注';
-
 -- 创建告警历史记录表
 CREATE TABLE sys_alert_history (
     id VARCHAR(32) PRIMARY KEY,
-    rule_id VARCHAR(32),                    -- 关联的规则ID
     alert_name VARCHAR(100) NOT NULL,        -- 告警名称
     metric VARCHAR(100) NOT NULL,            -- 触发的指标
     value DOUBLE PRECISION,                  -- 触发值
@@ -399,13 +360,11 @@ CREATE TABLE sys_alert_history (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_by VARCHAR(32),
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_by VARCHAR(32),
-    CONSTRAINT fk_alert_history_rule_id FOREIGN KEY (rule_id) REFERENCES sys_alert_rule (id)
+    updated_by VARCHAR(32)
 );
 
 COMMENT ON TABLE sys_alert_history IS '告警历史记录表';
 COMMENT ON COLUMN sys_alert_history.id IS '历史记录ID';
-COMMENT ON COLUMN sys_alert_history.rule_id IS '规则ID';
 COMMENT ON COLUMN sys_alert_history.alert_name IS '告警名称';
 COMMENT ON COLUMN sys_alert_history.metric IS '监控指标';
 COMMENT ON COLUMN sys_alert_history.value IS '触发值';
@@ -419,12 +378,6 @@ COMMENT ON COLUMN sys_alert_history.updated_at IS '更新时间';
 COMMENT ON COLUMN sys_alert_history.updated_by IS '更新人ID';
 
 -- 创建告警相关索引
-CREATE INDEX idx_sys_alert_rule_metric ON sys_alert_rule(metric);
-CREATE INDEX idx_sys_alert_rule_enabled ON sys_alert_rule(enabled);
-CREATE INDEX idx_sys_alert_rule_severity ON sys_alert_rule(severity);
-CREATE INDEX idx_sys_alert_rule_deleted ON sys_alert_rule(deleted);
-
-CREATE INDEX idx_sys_alert_history_rule_id ON sys_alert_history(rule_id);
 CREATE INDEX idx_sys_alert_history_status ON sys_alert_history(status);
 CREATE INDEX idx_sys_alert_history_fire_time ON sys_alert_history(fire_time);
 
