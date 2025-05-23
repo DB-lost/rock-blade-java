@@ -2,13 +2,15 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-03-24 15:54:19
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-10 23:06:51
+ * @LastEditTime: 2025-05-23 00:28:04
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/handler/EmailHandler.java
  * @Description: 邮件服务
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.framework.handler;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +32,29 @@ public class EmailHandler {
 
   @Value("${spring.mail.username}")
   private String fromEmail;
+
+  /**
+   * 发送告警邮件
+   *
+   * @param to 收件人列表
+   * @param subject 邮件主题
+   * @param content HTML格式的邮件内容
+   */
+  public void sendAlertEmail(List<String> to, String subject, String content) {
+    try {
+      MimeMessage message = mailSender.createMimeMessage();
+      MimeMessageHelper helper = new MimeMessageHelper(message, true);
+      helper.setTo(to.toArray(new String[0]));
+      helper.setFrom(fromEmail);
+      helper.setSubject(subject);
+      helper.setText(content, true);
+      mailSender.send(message);
+      log.info("告警邮件发送成功，接收者：{}", String.join(",", to));
+    } catch (MessagingException e) {
+      log.error("告警邮件发送失败，接收者：{}，错误信息：{}", String.join(",", to), e.getMessage());
+      throw new UtilException("邮件发送失败");
+    }
+  }
 
   /**
    * 发送验证码邮件
