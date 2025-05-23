@@ -346,3 +346,70 @@ COMMENT ON COLUMN sys_user_dept.updated_by IS '更新人ID';
 CREATE INDEX idx_sys_user_dept_user_id ON sys_user_dept(user_id);
 CREATE INDEX idx_sys_user_dept_dept_id ON sys_user_dept(dept_id);
 CREATE INDEX idx_sys_user_dept_is_primary ON sys_user_dept(is_primary);
+
+-- 创建告警历史记录表
+CREATE TABLE sys_alert_history (
+    id VARCHAR(32) PRIMARY KEY,
+    alert_name VARCHAR(100) NOT NULL,        -- 告警名称
+    metric VARCHAR(100) NOT NULL,            -- 触发的指标
+    value DOUBLE PRECISION,                  -- 触发值
+    severity VARCHAR(20) NOT NULL,           -- 严重程度
+    fire_time TIMESTAMP NOT NULL,            -- 触发时间
+    resolve_time TIMESTAMP,                  -- 恢复时间
+    status VARCHAR(20) NOT NULL,             -- 状态(firing/resolved)
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_by VARCHAR(32),
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_by VARCHAR(32)
+);
+
+COMMENT ON TABLE sys_alert_history IS '告警历史记录表';
+COMMENT ON COLUMN sys_alert_history.id IS '历史记录ID';
+COMMENT ON COLUMN sys_alert_history.alert_name IS '告警名称';
+COMMENT ON COLUMN sys_alert_history.metric IS '监控指标';
+COMMENT ON COLUMN sys_alert_history.value IS '触发值';
+COMMENT ON COLUMN sys_alert_history.severity IS '严重程度';
+COMMENT ON COLUMN sys_alert_history.fire_time IS '触发时间';
+COMMENT ON COLUMN sys_alert_history.resolve_time IS '恢复时间';
+COMMENT ON COLUMN sys_alert_history.status IS '状态';
+COMMENT ON COLUMN sys_alert_history.created_at IS '创建时间';
+COMMENT ON COLUMN sys_alert_history.created_by IS '创建人ID';
+COMMENT ON COLUMN sys_alert_history.updated_at IS '更新时间';
+COMMENT ON COLUMN sys_alert_history.updated_by IS '更新人ID';
+
+-- 创建告警相关索引
+CREATE INDEX idx_sys_alert_history_status ON sys_alert_history(status);
+CREATE INDEX idx_sys_alert_history_fire_time ON sys_alert_history(fire_time);
+
+-- 创建数据导出任务表
+CREATE TABLE sys_export_task (
+    id VARCHAR(32) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,            -- 任务名称
+    export_type VARCHAR(20) NOT NULL,      -- 导出类型(METRICS/ALERT)
+    params TEXT,                           -- 导出参数(JSON格式)
+    status VARCHAR(20) NOT NULL,           -- 状态(PENDING/PROCESSING/COMPLETED/FAILED)
+    file_path VARCHAR(200),                -- 导出文件路径
+    progress INTEGER DEFAULT 0,             -- 导出进度(0-100)
+    error_message TEXT,                    -- 错误信息
+    user_id VARCHAR(32) NOT NULL,          -- 创建用户ID
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_by VARCHAR(32),
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_by VARCHAR(32),
+    CONSTRAINT fk_export_task_user_id FOREIGN KEY (user_id) REFERENCES sys_user (id)
+);
+
+COMMENT ON TABLE sys_export_task IS '数据导出任务表';
+COMMENT ON COLUMN sys_export_task.id IS '任务ID';
+COMMENT ON COLUMN sys_export_task.name IS '任务名称';
+COMMENT ON COLUMN sys_export_task.export_type IS '导出类型';
+COMMENT ON COLUMN sys_export_task.params IS '导出参数';
+COMMENT ON COLUMN sys_export_task.status IS '状态';
+COMMENT ON COLUMN sys_export_task.file_path IS '导出文件路径';
+COMMENT ON COLUMN sys_export_task.progress IS '导出进度';
+COMMENT ON COLUMN sys_export_task.error_message IS '错误信息';
+
+-- 创建索引
+CREATE INDEX idx_sys_export_task_user_id ON sys_export_task(user_id);
+CREATE INDEX idx_sys_export_task_status ON sys_export_task(status);
+CREATE INDEX idx_sys_export_task_created_at ON sys_export_task(created_at);

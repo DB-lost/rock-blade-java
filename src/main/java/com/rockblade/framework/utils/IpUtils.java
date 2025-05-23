@@ -1,3 +1,13 @@
+/*
+ * @Author: DB 2502523450@qq.com
+ * @Date: 2025-05-20 11:19:09
+ * @LastEditors: DB 2502523450@qq.com
+ * @LastEditTime: 2025-05-21 11:03:56
+ * @FilePath: /rock-blade-ITOM-Backstage/home/db/WorkSpace/Template-WorkSpace/rock-blade-java/src/main/java/com/rockblade/framework/utils/IpUtils.java
+ * @Description: IP地址工具类
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
+ */
 package com.rockblade.framework.utils;
 
 import org.springframework.web.context.request.RequestAttributes;
@@ -7,7 +17,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import cn.hutool.core.util.StrUtil;
 import jakarta.servlet.http.HttpServletRequest;
 
-/** IP地址工具类 */
 public class IpUtils {
 
   private static final String UNKNOWN = "unknown";
@@ -70,5 +79,19 @@ public class IpUtils {
       }
     }
     return ip;
+  }
+
+  /**
+   * 获取IP地址对应的地理位置
+   *
+   * @param ip IP地址
+   * @return 地理位置描述
+   */
+  public static String getIpLocation(String ip) {
+    if (isEmptyIP(ip) || LOCALHOST.equals(ip)) {
+      return "本地";
+    }
+    // TODO: 后续可以接入第三方IP地理位置服务
+    return "未知位置";
   }
 }

@@ -9,7 +9,7 @@ rock-blade:
 # DataSource Config
 spring:
   application:
-    name: rock-blade-java-dev
+    name: rock-blade-java
   datasource:
       url: ${DEV_DATABASE_URL}
       username: ${DEV_DATABASE_USERNAME}
