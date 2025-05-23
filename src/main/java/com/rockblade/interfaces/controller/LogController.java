@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-23 10:44:32
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-23 11:01:19
+ * @LastEditTime: 2025-05-23 13:52:39
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/LogController.java
  * @Description: 日志管理接口
  *
@@ -20,8 +20,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,14 +29,17 @@ import com.rockblade.domain.system.dto.response.LogFileInfoResponse;
 import com.rockblade.domain.system.service.LogService;
 import com.rockblade.framework.core.base.entity.R;
 
-import cn.dev33.satoken.annotation.SaCheckPermission;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
+@Tag(name = "日志接口")
 @RequestMapping("/logs")
 public class LogController {
 
-  @Autowired private LogService logService;
+  @Autowired
+  private LogService logService;
 
   /**
    * 获取日志文件列表
@@ -47,11 +48,10 @@ public class LogController {
    * @return 日志文件列表
    */
   @GetMapping
-  @SaCheckPermission("system:log:list")
+  @Operation(summary = "获取日志文件列表")
+  // @SaCheckPermission("system:log:list")
   public R<List<LogFileInfoResponse>> getLogFiles(
-      @Parameter(description = "日志类型（可选）", example = "\"INFO\", \"ERROR\", \"SQL\", \"ALL\"")
-          @RequestParam(required = false)
-          String logType) {
+      @Parameter(description = "日志类型（可选）", example = "\"INFO\", \"ERROR\", \"SQL\", \"ALL\"") @RequestParam(required = false) String logType) {
     return R.ok(logService.getLogFiles(logType));
   }
 
@@ -62,7 +62,8 @@ public class LogController {
    * @return 日志文件
    */
   @GetMapping("/download/{fileName}")
-  @SaCheckPermission("system:log:download")
+  @Operation(summary = "下载日志文件")
+  // @SaCheckPermission("system:log:download")
   public ResponseEntity<Resource> downloadLogFile(@PathVariable String fileName) {
     Resource file = logService.downloadLogFile(fileName);
     if (file == null) {
@@ -80,10 +81,11 @@ public class LogController {
    * @param request 搜索请求
    * @return 日志内容
    */
-  @PostMapping("/search")
-  @SaCheckPermission("system:log:search")
-  public ResponseEntity<String> searchLogContent(@RequestBody LogSearchRequest request) {
-    return ResponseEntity.ok(logService.searchLogContent(request));
+  @GetMapping("/search")
+  @Operation(summary = "搜索日志内容")
+  // @SaCheckPermission("system:log:search")
+  public R<String> searchLogContent(LogSearchRequest request) {
+    return R.ok(logService.searchLogContent(request));
   }
 
   /**
@@ -92,9 +94,10 @@ public class LogController {
    * @param days 保留天数
    * @return 清理结果
    */
+  @Operation(summary = "清理过期日志")
   @DeleteMapping("/cleanup/{days}")
-  @SaCheckPermission("system:log:cleanup")
-  public ResponseEntity<Boolean> cleanupLogs(@PathVariable int days) {
-    return ResponseEntity.ok(logService.cleanupLogs(days));
+  // @SaCheckPermission("system:log:cleanup")
+  public R<Boolean> cleanupLogs(@PathVariable int days) {
+    return R.ok(logService.cleanupLogs(days));
   }
 }
