@@ -38,13 +38,12 @@ public class AlertService {
 
   private AlertProperties alertProperties;
 
-  @Autowired
-  private AlertHistoryService alertHistoryService;
+  @Autowired private AlertHistoryService alertHistoryService;
 
-  @Autowired
-  private EmailHandler emailHandler;
+  @Autowired private EmailHandler emailHandler;
 
-  private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+  private static final DateTimeFormatter DATE_FORMATTER =
+      DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
   /**
    * 处理告警信息
@@ -92,9 +91,7 @@ public class AlertService {
 
       // 发送告警邮件
       emailHandler.sendAlertEmail(
-          receivers,
-          MessageUtils.message("alert.subject"),
-          content.toString());
+          receivers, MessageUtils.message("alert.subject"), content.toString());
 
       log.info("告警通知发送成功: name={}, metric={}", alertName, metric);
     } catch (Exception e) {
