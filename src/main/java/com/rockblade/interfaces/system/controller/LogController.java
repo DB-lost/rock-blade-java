@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-23 10:44:32
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-23 13:52:39
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/LogController.java
+ * @LastEditTime: 2025-05-24 22:51:06
+ * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/system/controller/LogController.java
  * @Description: 日志管理接口
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.interfaces.controller;
+package com.rockblade.interfaces.system.controller;
 
 import java.util.List;
 
@@ -38,7 +38,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/logs")
 public class LogController {
 
-  @Autowired private LogService logService;
+  @Autowired
+  private LogService logService;
 
   /**
    * 获取日志文件列表
@@ -50,9 +51,7 @@ public class LogController {
   @Operation(summary = "获取日志文件列表")
   // @SaCheckPermission("system:log:list")
   public R<List<LogFileInfoResponse>> getLogFiles(
-      @Parameter(description = "日志类型（可选）", example = "\"INFO\", \"ERROR\", \"SQL\", \"ALL\"")
-          @RequestParam(required = false)
-          String logType) {
+      @Parameter(description = "日志类型（可选）", example = "\"INFO\", \"ERROR\", \"SQL\", \"ALL\"") @RequestParam(required = false) String logType) {
     return R.ok(logService.getLogFiles(logType));
   }
 

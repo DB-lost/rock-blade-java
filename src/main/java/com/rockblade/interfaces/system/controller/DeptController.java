@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-16 10:16:49
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-13 17:19:47
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/DeptController.java
+ * @LastEditTime: 2025-05-24 22:51:12
+ * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/system/controller/DeptController.java
  * @Description: 部门管理接口
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.interfaces.controller;
+package com.rockblade.interfaces.system.controller;
 
 import java.util.List;
 
@@ -28,7 +28,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "部门管理接口")
 public class DeptController {
 
-  @Autowired private DeptService deptService;
+  @Autowired
+  private DeptService deptService;
 
   /** 获取部门列表（树形结构） */
   @GetMapping("/list")

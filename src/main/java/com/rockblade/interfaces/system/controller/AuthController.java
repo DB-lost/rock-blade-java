@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 10:04:57
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-21 11:04:25
- * @FilePath: /rock-blade-ITOM-Backstage/home/db/WorkSpace/Template-WorkSpace/rock-blade-java/src/main/java/com/rockblade/interfaces/controller/AuthController.java
+ * @LastEditTime: 2025-05-24 22:51:18
+ * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/system/controller/AuthController.java
  * @Description: 认证接口
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.interfaces.controller;
+package com.rockblade.interfaces.system.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -44,14 +44,15 @@ import lombok.extern.slf4j.Slf4j;
 @Tag(name = "认证接口")
 public class AuthController {
 
-  @Autowired private UserService userService;
-  @Autowired private MeterRegistry meterRegistry;
+  @Autowired
+  private UserService userService;
+  @Autowired
+  private MeterRegistry meterRegistry;
 
   @GetMapping("/getPublicKey")
   @Operation(summary = "获取公钥")
   public R<PublicKeyResponse> getPublicKey(
-      @Parameter(description = "随机字符串") @RequestParam(name = "nonce", required = false)
-          String nonce) {
+      @Parameter(description = "随机字符串") @RequestParam(name = "nonce", required = false) String nonce) {
     return R.ok(userService.getPublicKey(nonce));
   }
 
@@ -122,7 +123,8 @@ public class AuthController {
   }
 
   private String getDeviceType(String userAgent) {
-    if (userAgent == null) return "unknown";
+    if (userAgent == null)
+      return "unknown";
     userAgent = userAgent.toLowerCase();
     if (userAgent.contains("mobile")
         || userAgent.contains("android")
@@ -135,7 +137,8 @@ public class AuthController {
   }
 
   private String getBrowserType(String userAgent) {
-    if (userAgent == null) return "unknown";
+    if (userAgent == null)
+      return "unknown";
     userAgent = userAgent.toLowerCase();
     if (userAgent.contains("chrome")) {
       return "chrome";

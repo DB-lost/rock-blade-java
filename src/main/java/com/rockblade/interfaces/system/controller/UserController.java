@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 00:13:16
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 20:47:49
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/UserController.java
+ * @LastEditTime: 2025-05-24 22:51:05
+ * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/system/controller/UserController.java
  * @Description: 用户信息接口
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.interfaces.controller;
+package com.rockblade.interfaces.system.controller;
 
 import java.util.List;
 
@@ -37,11 +37,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/user")
 public class UserController {
 
-  @Autowired private UserService userService;
+  @Autowired
+  private UserService userService;
 
-  @Autowired private DeptService deptService;
+  @Autowired
+  private DeptService deptService;
 
-  @Autowired private RoleService roleService;
+  @Autowired
+  private RoleService roleService;
 
   @GetMapping("/page")
   @Operation(summary = "分页查询用户列表")

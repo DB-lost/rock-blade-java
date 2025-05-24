@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-09 18:14:28
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/RoleController.java
+ * @LastEditTime: 2025-05-24 22:51:04
+ * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/system/controller/RoleController.java
  * @Description: 角色接口
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.interfaces.controller;
+package com.rockblade.interfaces.system.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -29,7 +29,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/role")
 public class RoleController {
 
-  @Autowired private RoleService roleService;
+  @Autowired
+  private RoleService roleService;
 
   @GetMapping("/page")
   @Operation(summary = "获取角色列表")

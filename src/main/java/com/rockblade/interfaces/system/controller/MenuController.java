@@ -1,5 +1,15 @@
 /*
  * @Author: DB 2502523450@qq.com
+ * @Date: 2025-05-24 17:44:17
+ * @LastEditors: DB 2502523450@qq.com
+ * @LastEditTime: 2025-05-24 22:51:09
+ * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/system/controller/MenuController.java
+ * @Description: 
+ * 
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ */
+/*
+ * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 22:21:37
  * @LastEditors: DB 2502523450@qq.com
  * @LastEditTime: 2025-04-16 10:14:12
@@ -8,7 +18,7 @@
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.interfaces.controller;
+package com.rockblade.interfaces.system.controller;
 
 import static com.rockblade.domain.system.entity.table.MenuTableDef.MENU;
 
@@ -32,7 +42,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/menu")
 public class MenuController {
 
-  @Autowired private MenuService menuService;
+  @Autowired
+  private MenuService menuService;
 
   @GetMapping("/list")
   @Operation(summary = "获取菜单列表")

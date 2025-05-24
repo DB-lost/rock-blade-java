@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 14:43:52
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-12 18:43:05
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/controller/CommonController.java
+ * @LastEditTime: 2025-05-24 22:51:16
+ * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/system/controller/CommonController.java
  * @Description: 公共接口
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.interfaces.controller;
+package com.rockblade.interfaces.system.controller;
 
 import java.util.List;
 
@@ -38,9 +38,11 @@ import lombok.extern.slf4j.Slf4j;
 @Tag(name = "公共接口")
 public class CommonController {
 
-  @Autowired private MenuService menuService;
+  @Autowired
+  private MenuService menuService;
 
-  @Autowired private UserService userService;
+  @Autowired
+  private UserService userService;
 
   @GetMapping("/getUserInfo")
   @Operation(summary = "获取用户信息")
