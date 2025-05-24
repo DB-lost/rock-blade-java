@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-16 21:43:20
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 14:49:04
+ * @LastEditTime: 2025-05-24 23:02:49
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/generator/RockBladeGeneratorApplication.java
  * @Description: 代码生成器
  *
@@ -42,7 +42,7 @@ public class RockBladeGeneratorApplication {
   private static final String PASSWORD = dotenv.get("DEV_DATABASE_PASSWORD");
 
   /** 输出路径 */
-  private static final String EXPORT_URL = "";
+  private static final String EXPORT_URL = "system";
 
   /** 表前缀 */
   private static final String TABLE_PREFIX = "sys_";
@@ -108,14 +108,14 @@ public class RockBladeGeneratorApplication {
     // 设置包配置
     globalConfig
         .getPackageConfig()
-        .setSourceDir(System.getProperty("user.dir") + EXPORT_URL + "/src/main/java")
+        .setSourceDir(System.getProperty("user.dir") + "/src/main/java")
         .setMapperXmlPath(
-            System.getProperty("user.dir") + EXPORT_URL + "/src/main/resources/mapper");
-    globalConfig.setEntityPackage("com.rockblade.domain" + ".system.entity");
-    globalConfig.setMapperPackage("com.rockblade.infrastructure" + ".mapper");
-    globalConfig.setServicePackage("com.rockblade.domain" + ".system.service");
-    globalConfig.setServiceImplPackage("com.rockblade.domain" + ".system.service.impl");
-    globalConfig.setControllerPackage("com.rockblade.interfaces" + ".controller");
+            System.getProperty("user.dir") + "/src/main/resources/" + "/mapper" + EXPORT_URL);
+    globalConfig.setEntityPackage("com.rockblade.domain." + EXPORT_URL + ".entity");
+    globalConfig.setMapperPackage("com.rockblade.infrastructure." + EXPORT_URL + ".mapper");
+    globalConfig.setServicePackage("com.rockblade.domain." + EXPORT_URL + ".service");
+    globalConfig.setServiceImplPackage("com.rockblade.domain." + EXPORT_URL + ".service.impl");
+    globalConfig.setControllerPackage("com.rockblade.interfaces." + EXPORT_URL + ".controller");
     // 设置策略配置
     globalConfig
         .getStrategyConfig()

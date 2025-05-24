@@ -2,7 +2,7 @@
  * @Author: DB
  * @Date: 2025-04-16 14:38:00
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 14:53:11
+ * @LastEditTime: 2025-05-24 22:54:16
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/impl/UserDeptServiceImpl.java
  * @Description: 用户部门关联服务实现
  */
@@ -17,7 +17,7 @@ import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import com.rockblade.domain.system.entity.UserDept;
 import com.rockblade.domain.system.service.UserDeptService;
-import com.rockblade.infrastructure.mapper.UserDeptMapper;
+import com.rockblade.infrastructure.system.mapper.UserDeptMapper;
 
 @Service
 public class UserDeptServiceImpl extends ServiceImpl<UserDeptMapper, UserDept>
