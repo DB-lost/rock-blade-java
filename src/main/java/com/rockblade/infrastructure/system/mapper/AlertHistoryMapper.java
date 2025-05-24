@@ -9,5 +9,4 @@ import com.rockblade.domain.system.entity.AlertHistory;
  * @author
  * @since 2025-05-21
  */
-public interface AlertHistoryMapper extends BaseMapper<AlertHistory> {
-}
+public interface AlertHistoryMapper extends BaseMapper<AlertHistory> {}

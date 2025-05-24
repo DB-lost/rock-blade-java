@@ -37,14 +37,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/user")
 public class UserController {
 
-  @Autowired
-  private UserService userService;
+  @Autowired private UserService userService;
 
-  @Autowired
-  private DeptService deptService;
+  @Autowired private DeptService deptService;
 
-  @Autowired
-  private RoleService roleService;
+  @Autowired private RoleService roleService;
 
   @GetMapping("/page")
   @Operation(summary = "分页查询用户列表")

@@ -32,8 +32,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/alertHistory")
 public class AlertHistoryController {
 
-  @Autowired
-  private AlertHistoryService alertHistoryService;
+  @Autowired private AlertHistoryService alertHistoryService;
 
   /**
    * 分页查询告警历史记录表。

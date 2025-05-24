@@ -15,5 +15,4 @@ import com.rockblade.infrastructure.system.mapper.RolePermissionMapper;
  */
 @Service("rolePermissionService")
 public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper, RolePermission>
-        implements RolePermissionService {
-}
+    implements RolePermissionService {}

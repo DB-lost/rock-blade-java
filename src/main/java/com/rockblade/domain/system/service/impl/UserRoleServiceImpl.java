@@ -19,5 +19,4 @@ import com.rockblade.infrastructure.system.mapper.UserRoleMapper;
 
 @Service("userRoleService")
 public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole>
-        implements UserRoleService {
-}
+    implements UserRoleService {}

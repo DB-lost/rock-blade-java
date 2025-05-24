@@ -28,8 +28,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "部门管理接口")
 public class DeptController {
 
-  @Autowired
-  private DeptService deptService;
+  @Autowired private DeptService deptService;
 
   /** 获取部门列表（树形结构） */
   @GetMapping("/list")

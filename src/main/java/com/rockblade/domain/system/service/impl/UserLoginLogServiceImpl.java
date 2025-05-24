@@ -19,5 +19,4 @@ import com.rockblade.infrastructure.system.mapper.UserLoginLogMapper;
 
 @Service("userLoginLogService")
 public class UserLoginLogServiceImpl extends ServiceImpl<UserLoginLogMapper, UserLoginLog>
-        implements UserLoginLogService {
-}
+    implements UserLoginLogService {}

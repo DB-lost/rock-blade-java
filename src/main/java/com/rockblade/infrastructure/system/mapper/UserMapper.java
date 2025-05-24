@@ -13,5 +13,4 @@ package com.rockblade.infrastructure.system.mapper;
 import com.mybatisflex.core.BaseMapper;
 import com.rockblade.domain.system.entity.User;
 
-public interface UserMapper extends BaseMapper<User> {
-}
+public interface UserMapper extends BaseMapper<User> {}

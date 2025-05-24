@@ -15,5 +15,4 @@ import com.rockblade.infrastructure.system.mapper.AlertHistoryMapper;
  */
 @Service("alertHistoryService")
 public class AlertHistoryServiceImpl extends ServiceImpl<AlertHistoryMapper, AlertHistory>
-        implements AlertHistoryService {
-}
+    implements AlertHistoryService {}

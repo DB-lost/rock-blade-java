@@ -19,5 +19,4 @@ import com.rockblade.infrastructure.system.mapper.RoleMenuMapper;
 
 @Service("roleMenuService")
 public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu>
-        implements RoleMenuService {
-}
+    implements RoleMenuService {}

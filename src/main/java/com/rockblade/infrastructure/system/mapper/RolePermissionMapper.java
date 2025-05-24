@@ -9,5 +9,4 @@ import com.rockblade.domain.system.entity.RolePermission;
  * @author
  * @since 2025-05-12
  */
-public interface RolePermissionMapper extends BaseMapper<RolePermission> {
-}
+public interface RolePermissionMapper extends BaseMapper<RolePermission> {}

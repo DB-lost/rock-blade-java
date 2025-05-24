@@ -32,8 +32,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/rolePermission")
 public class RolePermissionController {
 
-  @Autowired
-  private RolePermissionService rolePermissionService;
+  @Autowired private RolePermissionService rolePermissionService;
 
   /**
    * 分页查询角色和菜单关联表。
