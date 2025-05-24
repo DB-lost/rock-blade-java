@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-16 21:43:20
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-24 22:47:24
+ * @LastEditTime: 2025-05-24 23:02:49
  * @FilePath: /rock-blade-java/src/main/java/com/rockblade/generator/RockBladeGeneratorApplication.java
  * @Description: 代码生成器
  *
@@ -110,7 +110,7 @@ public class RockBladeGeneratorApplication {
         .getPackageConfig()
         .setSourceDir(System.getProperty("user.dir") + "/src/main/java")
         .setMapperXmlPath(
-            System.getProperty("user.dir") + "/src/main/resources/" + EXPORT_URL + "/mapper");
+            System.getProperty("user.dir") + "/src/main/resources/" + "/mapper" + EXPORT_URL);
     globalConfig.setEntityPackage("com.rockblade.domain." + EXPORT_URL + ".entity");
     globalConfig.setMapperPackage("com.rockblade.infrastructure." + EXPORT_URL + ".mapper");
     globalConfig.setServicePackage("com.rockblade.domain." + EXPORT_URL + ".service");
