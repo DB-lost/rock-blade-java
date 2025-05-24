@@ -1,4 +1,4 @@
-package com.rockblade.infrastructure.mapper;
+package com.rockblade.infrastructure.system.mapper;
 
 import com.mybatisflex.core.BaseMapper;
 import com.rockblade.domain.system.entity.RolePermission;
@@ -9,4 +9,5 @@ import com.rockblade.domain.system.entity.RolePermission;
  * @author
  * @since 2025-05-12
  */
-public interface RolePermissionMapper extends BaseMapper<RolePermission> {}
+public interface RolePermissionMapper extends BaseMapper<RolePermission> {
+}

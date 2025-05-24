@@ -1,4 +1,4 @@
-package com.rockblade.infrastructure.mapper;
+package com.rockblade.infrastructure.system.mapper;
 
 import com.mybatisflex.core.BaseMapper;
 import com.rockblade.domain.system.entity.ExportTask;
@@ -9,4 +9,5 @@ import com.rockblade.domain.system.entity.ExportTask;
  * @author
  * @since 2025-05-21
  */
-public interface ExportTaskMapper extends BaseMapper<ExportTask> {}
+public interface ExportTaskMapper extends BaseMapper<ExportTask> {
+}

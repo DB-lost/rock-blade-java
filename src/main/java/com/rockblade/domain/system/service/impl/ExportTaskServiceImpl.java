@@ -19,7 +19,7 @@ import com.rockblade.domain.system.entity.AlertHistory;
 import com.rockblade.domain.system.entity.ExportTask;
 import com.rockblade.domain.system.service.AlertHistoryService;
 import com.rockblade.domain.system.service.ExportTaskService;
-import com.rockblade.infrastructure.mapper.ExportTaskMapper;
+import com.rockblade.infrastructure.system.mapper.ExportTaskMapper;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.text.csv.CsvWriter;
@@ -37,13 +37,14 @@ import lombok.extern.slf4j.Slf4j;
 public class ExportTaskServiceImpl extends ServiceImpl<ExportTaskMapper, ExportTask>
     implements ExportTaskService {
 
-  @Autowired private MeterRegistry meterRegistry;
+  @Autowired
+  private MeterRegistry meterRegistry;
 
-  @Autowired private AlertHistoryService alertHistoryService;
+  @Autowired
+  private AlertHistoryService alertHistoryService;
 
   private static final String EXPORT_DIR = "exports";
-  private static final DateTimeFormatter FILE_DATE_FORMAT =
-      DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+  private static final DateTimeFormatter FILE_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
   @Override
   public ExportTask startExport(String exportType, Map<String, Object> params) {
@@ -79,14 +80,13 @@ public class ExportTaskServiceImpl extends ServiceImpl<ExportTaskMapper, ExportT
     }
 
     try {
-      String filePath =
-          switch (task.getExportType()) {
-            case "METRICS" -> exportMetrics(task);
-            case "ALERTS" -> exportAlerts(task);
-            default ->
-                throw new IllegalArgumentException(
-                    "Unsupported export type: " + task.getExportType());
-          };
+      String filePath = switch (task.getExportType()) {
+        case "METRICS" -> exportMetrics(task);
+        case "ALERTS" -> exportAlerts(task);
+        default ->
+          throw new IllegalArgumentException(
+              "Unsupported export type: " + task.getExportType());
+      };
 
       task.setFilePath(filePath);
       task.setStatus("COMPLETED");
