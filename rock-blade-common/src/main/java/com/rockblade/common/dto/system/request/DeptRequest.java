@@ -2,19 +2,19 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-16 10:19:53
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 11:16:44
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/dto/request/DeptRequest.java
+ * @LastEditTime: 2025-06-24 13:15:20
+ * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/dto/system/request/DeptRequest.java
  * @Description: 部门请求DTO
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.domain.system.dto.request;
+package com.rockblade.common.dto.system.request;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.rockblade.domain.system.dto.response.DeptResponse;
+import com.rockblade.common.dto.system.response.DeptResponse;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

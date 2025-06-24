@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-13 20:25:22
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:09:40
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/dto/request/EmailLoginRequest.java
- * @Description:
+ * @LastEditTime: 2025-06-24 13:15:46
+ * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/dto/system/request/EmailLoginRequest.java
+ * @Description: 邮箱登录请求
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.domain.system.dto.request;
+package com.rockblade.common.dto.system.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

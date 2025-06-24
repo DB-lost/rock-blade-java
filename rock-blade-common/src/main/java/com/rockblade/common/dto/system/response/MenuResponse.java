@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 22:21:37
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:10:07
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/dto/response/MenuResponse.java
- * @Description:
+ * @LastEditTime: 2025-06-24 13:18:15
+ * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/dto/system/response/MenuResponse.java
+ * @Description: 菜单响应DTO
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.domain.system.dto.response;
+package com.rockblade.common.dto.system.response;
 
 import java.util.List;
 import java.util.Map;

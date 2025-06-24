@@ -2,11 +2,11 @@
  * @Author: DB
  * @Date: 2025-04-16 14:30:00
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 20:31:10
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/dto/request/UserRequest.java
+ * @LastEditTime: 2025-06-24 13:17:36
+ * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/dto/system/request/UserRequest.java
  * @Description: 用户请求实体
  */
-package com.rockblade.domain.system.dto.request;
+package com.rockblade.common.dto.system.request;
 
 import java.util.List;
 

@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-20 11:19:09
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-21 11:03:56
- * @FilePath: /rock-blade-ITOM-Backstage/home/db/WorkSpace/Template-WorkSpace/rock-blade-java/src/main/java/com/rockblade/framework/utils/IpUtils.java
+ * @LastEditTime: 2025-06-24 13:19:49
+ * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/utils/IpUtils.java
  * @Description: IP地址工具类
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.framework.utils;
+package com.rockblade.common.utils;
 
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;

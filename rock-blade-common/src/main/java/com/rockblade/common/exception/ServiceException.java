@@ -2,20 +2,21 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 23:30:43
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-16 09:03:26
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/core/base/exception/ServiceException.java
+ * @LastEditTime: 2025-06-24 13:19:33
+ * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/exception/ServiceException.java
  * @Description: 业务异常
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.framework.core.base.exception;
+package com.rockblade.common.exception;
 
 import java.io.Serial;
 
 public final class ServiceException extends RuntimeException {
 
   /** 序列化uid */
-  @Serial private static final long serialVersionUID = 1L;
+  @Serial
+  private static final long serialVersionUID = 1L;
 
   /** 错误码 */
   private Integer code;
@@ -27,7 +28,8 @@ public final class ServiceException extends RuntimeException {
   private String detailMessage;
 
   /** 空构造方法，避免反序列化问题 */
-  public ServiceException() {}
+  public ServiceException() {
+  }
 
   /**
    * 业务异常
@@ -44,7 +46,7 @@ public final class ServiceException extends RuntimeException {
    * 业务异常
    *
    * @param message 消息
-   * @param code 代码
+   * @param code    代码
    * @author DB
    * @since 2024/05/23
    */

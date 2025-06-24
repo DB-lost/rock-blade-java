@@ -1,12 +1,14 @@
 /*
- * @Author: DB
+ * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-16 14:30:00
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-13 16:30:28
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/dto/response/UserPageResponse.java
+ * @LastEditTime: 2025-06-24 13:18:52
+ * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/dto/system/response/UserPageResponse.java
  * @Description: 用户详细信息响应实体
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.domain.system.dto.response;
+package com.rockblade.common.dto.system.response;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:10:09
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/dto/request/MenuRequest.java
+ * @LastEditTime: 2025-06-24 13:16:18
+ * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/dto/system/request/MenuRequest.java
  * @Description: 菜单请求DTO
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.domain.system.dto.request;
+package com.rockblade.common.dto.system.request;
 
 import java.util.List;
 import java.util.Map;

@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 21:26:39
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-16 09:03:36
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/core/constants/HttpStatus.java
+ * @LastEditTime: 2025-06-24 13:14:40
+ * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/constants/HttpStatus.java
  * @Description: 返回状态码
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.framework.core.constants;
+package com.rockblade.common.constants;
 
 public interface HttpStatus {
   /** 操作成功 */

@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-23 10:43:14
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-23 10:50:43
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/dto/request/LogSearchRequest.java
- * @Description:
+ * @LastEditTime: 2025-06-24 13:16:11
+ * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/dto/system/request/LogSearchRequest.java
+ * @Description: 日志搜索请求
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.domain.system.dto.request;
+package com.rockblade.common.dto.system.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

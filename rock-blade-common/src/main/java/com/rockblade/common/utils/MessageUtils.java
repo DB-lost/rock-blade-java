@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 23:33:22
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-16 09:03:42
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/utils/MessageUtils.java
+ * @LastEditTime: 2025-06-24 13:20:05
+ * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/utils/MessageUtils.java
  * @Description: 获取i18n资源文件
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.framework.utils;
+package com.rockblade.common.utils;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;

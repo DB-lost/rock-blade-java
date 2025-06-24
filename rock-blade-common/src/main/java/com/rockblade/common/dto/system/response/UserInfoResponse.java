@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 10:27:38
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-17 09:33:04
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/dto/response/UserInfoResponse.java
- * @Description:
+ * @LastEditTime: 2025-06-24 13:18:40
+ * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/dto/system/response/UserInfoResponse.java
+ * @Description: 用户信息响应
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.domain.system.dto.response;
+package com.rockblade.common.dto.system.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

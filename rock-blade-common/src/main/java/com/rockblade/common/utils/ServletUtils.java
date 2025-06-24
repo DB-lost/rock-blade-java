@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 23:33:22
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-16 09:03:45
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/utils/ServletUtils.java
+ * @LastEditTime: 2025-06-24 13:20:11
+ * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/utils/ServletUtils.java
  * @Description: 客户端工具类
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.framework.utils;
+package com.rockblade.common.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -42,7 +42,7 @@ public class ServletUtils {
   /**
    * 获取参数
    *
-   * @param name 参数key
+   * @param name         参数key
    * @param defaultValue 默认值
    * @return {@link String }
    * @author DB
@@ -89,7 +89,7 @@ public class ServletUtils {
   /**
    * 获取Integer参数
    *
-   * @param name 参数key
+   * @param name         参数key
    * @param defaultValue 默认值
    * @return {@link Integer }
    * @author DB
@@ -114,7 +114,7 @@ public class ServletUtils {
   /**
    * 获取Boolean参数
    *
-   * @param name 参数key
+   * @param name         参数key
    * @param defaultValue 默认值
    * @return {@link Boolean }
    * @author DB
@@ -173,7 +173,7 @@ public class ServletUtils {
    * 将字符串渲染到客户端
    *
    * @param response 渲染对象
-   * @param string 待渲染的字符串
+   * @param string   待渲染的字符串
    * @author DB
    * @since 2024/05/23
    */

@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-15 11:44:54
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:09:37
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/dto/response/RoleResponse.java
+ * @LastEditTime: 2025-06-24 13:18:34
+ * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/dto/system/response/RoleResponse.java
  * @Description: 角色响应DTO
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.domain.system.dto.response;
+package com.rockblade.common.dto.system.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

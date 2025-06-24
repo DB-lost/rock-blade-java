@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 23:33:22
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-16 09:03:50
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/utils/SqlUtils.java
+ * @LastEditTime: 2025-06-24 13:20:16
+ * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/utils/SqlUtils.java
  * @Description: sql操作工具类
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.framework.utils;
+package com.rockblade.common.utils;
 
 import com.rockblade.framework.core.base.entity.PageDomain;
 import com.rockblade.framework.core.base.exception.UtilException;
@@ -23,7 +23,8 @@ public class SqlUtils {
    * @author DB
    * @since 2024/05/23
    */
-  public SqlUtils() {}
+  public SqlUtils() {
+  }
 
   /**
    * SQL工具类实例
