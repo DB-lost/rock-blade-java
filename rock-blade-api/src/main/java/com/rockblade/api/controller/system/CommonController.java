@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 14:43:52
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-24 22:51:16
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/system/controller/CommonController.java
+ * @LastEditTime: 2025-06-24 15:28:06
+ * @FilePath: /rock-blade-java/rock-blade-api/src/main/java/com/rockblade/api/controller/system/CommonController.java
  * @Description: 公共接口
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.interfaces.system.controller;
+package com.rockblade.api.controller.system;
 
 import java.util.List;
 
@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rockblade.domain.system.dto.request.UserDetailsInfoRequest;
-import com.rockblade.domain.system.dto.response.MenuResponse;
-import com.rockblade.domain.system.dto.response.PermissionsResponse;
-import com.rockblade.domain.system.dto.response.UserInfoResponse;
-import com.rockblade.domain.system.service.MenuService;
-import com.rockblade.domain.system.service.UserService;
+import com.rockblade.common.dto.system.request.UserDetailsInfoRequest;
+import com.rockblade.common.dto.system.response.MenuResponse;
+import com.rockblade.common.dto.system.response.PermissionsResponse;
+import com.rockblade.common.dto.system.response.UserInfoResponse;
+import com.rockblade.system.service.MenuService;
+import com.rockblade.system.service.UserService;
 import com.rockblade.framework.core.base.entity.R;
 
 import cn.dev33.satoken.stp.StpUtil;

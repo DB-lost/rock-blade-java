@@ -1,4 +1,4 @@
-package com.rockblade.interfaces.system.controller;
+package com.rockblade.api.controller.system;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mybatisflex.core.paginate.Page;
-import com.rockblade.domain.system.entity.RolePermission;
-import com.rockblade.domain.system.service.RolePermissionService;
+import com.rockblade.system.entity.RolePermission;
+import com.rockblade.system.service.RolePermissionService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -32,7 +32,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/rolePermission")
 public class RolePermissionController {
 
-  @Autowired private RolePermissionService rolePermissionService;
+  @Autowired
+  private RolePermissionService rolePermissionService;
 
   /**
    * 分页查询角色和菜单关联表。

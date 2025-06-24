@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-24 17:44:17
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-24 22:51:09
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/system/controller/MenuController.java
+ * @LastEditTime: 2025-06-24 15:29:21
+ * @FilePath: /rock-blade-java/rock-blade-api/src/main/java/com/rockblade/api/controller/system/MenuController.java
  * @Description:
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -18,9 +18,9 @@
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.interfaces.system.controller;
+package com.rockblade.api.controller.system;
 
-import static com.rockblade.domain.system.entity.table.MenuTableDef.MENU;
+import static com.rockblade.system.entity.table.MenuTableDef.MENU;
 
 import java.util.List;
 
@@ -28,9 +28,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import com.rockblade.domain.system.dto.request.MenuRequest;
-import com.rockblade.domain.system.dto.response.MenuResponse;
-import com.rockblade.domain.system.service.MenuService;
+import com.rockblade.common.dto.system.request.MenuRequest;
+import com.rockblade.common.dto.system.response.MenuResponse;
+import com.rockblade.system.service.MenuService;
 import com.rockblade.framework.core.base.entity.R;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,7 +42,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/menu")
 public class MenuController {
 
-  @Autowired private MenuService menuService;
+  @Autowired
+  private MenuService menuService;
 
   @GetMapping("/list")
   @Operation(summary = "获取菜单列表")

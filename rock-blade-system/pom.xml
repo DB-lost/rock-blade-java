@@ -20,7 +20,7 @@
         <dependency>
             <groupId>com.rockblade</groupId>
             <artifactId>rock-blade-framework</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 </project>

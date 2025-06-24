@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 10:04:57
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-24 22:51:18
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/system/controller/AuthController.java
+ * @LastEditTime: 2025-06-24 15:27:49
+ * @FilePath: /rock-blade-java/rock-blade-api/src/main/java/com/rockblade/api/controller/system/AuthController.java
  * @Description: 认证接口
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.interfaces.system.controller;
+package com.rockblade.api.controller.system;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -19,17 +19,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rockblade.domain.system.dto.request.EmailCodeRequest;
-import com.rockblade.domain.system.dto.request.EmailLoginRequest;
-import com.rockblade.domain.system.dto.request.LoginRequest;
-import com.rockblade.domain.system.dto.request.RegisterRequest;
-import com.rockblade.domain.system.dto.request.ResetPasswordRequest;
-import com.rockblade.domain.system.dto.request.VerifyEmailCodeRequest;
-import com.rockblade.domain.system.dto.response.PublicKeyResponse;
-import com.rockblade.domain.system.service.UserService;
+import com.rockblade.common.dto.system.request.EmailCodeRequest;
+import com.rockblade.common.dto.system.request.EmailLoginRequest;
+import com.rockblade.common.dto.system.request.LoginRequest;
+import com.rockblade.common.dto.system.request.RegisterRequest;
+import com.rockblade.common.dto.system.request.ResetPasswordRequest;
+import com.rockblade.common.dto.system.request.VerifyEmailCodeRequest;
+import com.rockblade.common.dto.system.response.PublicKeyResponse;
+import com.rockblade.system.service.UserService;
 import com.rockblade.framework.core.base.entity.R;
-import com.rockblade.framework.utils.IpUtils;
-import com.rockblade.framework.utils.ServletUtils;
+import com.rockblade.common.utils.IpUtils;
+import com.rockblade.common.utils.ServletUtils;
 
 import cn.dev33.satoken.stp.StpUtil;
 import io.micrometer.core.instrument.MeterRegistry;

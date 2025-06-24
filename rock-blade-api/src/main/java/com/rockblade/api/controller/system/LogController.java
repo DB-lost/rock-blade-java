@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-23 10:44:32
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-24 22:51:06
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/system/controller/LogController.java
+ * @LastEditTime: 2025-06-24 15:29:05
+ * @FilePath: /rock-blade-java/rock-blade-api/src/main/java/com/rockblade/api/controller/system/LogController.java
  * @Description: 日志管理接口
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.interfaces.system.controller;
+package com.rockblade.api.controller.system;
 
 import java.util.List;
 
@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rockblade.domain.system.dto.request.LogSearchRequest;
-import com.rockblade.domain.system.dto.response.LogFileInfoResponse;
-import com.rockblade.domain.system.service.LogService;
+import com.rockblade.common.dto.system.request.LogSearchRequest;
+import com.rockblade.common.dto.system.response.LogFileInfoResponse;
+import com.rockblade.system.service.LogService;
 import com.rockblade.framework.core.base.entity.R;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,7 +38,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/logs")
 public class LogController {
 
-  @Autowired private LogService logService;
+  @Autowired
+  private LogService logService;
 
   /**
    * 获取日志文件列表
@@ -50,9 +51,7 @@ public class LogController {
   @Operation(summary = "获取日志文件列表")
   // @SaCheckPermission("system:log:list")
   public R<List<LogFileInfoResponse>> getLogFiles(
-      @Parameter(description = "日志类型（可选）", example = "\"INFO\", \"ERROR\", \"SQL\", \"ALL\"")
-          @RequestParam(required = false)
-          String logType) {
+      @Parameter(description = "日志类型（可选）", example = "\"INFO\", \"ERROR\", \"SQL\", \"ALL\"") @RequestParam(required = false) String logType) {
     return R.ok(logService.getLogFiles(logType));
   }
 

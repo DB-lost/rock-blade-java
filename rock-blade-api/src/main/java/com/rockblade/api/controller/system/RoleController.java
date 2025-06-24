@@ -2,23 +2,23 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-24 22:51:04
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/interfaces/system/controller/RoleController.java
+ * @LastEditTime: 2025-06-24 15:30:01
+ * @FilePath: /rock-blade-java/rock-blade-api/src/main/java/com/rockblade/api/controller/system/RoleController.java
  * @Description: 角色接口
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.interfaces.system.controller;
+package com.rockblade.api.controller.system;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.mybatisflex.core.paginate.Page;
-import com.rockblade.domain.system.dto.request.RolePageRequest;
-import com.rockblade.domain.system.dto.request.RoleRequest;
-import com.rockblade.domain.system.dto.response.RoleResponse;
-import com.rockblade.domain.system.service.RoleService;
+import com.rockblade.common.dto.system.request.RolePageRequest;
+import com.rockblade.common.dto.system.request.RoleRequest;
+import com.rockblade.common.dto.system.response.RoleResponse;
+import com.rockblade.system.service.RoleService;
 import com.rockblade.framework.core.base.entity.R;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,7 +29,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/role")
 public class RoleController {
 
-  @Autowired private RoleService roleService;
+  @Autowired
+  private RoleService roleService;
 
   @GetMapping("/page")
   @Operation(summary = "获取角色列表")

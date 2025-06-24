@@ -1,4 +1,4 @@
-package com.rockblade.interfaces.system.controller;
+package com.rockblade.api.controller.system;
 
 import java.util.Map;
 
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rockblade.domain.system.entity.ExportTask;
-import com.rockblade.domain.system.service.ExportTaskService;
+import com.rockblade.system.entity.ExportTask;
+import com.rockblade.system.service.ExportTaskService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -32,7 +32,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/exportTask")
 public class ExportTaskController {
 
-  @Autowired private ExportTaskService exportTaskService;
+  @Autowired
+  private ExportTaskService exportTaskService;
 
   /**
    * 开始导出任务。
