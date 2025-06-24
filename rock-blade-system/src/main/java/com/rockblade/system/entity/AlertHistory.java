@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-21 11:06:51
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-23 00:01:51
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/entity/AlertHistory.java
- * @Description:
+ * @LastEditTime: 2025-06-24 13:47:07
+ * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/entity/AlertHistory.java
+ * @Description: 告警历史记录表 实体类。
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.domain.system.entity;
+package com.rockblade.system.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -22,27 +22,18 @@ import com.rockblade.framework.core.base.entity.BaseUpdateListener;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-/**
- * 告警历史记录表 实体类。
- *
- * @author
- * @since 2025-05-21
- */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(
-    value = "sys_alert_history",
-    onInsert = BaseInsertListener.class,
-    onUpdate = BaseUpdateListener.class,
-    mapperGenerateEnable = false)
+@Table(value = "sys_alert_history", onInsert = BaseInsertListener.class, onUpdate = BaseUpdateListener.class, mapperGenerateEnable = false)
 public class AlertHistory extends BaseEntity implements Serializable {
 
   /** 历史记录ID */
-  @Id private String id;
+  @Id
+  private String id;
 
   /** 告警名称 */
   private String alertName;

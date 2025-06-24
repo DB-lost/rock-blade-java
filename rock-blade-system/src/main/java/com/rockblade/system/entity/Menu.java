@@ -1,12 +1,22 @@
-package com.rockblade.domain.system.entity;
+/*
+ * @Author: DB 2502523450@qq.com
+ * @Date: 2025-06-24 13:00:43
+ * @LastEditors: DB 2502523450@qq.com
+ * @LastEditTime: 2025-06-24 13:47:32
+ * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/entity/Menu.java
+ * @Description: 菜单表 实体类。
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
+ */
+package com.rockblade.system.entity;
 
 import java.io.Serializable;
 
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
-import com.rockblade.domain.system.enums.BadgeType;
-import com.rockblade.domain.system.enums.BadgeVariants;
-import com.rockblade.domain.system.enums.MenuType;
+import com.rockblade.system.enums.BadgeType;
+import com.rockblade.system.enums.BadgeVariants;
+import com.rockblade.system.enums.MenuType;
 import com.rockblade.framework.core.base.entity.BaseEntity;
 import com.rockblade.framework.core.base.entity.BaseInsertListener;
 import com.rockblade.framework.core.base.entity.BaseUpdateListener;
@@ -20,15 +30,12 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(
-    value = "sys_menu",
-    onInsert = BaseInsertListener.class,
-    onUpdate = BaseUpdateListener.class,
-    mapperGenerateEnable = false)
+@Table(value = "sys_menu", onInsert = BaseInsertListener.class, onUpdate = BaseUpdateListener.class, mapperGenerateEnable = false)
 public class Menu extends BaseEntity implements Serializable {
 
   /** 菜单ID */
-  @Id private String id;
+  @Id
+  private String id;
 
   /** 菜单名称 */
   private String name;

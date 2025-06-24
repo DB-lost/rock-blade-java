@@ -2,18 +2,18 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 22:21:37
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:10:06
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/MenuService.java
+ * @LastEditTime: 2025-06-24 13:53:08
+ * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/MenuService.java
  * @Description:
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.domain.system.service;
+package com.rockblade.system.service;
 
 import java.util.List;
 
 import com.mybatisflex.core.service.IService;
-import com.rockblade.domain.system.dto.request.MenuRequest;
+import com.rockblade.system.dto.request.MenuRequest;
 import com.rockblade.domain.system.dto.response.MenuResponse;
 import com.rockblade.domain.system.entity.Menu;
 
@@ -87,7 +87,7 @@ public interface MenuService extends IService<Menu> {
    *
    * @param menuName 菜单名称
    * @param parentId 父菜单ID
-   * @param menuId 菜单ID（更新时传入）
+   * @param menuId   菜单ID（更新时传入）
    * @return true: 唯一, false: 不唯一
    */
   Boolean checkMenuNameUnique(String menuName, String parentId, String menuId);

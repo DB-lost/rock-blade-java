@@ -1,4 +1,14 @@
-package com.rockblade.domain.system.service.impl;
+/*
+ * @Author: DB 2502523450@qq.com
+ * @Date: 2025-05-24 17:44:17
+ * @LastEditors: DB 2502523450@qq.com
+ * @LastEditTime: 2025-06-24 13:50:49
+ * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/impl/LogServiceImpl.java
+ * @Description: 日志服务实现。
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
+ */
+package com.rockblade.system.service.impl;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +38,7 @@ import cn.hutool.core.util.StrUtil;
 public class LogServiceImpl implements LogService {
 
   private static final String LOG_PATH = "./logs/rock-blade-java";
-  private static final String[] LOG_TYPES = {"info", "error", "sql"};
+  private static final String[] LOG_TYPES = { "info", "error", "sql" };
 
   @Override
   public List<LogFileInfoResponse> getLogFiles(String logType) {
@@ -40,35 +50,34 @@ public class LogServiceImpl implements LogService {
       }
 
       Stream<Path> walk = Files.walk(logDir.toPath(), 1);
-      logFiles =
-          walk.filter(Files::isRegularFile)
-              .filter(
-                  path -> {
-                    if (StrUtil.isNotEmpty(logType)) {
-                      return path.getFileName().toString().contains(logType);
-                    }
-                    return true;
-                  })
-              .map(
-                  path -> {
-                    LogFileInfoResponse info = new LogFileInfoResponse();
-                    File file = path.toFile();
-                    info.setFileName(file.getName());
-                    info.setFilePath(file.getPath());
-                    info.setFileSize(file.length());
-                    info.setLastModified(
-                        LocalDateTime.ofInstant(
-                            java.time.Instant.ofEpochMilli(file.lastModified()),
-                            ZoneId.systemDefault()));
-                    for (String type : LOG_TYPES) {
-                      if (file.getName().contains(type)) {
-                        info.setLogType(type.toUpperCase());
-                        break;
-                      }
-                    }
-                    return info;
-                  })
-              .collect(Collectors.toList());
+      logFiles = walk.filter(Files::isRegularFile)
+          .filter(
+              path -> {
+                if (StrUtil.isNotEmpty(logType)) {
+                  return path.getFileName().toString().contains(logType);
+                }
+                return true;
+              })
+          .map(
+              path -> {
+                LogFileInfoResponse info = new LogFileInfoResponse();
+                File file = path.toFile();
+                info.setFileName(file.getName());
+                info.setFilePath(file.getPath());
+                info.setFileSize(file.length());
+                info.setLastModified(
+                    LocalDateTime.ofInstant(
+                        java.time.Instant.ofEpochMilli(file.lastModified()),
+                        ZoneId.systemDefault()));
+                for (String type : LOG_TYPES) {
+                  if (file.getName().contains(type)) {
+                    info.setLogType(type.toUpperCase());
+                    break;
+                  }
+                }
+                return info;
+              })
+          .collect(Collectors.toList());
       walk.close();
     } catch (IOException e) {
       e.printStackTrace();
@@ -113,10 +122,9 @@ public class LogServiceImpl implements LogService {
 
       // 如果有关键字，进行过滤
       if (StrUtil.isNotEmpty(request.getKeyword())) {
-        lines =
-            lines.stream()
-                .filter(line -> line.contains(request.getKeyword()))
-                .collect(Collectors.toList());
+        lines = lines.stream()
+            .filter(line -> line.contains(request.getKeyword()))
+            .collect(Collectors.toList());
       }
 
       // 时间过滤待实现

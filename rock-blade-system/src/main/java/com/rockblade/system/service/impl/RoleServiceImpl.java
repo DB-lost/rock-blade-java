@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-24 22:52:31
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/impl/RoleServiceImpl.java
+ * @LastEditTime: 2025-06-24 13:52:10
+ * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/impl/RoleServiceImpl.java
  * @Description: 角色信息表 服务层实现。
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.domain.system.service.impl;
+package com.rockblade.system.service.impl;
 
 import static com.rockblade.domain.system.entity.table.RoleMenuTableDef.ROLE_MENU;
 import static com.rockblade.domain.system.entity.table.RoleTableDef.ROLE;
@@ -62,15 +62,13 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             .and(ROLE.CREATED_AT.between(request.getStartTime(), request.getEndTime()))
             .orderBy(ROLE.UPDATED_AT.desc()),
         RoleResponse.class,
-        permissions ->
-            permissions
-                .field(RoleResponse::getPermissions)
-                .queryWrapper(
-                    roleResponse ->
-                        QueryWrapper.create()
-                            .select(ROLE_MENU.MENU_ID)
-                            .from(ROLE_MENU)
-                            .where(ROLE_MENU.ROLE_ID.eq(roleResponse.getId()))));
+        permissions -> permissions
+            .field(RoleResponse::getPermissions)
+            .queryWrapper(
+                roleResponse -> QueryWrapper.create()
+                    .select(ROLE_MENU.MENU_ID)
+                    .from(ROLE_MENU)
+                    .where(ROLE_MENU.ROLE_ID.eq(roleResponse.getId()))));
   }
 
   @Override
@@ -170,9 +168,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
   @Override
   public List<Role> getRolesByUserId(String userId) {
     // 查询用户的角色关联
-    List<UserRole> userRoles =
-        SpringUtil.getBean(UserRoleService.class)
-            .list(QueryWrapper.create().where(USER_ROLE.USER_ID.eq(userId)));
+    List<UserRole> userRoles = SpringUtil.getBean(UserRoleService.class)
+        .list(QueryWrapper.create().where(USER_ROLE.USER_ID.eq(userId)));
 
     if (userRoles.isEmpty()) {
       return new ArrayList<>();

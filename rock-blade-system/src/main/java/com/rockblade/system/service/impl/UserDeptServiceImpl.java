@@ -2,13 +2,13 @@
  * @Author: DB
  * @Date: 2025-04-16 14:38:00
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-24 22:54:16
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/impl/UserDeptServiceImpl.java
+ * @LastEditTime: 2025-06-24 13:52:21
+ * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/impl/UserDeptServiceImpl.java
  * @Description: 用户部门关联服务实现
  */
-package com.rockblade.domain.system.service.impl;
+package com.rockblade.system.service.impl;
 
-import static com.rockblade.domain.system.entity.table.UserDeptTableDef.USER_DEPT;
+import static com.rockblade.system.entity.table.UserDeptTableDef.USER_DEPT;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

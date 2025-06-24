@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-23 10:43:29
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-23 10:46:44
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/LogService.java
- * @Description:
+ * @LastEditTime: 2025-06-24 13:53:01
+ * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/LogService.java
+ * @Description: 日志服务接口。
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.domain.system.service;
+package com.rockblade.system.service;
 
 import java.util.List;
 

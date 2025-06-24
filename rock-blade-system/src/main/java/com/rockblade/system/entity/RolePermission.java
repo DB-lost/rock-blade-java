@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-12 18:53:47
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-12 18:54:00
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/entity/RolePermission.java
+ * @LastEditTime: 2025-06-24 13:48:48
+ * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/entity/RolePermission.java
  * @Description: 角色权限码
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.domain.system.entity;
+package com.rockblade.system.entity;
 
 import java.io.Serializable;
 
@@ -27,15 +27,12 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(
-    value = "sys_role_permission",
-    onInsert = BaseInsertListener.class,
-    onUpdate = BaseUpdateListener.class,
-    mapperGenerateEnable = false)
+@Table(value = "sys_role_permission", onInsert = BaseInsertListener.class, onUpdate = BaseUpdateListener.class, mapperGenerateEnable = false)
 public class RolePermission extends BaseEntity implements Serializable {
 
   /** 角色ID */
-  @Id private String roleId;
+  @Id
+  private String roleId;
 
   /** 权限码 */
   private String permission;

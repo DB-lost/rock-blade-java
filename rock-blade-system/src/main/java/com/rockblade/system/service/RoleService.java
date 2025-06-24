@@ -2,22 +2,22 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-09 18:14:48
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/RoleService.java
+ * @LastEditTime: 2025-06-24 13:53:38
+ * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/RoleService.java
  * @Description: 角色信息表 服务层。
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.domain.system.service;
+package com.rockblade.system.service;
 
 import java.util.List;
 
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.service.IService;
-import com.rockblade.domain.system.dto.request.RolePageRequest;
-import com.rockblade.domain.system.dto.request.RoleRequest;
-import com.rockblade.domain.system.dto.response.RoleResponse;
-import com.rockblade.domain.system.entity.Role;
+import com.rockblade.system.dto.request.RolePageRequest;
+import com.rockblade.system.dto.request.RoleRequest;
+import com.rockblade.common.system.dto.response.RoleResponse;
+import com.rockblade.system.entity.Role;
 
 public interface RoleService extends IService<Role> {
   /**

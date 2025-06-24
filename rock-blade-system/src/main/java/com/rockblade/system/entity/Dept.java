@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-16 10:40:28
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 11:10:21
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/entity/Dept.java
- * @Description:
+ * @LastEditTime: 2025-06-24 13:47:20
+ * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/entity/Dept.java
+ * @Description: 部门表 实体类。
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.domain.system.entity;
+package com.rockblade.system.entity;
 
 import java.io.Serializable;
 
@@ -33,15 +33,12 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(
-    value = "sys_dept",
-    onInsert = BaseInsertListener.class,
-    onUpdate = BaseUpdateListener.class,
-    mapperGenerateEnable = false)
+@Table(value = "sys_dept", onInsert = BaseInsertListener.class, onUpdate = BaseUpdateListener.class, mapperGenerateEnable = false)
 public class Dept extends BaseEntity implements Serializable {
 
   /** 部门ID */
-  @Id private String id;
+  @Id
+  private String id;
 
   /** 部门名称 */
   private String name;

@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.rockblade</groupId>
 	<artifactId>rock-blade-java</artifactId>
-	<version>1.0.0</version>
+	<version>${reversion}</version>
 	<packaging>pom</packaging>
 	<name>rock-blade-java</name>
 	<description>Rock Blade Java - A Modular Spring Boot Template Project</description>
@@ -29,6 +29,7 @@
 		<url />
 	</scm>
 	<properties>
+		<reversion>1.0.0</reversion>
 		<java.version>21</java.version>
 		<cucumber.version>7.20.1</cucumber.version>
 		<jacoco.version>0.8.12</jacoco.version>

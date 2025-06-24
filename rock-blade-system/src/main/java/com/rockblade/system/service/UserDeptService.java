@@ -1,15 +1,15 @@
 /*
- * @Author: DB
+ * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-16 14:37:00
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 14:52:50
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/UserDeptService.java
+ * @LastEditTime: 2025-06-24 13:54:10
+ * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/UserDeptService.java
  * @Description: 用户部门关联服务接口
  */
-package com.rockblade.domain.system.service;
+package com.rockblade.system.service;
 
 import com.mybatisflex.core.service.IService;
-import com.rockblade.domain.system.entity.UserDept;
+import com.rockblade.system.entity.UserDept;
 
 public interface UserDeptService extends IService<UserDept> {
 

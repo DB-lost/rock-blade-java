@@ -2,28 +2,28 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:43:06
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-09 17:44:17
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/UserService.java
+ * @LastEditTime: 2025-06-24 13:54:39
+ * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/UserService.java
  * @Description: 用户服务接口
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.domain.system.service;
+package com.rockblade.system.service;
 
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.service.IService;
-import com.rockblade.domain.system.dto.request.EmailCodeRequest;
-import com.rockblade.domain.system.dto.request.EmailLoginRequest;
-import com.rockblade.domain.system.dto.request.LoginRequest;
-import com.rockblade.domain.system.dto.request.RegisterRequest;
-import com.rockblade.domain.system.dto.request.ResetPasswordRequest;
-import com.rockblade.domain.system.dto.request.UserDetailsInfoRequest;
-import com.rockblade.domain.system.dto.request.UserPageRequest;
-import com.rockblade.domain.system.dto.request.UserRequest;
-import com.rockblade.domain.system.dto.request.VerifyEmailCodeRequest;
-import com.rockblade.domain.system.dto.response.PublicKeyResponse;
-import com.rockblade.domain.system.dto.response.UserPageResponse;
-import com.rockblade.domain.system.entity.User;
+import com.rockblade.common.dto.request.EmailCodeRequest;
+import com.rockblade.common.dto.request.EmailLoginRequest;
+import com.rockblade.common.dto.request.LoginRequest;
+import com.rockblade.common.dto.request.RegisterRequest;
+import com.rockblade.common.dto.request.ResetPasswordRequest;
+import com.rockblade.common.dto.request.UserDetailsInfoRequest;
+import com.rockblade.common.dto.request.UserPageRequest;
+import com.rockblade.common.dto.request.UserRequest;
+import com.rockblade.common.dto.request.VerifyEmailCodeRequest;
+import com.rockblade.common.dto.response.PublicKeyResponse;
+import com.rockblade.common.dto.response.UserPageResponse;
+import com.rockblade.system.entity.User;
 
 public interface UserService extends IService<User> {
 
@@ -111,8 +111,8 @@ public interface UserService extends IService<User> {
   /**
    * 给用户分配部门
    *
-   * @param userId 用户ID
-   * @param deptId 部门ID
+   * @param userId    用户ID
+   * @param deptId    部门ID
    * @param isPrimary 是否为主部门
    */
   void assignDept(String userId, String deptId, Boolean isPrimary);

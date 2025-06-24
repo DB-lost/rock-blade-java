@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 00:13:16
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-12 18:30:42
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/entity/User.java
+ * @LastEditTime: 2025-06-24 13:48:54
+ * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/entity/User.java
  * @Description: 用户信息表
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.domain.system.entity;
+package com.rockblade.system.entity;
 
 import java.io.Serializable;
 
@@ -28,15 +28,12 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(
-    value = "sys_user",
-    onInsert = BaseInsertListener.class,
-    onUpdate = BaseUpdateListener.class,
-    mapperGenerateEnable = false)
+@Table(value = "sys_user", onInsert = BaseInsertListener.class, onUpdate = BaseUpdateListener.class, mapperGenerateEnable = false)
 public class User extends BaseEntity implements Serializable {
 
   /** 主键ID */
-  @Id private String id;
+  @Id
+  private String id;
 
   /** 用户名 */
   private String username;

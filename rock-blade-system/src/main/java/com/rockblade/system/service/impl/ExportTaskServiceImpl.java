@@ -1,4 +1,14 @@
-package com.rockblade.domain.system.service.impl;
+/*
+ * @Author: DB 2502523450@qq.com
+ * @Date: 2025-05-24 17:44:17
+ * @LastEditors: DB 2502523450@qq.com
+ * @LastEditTime: 2025-06-24 13:50:49
+ * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/impl/ExportTaskServiceImpl.java
+ * @Description: 数据导出任务表 服务层实现。
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
+ */
+package com.rockblade.system.service.impl;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -26,24 +36,19 @@ import cn.hutool.core.text.csv.CsvWriter;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * 数据导出任务表 服务层实现。
- *
- * @author
- * @since 2025-05-21
- */
 @Slf4j
 @Service("exportTaskService")
 public class ExportTaskServiceImpl extends ServiceImpl<ExportTaskMapper, ExportTask>
     implements ExportTaskService {
 
-  @Autowired private MeterRegistry meterRegistry;
+  @Autowired
+  private MeterRegistry meterRegistry;
 
-  @Autowired private AlertHistoryService alertHistoryService;
+  @Autowired
+  private AlertHistoryService alertHistoryService;
 
   private static final String EXPORT_DIR = "exports";
-  private static final DateTimeFormatter FILE_DATE_FORMAT =
-      DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+  private static final DateTimeFormatter FILE_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
   @Override
   public ExportTask startExport(String exportType, Map<String, Object> params) {
@@ -79,14 +84,13 @@ public class ExportTaskServiceImpl extends ServiceImpl<ExportTaskMapper, ExportT
     }
 
     try {
-      String filePath =
-          switch (task.getExportType()) {
-            case "METRICS" -> exportMetrics(task);
-            case "ALERTS" -> exportAlerts(task);
-            default ->
-                throw new IllegalArgumentException(
-                    "Unsupported export type: " + task.getExportType());
-          };
+      String filePath = switch (task.getExportType()) {
+        case "METRICS" -> exportMetrics(task);
+        case "ALERTS" -> exportAlerts(task);
+        default ->
+          throw new IllegalArgumentException(
+              "Unsupported export type: " + task.getExportType());
+      };
 
       task.setFilePath(filePath);
       task.setStatus("COMPLETED");

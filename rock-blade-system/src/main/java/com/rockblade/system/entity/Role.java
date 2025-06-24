@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:09:34
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/entity/Role.java
+ * @LastEditTime: 2025-06-24 13:48:09
+ * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/entity/Role.java
  * @Description: 角色信息表 实体类。
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.domain.system.entity;
+package com.rockblade.system.entity;
 
 import java.io.Serializable;
 
@@ -27,15 +27,12 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(
-    value = "sys_role",
-    onInsert = BaseInsertListener.class,
-    onUpdate = BaseUpdateListener.class,
-    mapperGenerateEnable = false)
+@Table(value = "sys_role", onInsert = BaseInsertListener.class, onUpdate = BaseUpdateListener.class, mapperGenerateEnable = false)
 public class Role extends BaseEntity implements Serializable {
 
   /** 主键ID */
-  @Id private String id;
+  @Id
+  private String id;
 
   /** 角色名称 */
   private String roleName;

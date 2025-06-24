@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-16 10:16:49
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 14:49:55
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/domain/system/service/DeptService.java
+ * @LastEditTime: 2025-06-24 13:52:52
+ * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/DeptService.java
  * @Description: 部门表 服务层。
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.domain.system.service;
+package com.rockblade.system.service;
 
 import java.util.List;
 
@@ -64,7 +64,7 @@ public interface DeptService extends IService<Dept> {
    *
    * @param deptName 部门名称
    * @param parentId 父部门ID
-   * @param deptId 部门ID（可选，用于更新校验）
+   * @param deptId   部门ID（可选，用于更新校验）
    * @return 结果
    */
   boolean checkDeptNameUnique(String deptName, String parentId, String deptId);

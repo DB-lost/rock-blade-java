@@ -1,4 +1,14 @@
-package com.rockblade.domain.system.entity;
+/*
+ * @Author: DB 2502523450@qq.com
+ * @Date: 2025-06-24 13:00:43
+ * @LastEditors: DB 2502523450@qq.com
+ * @LastEditTime: 2025-06-24 13:47:32
+ * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/entity/ExportTask.java
+ * @Description: 导出任务表 实体类。
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
+ */
+package com.rockblade.system.entity;
 
 import java.io.Serializable;
 
@@ -11,27 +21,18 @@ import com.rockblade.framework.core.base.entity.BaseUpdateListener;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-/**
- * 数据导出任务表 实体类。
- *
- * @author
- * @since 2025-05-21
- */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(
-    value = "sys_export_task",
-    onInsert = BaseInsertListener.class,
-    onUpdate = BaseUpdateListener.class,
-    mapperGenerateEnable = false)
+@Table(value = "sys_export_task", onInsert = BaseInsertListener.class, onUpdate = BaseUpdateListener.class, mapperGenerateEnable = false)
 public class ExportTask extends BaseEntity implements Serializable {
 
   /** 任务ID */
-  @Id private String id;
+  @Id
+  private String id;
 
   /** 任务名称 */
   private String name;
