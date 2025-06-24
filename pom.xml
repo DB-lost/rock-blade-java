@@ -11,9 +11,10 @@
 	</parent>
 	<groupId>com.rockblade</groupId>
 	<artifactId>rock-blade-java</artifactId>
-	<version>1.0.0</version>
+	<version>${revision}</version>
+	<packaging>pom</packaging>
 	<name>rock-blade-java</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Rock Blade Java - A Modular Spring Boot Template Project</description>
 	<url />
 	<licenses>
 		<license />
@@ -28,6 +29,7 @@
 		<url />
 	</scm>
 	<properties>
+		<revision>1.0.0</revision>
 		<java.version>21</java.version>
 		<cucumber.version>7.20.1</cucumber.version>
 		<jacoco.version>0.8.12</jacoco.version>
@@ -52,144 +54,134 @@
 		<knife4j.version>4.6.0</knife4j.version>
 		<dotenv.version>5.2.2</dotenv.version>
 	</properties>
+
+	<!-- 子模块定义 -->
+	<modules>
+		<module>rock-blade-common</module>
+		<module>rock-blade-framework</module>
+		<module>rock-blade-system</module>
+		<module>rock-blade-api</module>
+		<module>rock-blade-web</module>
+		<module>rock-blade-generator</module>
+	</modules>
+	<dependencyManagement>
+		<dependencies>
+			<!-- 子模块依赖 -->
+			<dependency>
+				<groupId>com.rockblade</groupId>
+				<artifactId>rock-blade-common</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.rockblade</groupId>
+				<artifactId>rock-blade-framework</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.rockblade</groupId>
+				<artifactId>rock-blade-system</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.rockblade</groupId>
+				<artifactId>rock-blade-api</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.rockblade</groupId>
+				<artifactId>rock-blade-web</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.rockblade</groupId>
+				<artifactId>rock-blade-generator</artifactId>
+				<version>${revision}</version>
+			</dependency>
+
+			<!-- MyBatis Flex -->
+			<dependency>
+				<groupId>com.mybatis-flex</groupId>
+				<artifactId>mybatis-flex-spring-boot3-starter</artifactId>
+				<version>${mybatis-flex.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.mybatis-flex</groupId>
+				<artifactId>mybatis-flex-processor</artifactId>
+				<version>${mybatis-flex.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<!-- 代码生成器 -->
+			<dependency>
+				<groupId>com.mybatis-flex</groupId>
+				<artifactId>mybatis-flex-codegen</artifactId>
+				<version>${mybatis-flex.version}</version>
+			</dependency>
+
+			<!--  Sa-Token 权限认证，在线文档：https://sa-token.cc  -->
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-spring-boot3-starter</artifactId>
+				<version>${sa-token.version}</version>
+			</dependency>
+			<!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-redis-jackson</artifactId>
+				<version>${sa-token.version}</version>
+			</dependency>
+			<!--  Sa-Token 整合 jwt  -->
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-jwt</artifactId>
+				<version>${sa-token.version}</version>
+			</dependency>
+			<!--  Sa-Token 整合 SpringAOP 实现注解鉴权  -->
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-spring-aop</artifactId>
+				<version>${sa-token.version}</version>
+			</dependency>
+
+			<!-- hutool工具包 -->
+			<dependency>
+				<groupId>cn.hutool</groupId>
+				<artifactId>hutool-all</artifactId>
+				<version>${hutool.version}</version>
+			</dependency>
+
+			<!-- 读取环境变量 -->
+			<dependency>
+				<groupId>io.github.cdimascio</groupId>
+				<artifactId>java-dotenv</artifactId>
+				<version>${dotenv.version}</version>
+			</dependency>
+
+			<!-- knife4j-Swagger -->
+			<dependency>
+				<groupId>com.github.xingfudeshi</groupId>
+				<artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+				<version>${knife4j.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
+		<!-- 公共依赖，所有子模块都会继承 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-validation</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-
-		<!-- MyBatis Flex -->
-		<dependency>
-			<groupId>com.mybatis-flex</groupId>
-			<artifactId>mybatis-flex-spring-boot3-starter</artifactId>
-			<version>${mybatis-flex.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.mybatis-flex</groupId>
-			<artifactId>mybatis-flex-processor</artifactId>
-			<version>${mybatis-flex.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<!-- 代码生成器 -->
-		<dependency>
-			<groupId>com.mybatis-flex</groupId>
-			<artifactId>mybatis-flex-codegen</artifactId>
-			<version>${mybatis-flex.version}</version>
-		</dependency>
-
-		<!--  Sa-Token 权限认证，在线文档：https://sa-token.cc  -->
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-spring-boot3-starter</artifactId>
-			<version>${sa-token.version}</version>
-		</dependency>
-		<!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-redis-jackson</artifactId>
-			<version>${sa-token.version}</version>
-		</dependency>
-		<!--  Sa-Token 整合 jwt  -->
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-jwt</artifactId>
-			<version>${sa-token.version}</version>
-		</dependency>
-		<!--  Sa-Token 整合 SpringAOP 实现注解鉴权  -->
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-spring-aop</artifactId>
-			<version>${sa-token.version}</version>
-		</dependency>
-
-		<!-- 提供Redis连接池 -->
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-pool2</artifactId>
-		</dependency>
-
-		<!-- hutool工具包 -->
-		<dependency>
-			<groupId>cn.hutool</groupId>
-			<artifactId>hutool-all</artifactId>
-			<version>${hutool.version}</version>
-		</dependency>
-
-		<!-- 提供HikariCP连接池 -->
-		<dependency>
-			<groupId>com.zaxxer</groupId>
-			<artifactId>HikariCP</artifactId>
-		</dependency>
-		<!-- PgSQL -->
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>${postgresql.version}</version>
-		</dependency>
-		<!-- knife4j-Swagger -->
-		<dependency>
-			<groupId>com.github.xingfudeshi</groupId>
-			<artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
-			<version>${knife4j.version}</version>
-		</dependency>
-
-		<!-- 开发工具 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>true</optional>
-		</dependency>
-
-		<!-- 读取环境变量 -->
-		<dependency>
-			<groupId>io.github.cdimascio</groupId>
-			<artifactId>java-dotenv</artifactId>
-			<version>${dotenv.version}</version>
-		</dependency>
-
-		<!-- Spring Boot Mail -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-mail</artifactId>
-		</dependency>
-
-		<!-- Spring Boot Actuator -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-
-		<!-- Micrometer Core -->
-		<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-core</artifactId>
-		</dependency>
-
-		<!-- Micrometer Prometheus registry -->
-		<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-registry-prometheus</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -215,18 +207,6 @@
 							<artifactId>spring-boot-configuration-processor</artifactId>
 						</path>
 					</annotationProcessorPaths>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
 				</configuration>
 			</plugin>
 
@@ -284,6 +264,7 @@
 					<createBackupFile>false</createBackupFile>
 				</configuration>
 			</plugin>
+
 		</plugins>
 	</build>
 

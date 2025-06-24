@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.rockblade</groupId>
+        <artifactId>rock-blade-java</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <packaging>jar</packaging>
+
+    <artifactId>rock-blade-generator</artifactId>
+    <name>rock-blade-generator</name>
+    <description>代码生成器</description>
+
+    <dependencies>
+        <!-- 依赖framework模块 -->
+        <dependency>
+            <groupId>com.rockblade</groupId>
+            <artifactId>rock-blade-framework</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <!-- 提供HikariCP连接池 -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+        </dependency>
+
+        <!-- 代码生成器 -->
+        <dependency>
+            <groupId>com.mybatis-flex</groupId>
+            <artifactId>mybatis-flex-codegen</artifactId>
+            <version>${mybatis-flex.version}</version>
+        </dependency>
+
+        <!-- PgSQL -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+        </dependency>
+
+    </dependencies>
+</project>
