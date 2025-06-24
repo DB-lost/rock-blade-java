@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 22:21:37
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:18:15
+ * @LastEditTime: 2025-06-24 14:05:15
  * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/dto/system/response/MenuResponse.java
  * @Description: 菜单响应DTO
  *
@@ -13,9 +13,9 @@ package com.rockblade.common.dto.system.response;
 import java.util.List;
 import java.util.Map;
 
-import com.rockblade.domain.system.enums.BadgeType;
-import com.rockblade.domain.system.enums.BadgeVariants;
-import com.rockblade.domain.system.enums.MenuType;
+import com.rockblade.common.enums.BadgeType;
+import com.rockblade.common.enums.BadgeVariants;
+import com.rockblade.common.enums.MenuType;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

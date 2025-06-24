@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 23:33:22
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:20:16
- * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/utils/SqlUtils.java
+ * @LastEditTime: 2025-06-24 14:08:06
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/handler/SqlHandler.java
  * @Description: sql操作工具类
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -15,38 +15,10 @@ import com.rockblade.framework.core.base.exception.UtilException;
 
 import cn.hutool.core.util.StrUtil;
 
-public class SqlUtils {
+import org.springframework.stereotype.Component;
 
-  /**
-   * sql工具类空参构造器
-   *
-   * @author DB
-   * @since 2024/05/23
-   */
-  public SqlUtils() {
-  }
-
-  /**
-   * SQL工具类实例
-   *
-   * @author DB
-   * @version 1.1.0
-   * @since 2024/05/23
-   */
-  private static class SqlUtilInstance {
-    private static final SqlUtils INSTANCE = new SqlUtils();
-  }
-
-  /**
-   * 获得实例
-   *
-   * @return {@link SqlUtils }
-   * @author DB
-   * @since 2024/05/23
-   */
-  public static SqlUtils getInstance() {
-    return SqlUtilInstance.INSTANCE;
-  }
+@Component
+public class SqlHandler {
 
   /** 当前记录起始索引 */
   public final String PAGE_NUM = "page";
@@ -80,7 +52,7 @@ public class SqlUtils {
     pageDomain.setOrderByColumn(
         null == ServletUtils.getParameter(ORDER_BY_COLUMN)
             ? null
-            : SqlUtils.getInstance().escapeOrderBySql(ServletUtils.getParameter(ORDER_BY_COLUMN)));
+            : escapeOrderBySql(ServletUtils.getParameter(ORDER_BY_COLUMN)));
     pageDomain.setIsAsc(ServletUtils.getParameter(IS_ASC));
     pageDomain.setReasonable(ServletUtils.getParameterToBool(REASONABLE));
     return pageDomain;

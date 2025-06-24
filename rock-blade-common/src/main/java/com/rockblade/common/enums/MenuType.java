@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-14 12:45:46
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:49:49
- * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/enums/MenuType.java
+ * @LastEditTime: 2025-06-24 14:04:36
+ * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/enums/MenuType.java
  * @Description: 菜单类型枚举
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.system.enums;
+package com.rockblade.common.enums;
 
 public enum MenuType {
   CATALOG("M", "目录"),

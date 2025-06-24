@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 23:30:43
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:19:12
+ * @LastEditTime: 2025-06-24 14:09:28
  * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/exception/BaseException.java
  * @Description: 基础异常 
  *
@@ -12,7 +12,7 @@ package com.rockblade.common.exception;
 
 import java.io.Serial;
 
-import com.rockblade.framework.utils.MessageUtils;
+import com.rockblade.common.utils.MessageUtils;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.Getter;
