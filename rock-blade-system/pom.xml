@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.rockblade</groupId>
+        <artifactId>rock-blade-java</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <packaging>jar</packaging>
+
+    <artifactId>rock-blade-system</artifactId>
+    <name>rock-blade-system</name>
+    <description>系统管理模块，包含用户、角色、权限等系统管理功能</description>
+
+    <dependencies>
+        <!-- 依赖 framework 模块 -->
+        <dependency>
+            <groupId>com.rockblade</groupId>
+            <artifactId>rock-blade-framework</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
+</project>
