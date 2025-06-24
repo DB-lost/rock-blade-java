@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 20:49:05
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 15:39:03
+ * @LastEditTime: 2025-06-24 15:49:42
  * @FilePath: /rock-blade-java/rock-blade-web/src/main/java/com/rockblade/web/RockBladeJavaWebApplication.java
  * @Description: 启动类
  *
@@ -18,7 +18,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication(scanBasePackages = { "com.rockblade.**" })
-@MapperScan("com.rockblade.infrastructure.**.mapper")
+@MapperScan("com.rockblade.**.mapper")
 @EnableAsync
 @EnableScheduling
 public class RockBladeJavaWebApplication {

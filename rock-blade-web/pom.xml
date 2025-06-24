@@ -21,6 +21,13 @@
             <groupId>com.rockblade</groupId>
             <artifactId>rock-blade-api</artifactId>
         </dependency>
+
+        <!-- PgSQL -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
