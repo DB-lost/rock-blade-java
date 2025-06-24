@@ -13,5 +13,4 @@ package com.rockblade.system.service;
 import com.mybatisflex.core.service.IService;
 import com.rockblade.system.entity.UserRole;
 
-public interface UserRoleService extends IService<UserRole> {
-}
+public interface UserRoleService extends IService<UserRole> {}

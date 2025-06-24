@@ -14,10 +14,9 @@ import org.springframework.stereotype.Service;
 
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import com.rockblade.system.entity.UserRole;
-import com.rockblade.system.service.UserRoleService;
 import com.rockblade.system.mapper.UserRoleMapper;
+import com.rockblade.system.service.UserRoleService;
 
 @Service("userRoleService")
 public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole>
-        implements UserRoleService {
-}
+    implements UserRoleService {}

@@ -30,8 +30,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.rockblade.common.dto.system.request.MenuRequest;
 import com.rockblade.common.dto.system.response.MenuResponse;
-import com.rockblade.system.service.MenuService;
 import com.rockblade.framework.core.base.entity.R;
+import com.rockblade.system.service.MenuService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -42,8 +42,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/menu")
 public class MenuController {
 
-  @Autowired
-  private MenuService menuService;
+  @Autowired private MenuService menuService;
 
   @GetMapping("/list")
   @Operation(summary = "获取菜单列表")

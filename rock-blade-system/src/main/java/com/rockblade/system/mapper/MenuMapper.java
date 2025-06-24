@@ -13,5 +13,4 @@ package com.rockblade.system.mapper;
 import com.mybatisflex.core.BaseMapper;
 import com.rockblade.system.entity.Menu;
 
-public interface MenuMapper extends BaseMapper<Menu> {
-}
+public interface MenuMapper extends BaseMapper<Menu> {}

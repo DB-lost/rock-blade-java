@@ -75,15 +75,16 @@ public class MonitorConfig {
 
     // CPU使用率和系统内存
     if (osBean instanceof com.sun.management.OperatingSystemMXBean) {
-      com.sun.management.OperatingSystemMXBean sunOsBean = (com.sun.management.OperatingSystemMXBean) osBean;
+      com.sun.management.OperatingSystemMXBean sunOsBean =
+          (com.sun.management.OperatingSystemMXBean) osBean;
       Gauge.builder("system.cpu.usage", sunOsBean::getCpuLoad)
           .description(MessageUtils.message("monitor.system.cpu.usage"))
           .register(registry);
 
       // 系统内存监控
       Gauge.builder(
-          "system.memory.used.bytes",
-          () -> sunOsBean.getTotalMemorySize() - sunOsBean.getFreeMemorySize())
+              "system.memory.used.bytes",
+              () -> sunOsBean.getTotalMemorySize() - sunOsBean.getFreeMemorySize())
           .description("System memory used")
           .baseUnit("bytes")
           .register(registry);

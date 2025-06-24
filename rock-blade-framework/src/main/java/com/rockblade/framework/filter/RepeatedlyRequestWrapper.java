@@ -29,7 +29,7 @@ public class RepeatedlyRequestWrapper extends HttpServletRequestWrapper {
   /**
    * 重复请求包装器
    *
-   * @param request  请求
+   * @param request 请求
    * @param response 响应
    * @throws IOException ioexception
    * @author DB
@@ -104,8 +104,7 @@ public class RepeatedlyRequestWrapper extends HttpServletRequestWrapper {
       }
 
       @Override
-      public void setReadListener(ReadListener readListener) {
-      }
+      public void setReadListener(ReadListener readListener) {}
     };
   }
 }

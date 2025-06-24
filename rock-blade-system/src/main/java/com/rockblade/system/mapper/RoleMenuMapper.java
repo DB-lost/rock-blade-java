@@ -13,5 +13,4 @@ package com.rockblade.system.mapper;
 import com.mybatisflex.core.BaseMapper;
 import com.rockblade.system.entity.RoleMenu;
 
-public interface RoleMenuMapper extends BaseMapper<RoleMenu> {
-}
+public interface RoleMenuMapper extends BaseMapper<RoleMenu> {}

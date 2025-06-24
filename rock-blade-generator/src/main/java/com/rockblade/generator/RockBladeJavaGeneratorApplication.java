@@ -128,20 +128,28 @@ public class RockBladeJavaGeneratorApplication {
     globalConfig
         .getTemplateConfig()
         .setEntity(
-            System.getProperty("user.dir") + "/rock-blade-generator" + "/src/main/resources/templates/enjoy/entity.tpl")
+            System.getProperty("user.dir")
+                + "/rock-blade-generator"
+                + "/src/main/resources/templates/enjoy/entity.tpl")
         .setMapper(
-            System.getProperty("user.dir") + "/rock-blade-generator" + "/src/main/resources/templates/enjoy/mapper.tpl")
+            System.getProperty("user.dir")
+                + "/rock-blade-generator"
+                + "/src/main/resources/templates/enjoy/mapper.tpl")
         .setService(
-            System.getProperty("user.dir") + "/rock-blade-generator"
+            System.getProperty("user.dir")
+                + "/rock-blade-generator"
                 + "/src/main/resources/templates/enjoy/service.tpl")
         .setServiceImpl(
-            System.getProperty("user.dir") + "/rock-blade-generator"
+            System.getProperty("user.dir")
+                + "/rock-blade-generator"
                 + "/src/main/resources/templates/enjoy/serviceImpl.tpl")
         .setController(
-            System.getProperty("user.dir") + "/rock-blade-generator"
+            System.getProperty("user.dir")
+                + "/rock-blade-generator"
                 + "/src/main/resources/templates/enjoy/controller.tpl")
         .setMapperXml(
-            System.getProperty("user.dir") + "/rock-blade-generator"
+            System.getProperty("user.dir")
+                + "/rock-blade-generator"
                 + "/src/main/resources/templates/enjoy/mapperXml.tpl");
     // Entity 生成配置
     globalConfig
@@ -160,7 +168,8 @@ public class RockBladeJavaGeneratorApplication {
     globalConfig.enableServiceImpl();
     // 开启 Controller 的生成
     globalConfig.enableController();
-    globalConfig.getControllerConfig()
+    globalConfig
+        .getControllerConfig()
         .setSourceDir(System.getProperty("user.dir") + "/rock-blade-api" + "/src/main/java");
     // 开启 xml 的生成
     globalConfig.enableMapperXml();

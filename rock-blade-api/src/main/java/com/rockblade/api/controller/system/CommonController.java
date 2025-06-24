@@ -23,9 +23,9 @@ import com.rockblade.common.dto.system.request.UserDetailsInfoRequest;
 import com.rockblade.common.dto.system.response.MenuResponse;
 import com.rockblade.common.dto.system.response.PermissionsResponse;
 import com.rockblade.common.dto.system.response.UserInfoResponse;
+import com.rockblade.framework.core.base.entity.R;
 import com.rockblade.system.service.MenuService;
 import com.rockblade.system.service.UserService;
-import com.rockblade.framework.core.base.entity.R;
 
 import cn.dev33.satoken.stp.StpUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,11 +38,9 @@ import lombok.extern.slf4j.Slf4j;
 @Tag(name = "公共接口")
 public class CommonController {
 
-  @Autowired
-  private MenuService menuService;
+  @Autowired private MenuService menuService;
 
-  @Autowired
-  private UserService userService;
+  @Autowired private UserService userService;
 
   @GetMapping("/getUserInfo")
   @Operation(summary = "获取用户信息")

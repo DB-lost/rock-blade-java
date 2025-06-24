@@ -64,7 +64,7 @@ public interface DeptService extends IService<Dept> {
    *
    * @param deptName 部门名称
    * @param parentId 父部门ID
-   * @param deptId   部门ID（可选，用于更新校验）
+   * @param deptId 部门ID（可选，用于更新校验）
    * @return 结果
    */
   boolean checkDeptNameUnique(String deptName, String parentId, String deptId);

@@ -26,9 +26,9 @@ import com.mybatisflex.spring.service.impl.ServiceImpl;
 import com.rockblade.common.dto.system.request.MenuRequest;
 import com.rockblade.common.dto.system.response.MenuResponse;
 import com.rockblade.system.entity.Menu;
+import com.rockblade.system.mapper.MenuMapper;
 import com.rockblade.system.service.MenuService;
 import com.rockblade.system.service.RoleMenuService;
-import com.rockblade.system.mapper.MenuMapper;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
@@ -62,23 +62,24 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     List<Menu> menus = this.list(QueryWrapper.create().orderBy(MENU.ORDER.asc()));
 
     // 过滤权限并构建树
-    List<Menu> authorizedMenus = menus.stream()
-        .filter(
-            menu -> {
-              // 如果菜单忽略权限访问，直接返回true
-              // if (Boolean.TRUE.equals(menu.getIgnoreAccess())) {
-              // return true;
-              // }
+    List<Menu> authorizedMenus =
+        menus.stream()
+            .filter(
+                menu -> {
+                  // 如果菜单忽略权限访问，直接返回true
+                  // if (Boolean.TRUE.equals(menu.getIgnoreAccess())) {
+                  // return true;
+                  // }
 
-              // TODO: 实现角色权限检查
-              // 如果设置了authority,需要检查用户角色是否匹配
-              // if (menu.getAuthority() != null && menu.getAuthority().length > 0) {
-              // return checkUserHasRole(userId, menu.getAuthority());
-              // }
+                  // TODO: 实现角色权限检查
+                  // 如果设置了authority,需要检查用户角色是否匹配
+                  // if (menu.getAuthority() != null && menu.getAuthority().length > 0) {
+                  // return checkUserHasRole(userId, menu.getAuthority());
+                  // }
 
-              return true;
-            })
-        .toList();
+                  return true;
+                })
+            .toList();
 
     return buildMenuTree(authorizedMenus, null);
   }
@@ -86,17 +87,19 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
   @Override
   public List<MenuResponse> getMenuTreeByRoleId(String roleId) {
     // 通过角色ID获取菜单ID列表
-    List<String> menuIds = SpringUtil.getBean(RoleMenuService.class)
-        .queryChain()
-        .select(ROLE_MENU.MENU_ID)
-        .where(ROLE_MENU.ROLE_ID.eq(roleId))
-        .list()
-        .stream()
-        .map(rm -> rm.getMenuId())
-        .toList();
+    List<String> menuIds =
+        SpringUtil.getBean(RoleMenuService.class)
+            .queryChain()
+            .select(ROLE_MENU.MENU_ID)
+            .where(ROLE_MENU.ROLE_ID.eq(roleId))
+            .list()
+            .stream()
+            .map(rm -> rm.getMenuId())
+            .toList();
 
     // 查询菜单列表
-    List<Menu> menus = this.list(QueryWrapper.create().where(MENU.ID.in(menuIds)).orderBy(MENU.ORDER.asc()));
+    List<Menu> menus =
+        this.list(QueryWrapper.create().where(MENU.ID.in(menuIds)).orderBy(MENU.ORDER.asc()));
 
     return buildMenuTree(menus, null);
   }
@@ -137,7 +140,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
   @Override
   public Boolean checkMenuNameUnique(String menuName, String parentId, String menuId) {
-    QueryWrapper query = QueryWrapper.create().where(MENU.NAME.eq(menuName)).and(MENU.PID.eq(parentId));
+    QueryWrapper query =
+        QueryWrapper.create().where(MENU.NAME.eq(menuName)).and(MENU.PID.eq(parentId));
 
     if (menuId != null) {
       query.and(MENU.ID.ne(menuId));
@@ -149,7 +153,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
   /**
    * 构建菜单树
    *
-   * @param menus    菜单列表
+   * @param menus 菜单列表
    * @param parentId 父ID
    * @return 菜单树
    */
@@ -157,9 +161,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     List<MenuResponse> tree = new ArrayList<>();
     menus.stream()
         .filter(
-            menu -> StrUtil.isBlank(parentId)
-                ? menu.getPid() == null
-                : Objects.equals(menu.getPid(), parentId))
+            menu ->
+                StrUtil.isBlank(parentId)
+                    ? menu.getPid() == null
+                    : Objects.equals(menu.getPid(), parentId))
         .forEach(
             menu -> {
               MenuResponse node = convertToResponse(menu);

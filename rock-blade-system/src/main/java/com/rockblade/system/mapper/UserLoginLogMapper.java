@@ -13,5 +13,4 @@ package com.rockblade.system.mapper;
 import com.mybatisflex.core.BaseMapper;
 import com.rockblade.system.entity.UserLoginLog;
 
-public interface UserLoginLogMapper extends BaseMapper<UserLoginLog> {
-}
+public interface UserLoginLogMapper extends BaseMapper<UserLoginLog> {}

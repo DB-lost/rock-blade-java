@@ -23,11 +23,11 @@ import com.rockblade.common.dto.system.request.UserRequest;
 import com.rockblade.common.dto.system.response.DeptResponse;
 import com.rockblade.common.dto.system.response.RoleResponse;
 import com.rockblade.common.dto.system.response.UserPageResponse;
+import com.rockblade.framework.core.base.entity.R;
 import com.rockblade.system.entity.Role;
 import com.rockblade.system.service.DeptService;
 import com.rockblade.system.service.RoleService;
 import com.rockblade.system.service.UserService;
-import com.rockblade.framework.core.base.entity.R;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,14 +37,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/user")
 public class UserController {
 
-  @Autowired
-  private UserService userService;
+  @Autowired private UserService userService;
 
-  @Autowired
-  private DeptService deptService;
+  @Autowired private DeptService deptService;
 
-  @Autowired
-  private RoleService roleService;
+  @Autowired private RoleService roleService;
 
   @GetMapping("/page")
   @Operation(summary = "分页查询用户列表")

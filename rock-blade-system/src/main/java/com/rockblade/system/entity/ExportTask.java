@@ -27,12 +27,15 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(value = "sys_export_task", onInsert = BaseInsertListener.class, onUpdate = BaseUpdateListener.class, mapperGenerateEnable = false)
+@Table(
+    value = "sys_export_task",
+    onInsert = BaseInsertListener.class,
+    onUpdate = BaseUpdateListener.class,
+    mapperGenerateEnable = false)
 public class ExportTask extends BaseEntity implements Serializable {
 
   /** 任务ID */
-  @Id
-  private String id;
+  @Id private String id;
 
   /** 任务名称 */
   private String name;

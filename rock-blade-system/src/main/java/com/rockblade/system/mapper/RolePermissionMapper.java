@@ -5,13 +5,12 @@
  * @LastEditTime: 2025-06-24 15:04:09
  * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/mapper/RolePermissionMapper.java
  * @Description: 角色和权限关联表 映射层。
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.system.mapper;
 
 import com.mybatisflex.core.BaseMapper;
 import com.rockblade.system.entity.RolePermission;
 
-public interface RolePermissionMapper extends BaseMapper<RolePermission> {
-}
+public interface RolePermissionMapper extends BaseMapper<RolePermission> {}

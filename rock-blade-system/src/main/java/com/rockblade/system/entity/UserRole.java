@@ -27,14 +27,16 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(value = "sys_user_role", onInsert = BaseInsertListener.class, onUpdate = BaseUpdateListener.class, mapperGenerateEnable = false)
+@Table(
+    value = "sys_user_role",
+    onInsert = BaseInsertListener.class,
+    onUpdate = BaseUpdateListener.class,
+    mapperGenerateEnable = false)
 public class UserRole extends BaseEntity implements Serializable {
 
   /** 用户ID */
-  @Id
-  private String userId;
+  @Id private String userId;
 
   /** 角色ID */
-  @Id
-  private String roleId;
+  @Id private String roleId;
 }

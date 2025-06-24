@@ -27,12 +27,15 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(value = "sys_role_permission", onInsert = BaseInsertListener.class, onUpdate = BaseUpdateListener.class, mapperGenerateEnable = false)
+@Table(
+    value = "sys_role_permission",
+    onInsert = BaseInsertListener.class,
+    onUpdate = BaseUpdateListener.class,
+    mapperGenerateEnable = false)
 public class RolePermission extends BaseEntity implements Serializable {
 
   /** 角色ID */
-  @Id
-  private String roleId;
+  @Id private String roleId;
 
   /** 权限码 */
   private String permission;

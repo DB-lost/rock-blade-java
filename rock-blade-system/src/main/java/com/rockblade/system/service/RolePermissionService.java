@@ -5,13 +5,12 @@
  * @LastEditTime: 2025-06-24 13:53:24
  * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/RolePermissionService.java
  * @Description: 角色和权限关联表 服务层。
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.system.service;
 
 import com.mybatisflex.core.service.IService;
 import com.rockblade.system.entity.RolePermission;
 
-public interface RolePermissionService extends IService<RolePermission> {
-}
+public interface RolePermissionService extends IService<RolePermission> {}

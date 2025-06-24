@@ -6,7 +6,7 @@
  * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/constants/Constants.java
  * @Description: 实体类
  *
- * Copyright (c) 2025 by RockBlade, All Rights Reserved.  
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.common.constants;
 
@@ -86,7 +86,7 @@ public interface Constants {
 
   /** 定时任务违规的字符 */
   String[] JOB_ERROR_STR = {
-      "java.net.URL", "javax.naming.InitialContext", "org.yaml.snakeyaml", "org.springframework.jndi"
+    "java.net.URL", "javax.naming.InitialContext", "org.yaml.snakeyaml", "org.springframework.jndi"
   };
 
   /** 超级管理员 */
@@ -135,47 +135,47 @@ public interface Constants {
   String IMAGE_GIF = "image/gif";
 
   /** 映像扩展 */
-  String[] IMAGE_EXTENSION = { "bmp", "gif", "jpg", "jpeg", "png" };
+  String[] IMAGE_EXTENSION = {"bmp", "gif", "jpg", "jpeg", "png"};
 
   /** flash扩展 */
-  String[] FLASH_EXTENSION = { "swf", "flv" };
+  String[] FLASH_EXTENSION = {"swf", "flv"};
 
   /** 媒体扩展 */
   String[] MEDIA_EXTENSION = {
-      "swf", "flv", "mp3", "wav", "wma", "wmv", "mid", "avi", "mpg", "asf", "rm", "rmvb"
+    "swf", "flv", "mp3", "wav", "wma", "wmv", "mid", "avi", "mpg", "asf", "rm", "rmvb"
   };
 
   /** 视频扩展 */
-  String[] VIDEO_EXTENSION = { "mp4", "avi", "rmvb" };
+  String[] VIDEO_EXTENSION = {"mp4", "avi", "rmvb"};
 
   /** 默认允许扩展 */
   String[] DEFAULT_ALLOWED_EXTENSION = {
-      // 图片
-      "bmp",
-      "gif",
-      "jpg",
-      "jpeg",
-      "png",
-      // word excel powerpoint
-      "doc",
-      "docx",
-      "xls",
-      "xlsx",
-      "ppt",
-      "pptx",
-      "html",
-      "htm",
-      "txt",
-      // 压缩文件
-      "rar",
-      "zip",
-      "gz",
-      "bz2",
-      // 视频格式
-      "mp4",
-      "avi",
-      "rmvb",
-      // pdf
-      "pdf"
+    // 图片
+    "bmp",
+    "gif",
+    "jpg",
+    "jpeg",
+    "png",
+    // word excel powerpoint
+    "doc",
+    "docx",
+    "xls",
+    "xlsx",
+    "ppt",
+    "pptx",
+    "html",
+    "htm",
+    "txt",
+    // 压缩文件
+    "rar",
+    "zip",
+    "gz",
+    "bz2",
+    // 视频格式
+    "mp4",
+    "avi",
+    "rmvb",
+    // pdf
+    "pdf"
   };
 }

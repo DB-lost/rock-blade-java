@@ -28,24 +28,23 @@ import com.mybatisflex.spring.service.impl.ServiceImpl;
 import com.rockblade.common.dto.system.request.RolePageRequest;
 import com.rockblade.common.dto.system.request.RoleRequest;
 import com.rockblade.common.dto.system.response.RoleResponse;
+import com.rockblade.common.exception.ServiceException;
+import com.rockblade.framework.core.base.entity.PageDomain;
+import com.rockblade.framework.handler.SqlHandler;
 import com.rockblade.system.entity.Role;
 import com.rockblade.system.entity.RoleMenu;
 import com.rockblade.system.entity.UserRole;
+import com.rockblade.system.mapper.RoleMapper;
 import com.rockblade.system.service.RoleMenuService;
 import com.rockblade.system.service.RoleService;
 import com.rockblade.system.service.UserRoleService;
-import com.rockblade.framework.core.base.entity.PageDomain;
-import com.rockblade.common.exception.ServiceException;
-import com.rockblade.framework.handler.SqlHandler;
-import com.rockblade.system.mapper.RoleMapper;
 
 import cn.hutool.extra.spring.SpringUtil;
 
 @Service("roleService")
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
 
-  @Autowired
-  private SqlHandler sqlHandler;
+  @Autowired private SqlHandler sqlHandler;
 
   @Override
   public Role getRoleByKey(String roleKey) {
@@ -66,13 +65,15 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             .and(ROLE.CREATED_AT.between(request.getStartTime(), request.getEndTime()))
             .orderBy(ROLE.UPDATED_AT.desc()),
         RoleResponse.class,
-        permissions -> permissions
-            .field(RoleResponse::getPermissions)
-            .queryWrapper(
-                roleResponse -> QueryWrapper.create()
-                    .select(ROLE_MENU.MENU_ID)
-                    .from(ROLE_MENU)
-                    .where(ROLE_MENU.ROLE_ID.eq(roleResponse.getId()))));
+        permissions ->
+            permissions
+                .field(RoleResponse::getPermissions)
+                .queryWrapper(
+                    roleResponse ->
+                        QueryWrapper.create()
+                            .select(ROLE_MENU.MENU_ID)
+                            .from(ROLE_MENU)
+                            .where(ROLE_MENU.ROLE_ID.eq(roleResponse.getId()))));
   }
 
   @Override
@@ -172,8 +173,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
   @Override
   public List<Role> getRolesByUserId(String userId) {
     // 查询用户的角色关联
-    List<UserRole> userRoles = SpringUtil.getBean(UserRoleService.class)
-        .list(QueryWrapper.create().where(USER_ROLE.USER_ID.eq(userId)));
+    List<UserRole> userRoles =
+        SpringUtil.getBean(UserRoleService.class)
+            .list(QueryWrapper.create().where(USER_ROLE.USER_ID.eq(userId)));
 
     if (userRoles.isEmpty()) {
       return new ArrayList<>();

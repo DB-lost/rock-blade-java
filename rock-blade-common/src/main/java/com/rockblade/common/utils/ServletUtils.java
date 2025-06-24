@@ -42,7 +42,7 @@ public class ServletUtils {
   /**
    * 获取参数
    *
-   * @param name         参数key
+   * @param name 参数key
    * @param defaultValue 默认值
    * @return {@link String }
    * @author DB
@@ -89,7 +89,7 @@ public class ServletUtils {
   /**
    * 获取Integer参数
    *
-   * @param name         参数key
+   * @param name 参数key
    * @param defaultValue 默认值
    * @return {@link Integer }
    * @author DB
@@ -114,7 +114,7 @@ public class ServletUtils {
   /**
    * 获取Boolean参数
    *
-   * @param name         参数key
+   * @param name 参数key
    * @param defaultValue 默认值
    * @return {@link Boolean }
    * @author DB
@@ -173,7 +173,7 @@ public class ServletUtils {
    * 将字符串渲染到客户端
    *
    * @param response 渲染对象
-   * @param string   待渲染的字符串
+   * @param string 待渲染的字符串
    * @author DB
    * @since 2024/05/23
    */

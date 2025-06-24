@@ -27,14 +27,16 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(value = "sys_role_menu", onInsert = BaseInsertListener.class, onUpdate = BaseUpdateListener.class, mapperGenerateEnable = false)
+@Table(
+    value = "sys_role_menu",
+    onInsert = BaseInsertListener.class,
+    onUpdate = BaseUpdateListener.class,
+    mapperGenerateEnable = false)
 public class RoleMenu extends BaseEntity implements Serializable {
 
   /** 角色ID */
-  @Id
-  private String roleId;
+  @Id private String roleId;
 
   /** 菜单ID */
-  @Id
-  private String menuId;
+  @Id private String menuId;
 }

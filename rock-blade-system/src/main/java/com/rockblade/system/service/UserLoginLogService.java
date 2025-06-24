@@ -13,5 +13,4 @@ package com.rockblade.system.service;
 import com.mybatisflex.core.service.IService;
 import com.rockblade.system.entity.UserLoginLog;
 
-public interface UserLoginLogService extends IService<UserLoginLog> {
-}
+public interface UserLoginLogService extends IService<UserLoginLog> {}

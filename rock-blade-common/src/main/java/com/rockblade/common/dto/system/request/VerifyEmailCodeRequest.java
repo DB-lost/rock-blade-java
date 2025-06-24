@@ -5,8 +5,8 @@
  * @LastEditTime: 2025-06-24 13:17:41
  * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/dto/system/request/VerifyEmailCodeRequest.java
  * @Description: 校验邮箱验证码请求
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.common.dto.system.request;
 

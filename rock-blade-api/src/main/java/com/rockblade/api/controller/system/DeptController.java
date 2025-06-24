@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.rockblade.common.dto.system.request.DeptRequest;
 import com.rockblade.common.dto.system.response.DeptResponse;
-import com.rockblade.system.service.DeptService;
 import com.rockblade.framework.core.base.entity.R;
+import com.rockblade.system.service.DeptService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,8 +28,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "部门管理接口")
 public class DeptController {
 
-  @Autowired
-  private DeptService deptService;
+  @Autowired private DeptService deptService;
 
   /** 获取部门列表（树形结构） */
   @GetMapping("/list")

@@ -27,12 +27,15 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(value = "sys_user_login_log", onInsert = BaseInsertListener.class, onUpdate = BaseUpdateListener.class, mapperGenerateEnable = false)
+@Table(
+    value = "sys_user_login_log",
+    onInsert = BaseInsertListener.class,
+    onUpdate = BaseUpdateListener.class,
+    mapperGenerateEnable = false)
 public class UserLoginLog extends BaseEntity implements Serializable {
 
   /** 主键ID */
-  @Id
-  private String id;
+  @Id private String id;
 
   /** 用户ID */
   private String userId;

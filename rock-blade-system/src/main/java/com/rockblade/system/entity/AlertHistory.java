@@ -28,12 +28,15 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(value = "sys_alert_history", onInsert = BaseInsertListener.class, onUpdate = BaseUpdateListener.class, mapperGenerateEnable = false)
+@Table(
+    value = "sys_alert_history",
+    onInsert = BaseInsertListener.class,
+    onUpdate = BaseUpdateListener.class,
+    mapperGenerateEnable = false)
 public class AlertHistory extends BaseEntity implements Serializable {
 
   /** 历史记录ID */
-  @Id
-  private String id;
+  @Id private String id;
 
   /** 告警名称 */
   private String alertName;

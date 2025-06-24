@@ -10,16 +10,13 @@
  */
 package com.rockblade.framework.handler;
 
-import com.rockblade.framework.core.base.entity.PageDomain;
+import org.springframework.stereotype.Component;
+
 import com.rockblade.common.exception.UtilException;
+import com.rockblade.common.utils.ServletUtils;
+import com.rockblade.framework.core.base.entity.PageDomain;
 
 import cn.hutool.core.util.StrUtil;
-
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import com.rockblade.common.utils.ServletUtils;
 
 @Component
 public class SqlHandler {

@@ -33,13 +33,15 @@ public class ApiMonitorAspect {
     this.meterRegistry = meterRegistry;
   }
 
-  @Around("@annotation(org.springframework.web.bind.annotation.RequestMapping) || "
-      + "@annotation(org.springframework.web.bind.annotation.GetMapping) || "
-      + "@annotation(org.springframework.web.bind.annotation.PostMapping) || "
-      + "@annotation(org.springframework.web.bind.annotation.PutMapping) || "
-      + "@annotation(org.springframework.web.bind.annotation.DeleteMapping)")
+  @Around(
+      "@annotation(org.springframework.web.bind.annotation.RequestMapping) || "
+          + "@annotation(org.springframework.web.bind.annotation.GetMapping) || "
+          + "@annotation(org.springframework.web.bind.annotation.PostMapping) || "
+          + "@annotation(org.springframework.web.bind.annotation.PutMapping) || "
+          + "@annotation(org.springframework.web.bind.annotation.DeleteMapping)")
   public Object monitorApiEndpoint(ProceedingJoinPoint joinPoint) throws Throwable {
-    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    HttpServletRequest request =
+        ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
     String endpoint = request.getRequestURI();
     String method = request.getMethod();
 

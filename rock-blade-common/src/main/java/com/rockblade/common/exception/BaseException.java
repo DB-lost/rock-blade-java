@@ -4,7 +4,7 @@
  * @LastEditors: DB 2502523450@qq.com
  * @LastEditTime: 2025-06-24 14:09:28
  * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/exception/BaseException.java
- * @Description: 基础异常 
+ * @Description: 基础异常
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
@@ -21,8 +21,7 @@ import lombok.Getter;
 public class BaseException extends RuntimeException {
 
   /** 序列化uid */
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   /** 所属模块 */
   private final String module;
@@ -39,9 +38,9 @@ public class BaseException extends RuntimeException {
   /**
    * 基础异常构造器
    *
-   * @param module         模块
-   * @param code           代码
-   * @param args           参数
+   * @param module 模块
+   * @param code 代码
+   * @param args 参数
    * @param defaultMessage 默认消息
    * @author DB
    * @since 2024/05/23
@@ -57,8 +56,8 @@ public class BaseException extends RuntimeException {
    * 基础异常构造器
    *
    * @param module 模块
-   * @param code   代码
-   * @param args   参数
+   * @param code 代码
+   * @param args 参数
    * @author DB
    * @since 2024/05/23
    */
@@ -69,7 +68,7 @@ public class BaseException extends RuntimeException {
   /**
    * 基础异常构造器
    *
-   * @param module         模块
+   * @param module 模块
    * @param defaultMessage 默认消息
    * @author DB
    * @since 2024/05/23

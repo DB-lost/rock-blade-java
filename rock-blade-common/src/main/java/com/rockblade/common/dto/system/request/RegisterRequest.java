@@ -5,8 +5,8 @@
  * @LastEditTime: 2025-06-24 13:16:28
  * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/dto/system/request/RegisterRequest.java
  * @Description: 注册请求
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.common.dto.system.request;
 

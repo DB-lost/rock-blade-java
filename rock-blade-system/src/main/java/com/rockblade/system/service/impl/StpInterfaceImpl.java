@@ -36,20 +36,22 @@ public class StpInterfaceImpl implements StpInterface {
   @Override
   public List<String> getPermissionList(Object loginId, String loginType) {
     RoleService roleService = SpringUtil.getBean(RoleService.class);
-    List<Role> roleList = roleService
-        .queryChain()
-        .from(ROLE)
-        .leftJoin(USER_ROLE)
-        .on(USER_ROLE.ROLE_ID.eq(ROLE.ID))
-        .where(USER_ROLE.USER_ID.eq(loginId))
-        .list();
+    List<Role> roleList =
+        roleService
+            .queryChain()
+            .from(ROLE)
+            .leftJoin(USER_ROLE)
+            .on(USER_ROLE.ROLE_ID.eq(ROLE.ID))
+            .where(USER_ROLE.USER_ID.eq(loginId))
+            .list();
     List<String> list;
     if (!roleList.isEmpty()) {
-      List<RolePermission> rolePermissionsList = SpringUtil.getBean(RolePermissionService.class)
-          .queryChain()
-          .where(
-              ROLE_PERMISSION.ROLE_ID.in(roleList.stream().map(item -> item.getId()).toList()))
-          .list();
+      List<RolePermission> rolePermissionsList =
+          SpringUtil.getBean(RolePermissionService.class)
+              .queryChain()
+              .where(
+                  ROLE_PERMISSION.ROLE_ID.in(roleList.stream().map(item -> item.getId()).toList()))
+              .list();
       if (!rolePermissionsList.isEmpty()) {
         list = rolePermissionsList.stream().map(item -> item.getPermission()).distinct().toList();
       } else {
