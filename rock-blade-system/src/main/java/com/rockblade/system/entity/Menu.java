@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-06-24 13:00:43
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:47:32
+ * @LastEditTime: 2025-06-24 15:15:38
  * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/entity/Menu.java
  * @Description: 菜单表 实体类。
  *
@@ -14,9 +14,9 @@ import java.io.Serializable;
 
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
-import com.rockblade.system.enums.BadgeType;
-import com.rockblade.system.enums.BadgeVariants;
-import com.rockblade.system.enums.MenuType;
+import com.rockblade.common.enums.BadgeType;
+import com.rockblade.common.enums.BadgeVariants;
+import com.rockblade.common.enums.MenuType;
 import com.rockblade.framework.core.base.entity.BaseEntity;
 import com.rockblade.framework.core.base.entity.BaseInsertListener;
 import com.rockblade.framework.core.base.entity.BaseUpdateListener;

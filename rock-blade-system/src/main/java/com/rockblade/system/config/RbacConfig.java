@@ -2,22 +2,22 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-12 09:34:55
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:28:18
- * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/config/RbacConfig.java
+ * @LastEditTime: 2025-06-24 15:21:33
+ * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/config/RbacConfig.java
  * @Description:
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.framework.config;
+package com.rockblade.system.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-import com.rockblade.domain.system.entity.Role;
-import com.rockblade.domain.system.service.RoleService;
-import com.rockblade.framework.config.properties.RbacProperties;
-import com.rockblade.framework.config.properties.RbacProperties.RoleConfig;
+import com.rockblade.system.entity.Role;
+import com.rockblade.system.service.RoleService;
+import com.rockblade.system.config.properties.RbacProperties;
+import com.rockblade.system.config.properties.RbacProperties.RoleConfig;
 
 import jakarta.annotation.PostConstruct;
 

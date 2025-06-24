@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:51:44
+ * @LastEditTime: 2025-06-24 15:03:33
  * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/impl/MenuServiceImpl.java
  * @Description: 菜单权限表 服务实现层。
  *
@@ -10,8 +10,8 @@
  */
 package com.rockblade.system.service.impl;
 
-import static com.rockblade.domain.system.entity.table.MenuTableDef.MENU;
-import static com.rockblade.domain.system.entity.table.RoleMenuTableDef.ROLE_MENU;
+import static com.rockblade.system.entity.table.MenuTableDef.MENU;
+import static com.rockblade.system.entity.table.RoleMenuTableDef.ROLE_MENU;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +23,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
-import com.rockblade.domain.system.dto.request.MenuRequest;
-import com.rockblade.domain.system.dto.response.MenuResponse;
-import com.rockblade.domain.system.entity.Menu;
-import com.rockblade.domain.system.service.MenuService;
-import com.rockblade.domain.system.service.RoleMenuService;
-import com.rockblade.infrastructure.system.mapper.MenuMapper;
+import com.rockblade.common.dto.system.request.MenuRequest;
+import com.rockblade.common.dto.system.response.MenuResponse;
+import com.rockblade.system.entity.Menu;
+import com.rockblade.system.service.MenuService;
+import com.rockblade.system.service.RoleMenuService;
+import com.rockblade.system.mapper.MenuMapper;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;

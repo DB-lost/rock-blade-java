@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-23 10:43:29
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:53:01
+ * @LastEditTime: 2025-06-24 15:17:31
  * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/LogService.java
  * @Description: 日志服务接口。
  *
@@ -14,8 +14,8 @@ import java.util.List;
 
 import org.springframework.core.io.Resource;
 
-import com.rockblade.domain.system.dto.request.LogSearchRequest;
-import com.rockblade.domain.system.dto.response.LogFileInfoResponse;
+import com.rockblade.common.dto.system.request.LogSearchRequest;
+import com.rockblade.common.dto.system.response.LogFileInfoResponse;
 
 public interface LogService {
 

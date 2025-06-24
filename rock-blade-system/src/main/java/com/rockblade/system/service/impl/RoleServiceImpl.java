@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:27:58
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:52:10
+ * @LastEditTime: 2025-06-24 15:19:30
  * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/impl/RoleServiceImpl.java
  * @Description: 角色信息表 服务层实现。
  *
@@ -10,38 +10,42 @@
  */
 package com.rockblade.system.service.impl;
 
-import static com.rockblade.domain.system.entity.table.RoleMenuTableDef.ROLE_MENU;
-import static com.rockblade.domain.system.entity.table.RoleTableDef.ROLE;
-import static com.rockblade.domain.system.entity.table.UserRoleTableDef.USER_ROLE;
+import static com.rockblade.system.entity.table.RoleMenuTableDef.ROLE_MENU;
+import static com.rockblade.system.entity.table.RoleTableDef.ROLE;
+import static com.rockblade.system.entity.table.UserRoleTableDef.USER_ROLE;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
-import com.rockblade.domain.system.dto.request.RolePageRequest;
-import com.rockblade.domain.system.dto.request.RoleRequest;
-import com.rockblade.domain.system.dto.response.RoleResponse;
-import com.rockblade.domain.system.entity.Role;
-import com.rockblade.domain.system.entity.RoleMenu;
-import com.rockblade.domain.system.entity.UserRole;
-import com.rockblade.domain.system.service.RoleMenuService;
-import com.rockblade.domain.system.service.RoleService;
-import com.rockblade.domain.system.service.UserRoleService;
+import com.rockblade.common.dto.system.request.RolePageRequest;
+import com.rockblade.common.dto.system.request.RoleRequest;
+import com.rockblade.common.dto.system.response.RoleResponse;
+import com.rockblade.system.entity.Role;
+import com.rockblade.system.entity.RoleMenu;
+import com.rockblade.system.entity.UserRole;
+import com.rockblade.system.service.RoleMenuService;
+import com.rockblade.system.service.RoleService;
+import com.rockblade.system.service.UserRoleService;
 import com.rockblade.framework.core.base.entity.PageDomain;
-import com.rockblade.framework.core.base.exception.ServiceException;
-import com.rockblade.framework.utils.SqlUtils;
-import com.rockblade.infrastructure.system.mapper.RoleMapper;
+import com.rockblade.common.exception.ServiceException;
+import com.rockblade.framework.handler.SqlHandler;
+import com.rockblade.system.mapper.RoleMapper;
 
 import cn.hutool.extra.spring.SpringUtil;
 
 @Service("roleService")
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
+
+  @Autowired
+  private SqlHandler sqlHandler;
 
   @Override
   public Role getRoleByKey(String roleKey) {
@@ -51,7 +55,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
   @Override
   public Page<RoleResponse> getRolePage(RolePageRequest request) {
     // 执行分页查询
-    PageDomain pageDomain = SqlUtils.getInstance().getPageDomain();
+    PageDomain pageDomain = sqlHandler.getPageDomain();
     return this.mapper.paginateWithRelationsAs(
         Page.of(pageDomain.getPage(), pageDomain.getPageSize()),
         queryChain()

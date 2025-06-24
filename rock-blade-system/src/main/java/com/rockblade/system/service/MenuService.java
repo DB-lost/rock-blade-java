@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 22:21:37
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:53:08
+ * @LastEditTime: 2025-06-24 15:17:16
  * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/MenuService.java
  * @Description:
  *
@@ -13,9 +13,9 @@ package com.rockblade.system.service;
 import java.util.List;
 
 import com.mybatisflex.core.service.IService;
-import com.rockblade.system.dto.request.MenuRequest;
-import com.rockblade.domain.system.dto.response.MenuResponse;
-import com.rockblade.domain.system.entity.Menu;
+import com.rockblade.common.dto.system.request.MenuRequest;
+import com.rockblade.common.dto.system.response.MenuResponse;
+import com.rockblade.system.entity.Menu;
 
 public interface MenuService extends IService<Menu> {
 

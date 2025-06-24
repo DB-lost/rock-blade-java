@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-12 11:36:57
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:52:16
+ * @LastEditTime: 2025-06-24 15:04:21
  * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/impl/StpInterfaceImpl.java
  * @Description: 自定义权限加载接口实现类
  *
@@ -10,21 +10,21 @@
  */
 package com.rockblade.system.service.impl;
 
-import static com.rockblade.domain.system.entity.table.RolePermissionTableDef.ROLE_PERMISSION;
-import static com.rockblade.domain.system.entity.table.RoleTableDef.ROLE;
-import static com.rockblade.domain.system.entity.table.UserRoleTableDef.USER_ROLE;
+import static com.rockblade.system.entity.table.RolePermissionTableDef.ROLE_PERMISSION;
+import static com.rockblade.system.entity.table.RoleTableDef.ROLE;
+import static com.rockblade.system.entity.table.UserRoleTableDef.USER_ROLE;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.rockblade.domain.system.entity.Role;
-import com.rockblade.domain.system.entity.RolePermission;
-import com.rockblade.domain.system.entity.User;
-import com.rockblade.domain.system.service.RolePermissionService;
-import com.rockblade.domain.system.service.RoleService;
-import com.rockblade.domain.system.service.UserService;
+import com.rockblade.system.entity.Role;
+import com.rockblade.system.entity.RolePermission;
+import com.rockblade.system.entity.User;
+import com.rockblade.system.service.RolePermissionService;
+import com.rockblade.system.service.RoleService;
+import com.rockblade.system.service.UserService;
 
 import cn.dev33.satoken.stp.StpInterface;
 import cn.hutool.extra.spring.SpringUtil;

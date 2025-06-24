@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:43:06
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:54:39
+ * @LastEditTime: 2025-06-24 14:58:27
  * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/UserService.java
  * @Description: 用户服务接口
  *
@@ -12,17 +12,17 @@ package com.rockblade.system.service;
 
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.service.IService;
-import com.rockblade.common.dto.request.EmailCodeRequest;
-import com.rockblade.common.dto.request.EmailLoginRequest;
-import com.rockblade.common.dto.request.LoginRequest;
-import com.rockblade.common.dto.request.RegisterRequest;
-import com.rockblade.common.dto.request.ResetPasswordRequest;
-import com.rockblade.common.dto.request.UserDetailsInfoRequest;
-import com.rockblade.common.dto.request.UserPageRequest;
-import com.rockblade.common.dto.request.UserRequest;
-import com.rockblade.common.dto.request.VerifyEmailCodeRequest;
-import com.rockblade.common.dto.response.PublicKeyResponse;
-import com.rockblade.common.dto.response.UserPageResponse;
+import com.rockblade.common.dto.system.request.EmailCodeRequest;
+import com.rockblade.common.dto.system.request.EmailLoginRequest;
+import com.rockblade.common.dto.system.request.LoginRequest;
+import com.rockblade.common.dto.system.request.RegisterRequest;
+import com.rockblade.common.dto.system.request.ResetPasswordRequest;
+import com.rockblade.common.dto.system.request.UserDetailsInfoRequest;
+import com.rockblade.common.dto.system.request.UserPageRequest;
+import com.rockblade.common.dto.system.request.UserRequest;
+import com.rockblade.common.dto.system.request.VerifyEmailCodeRequest;
+import com.rockblade.common.dto.system.response.PublicKeyResponse;
+import com.rockblade.common.dto.system.response.UserPageResponse;
 import com.rockblade.system.entity.User;
 
 public interface UserService extends IService<User> {

@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-24 17:44:17
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:50:49
+ * @LastEditTime: 2025-06-24 15:21:01
  * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/impl/LogServiceImpl.java
  * @Description: 日志服务实现。
  *
@@ -26,16 +26,20 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
-import com.rockblade.domain.system.dto.request.LogSearchRequest;
-import com.rockblade.domain.system.dto.response.LogFileInfoResponse;
-import com.rockblade.domain.system.service.LogService;
+import com.rockblade.common.dto.system.request.LogSearchRequest;
+import com.rockblade.common.dto.system.response.LogFileInfoResponse;
+import com.rockblade.system.service.LogService;
 import com.rockblade.framework.core.base.entity.PageDomain;
-import com.rockblade.framework.utils.SqlUtils;
+import com.rockblade.framework.handler.SqlHandler;
 
 import cn.hutool.core.util.StrUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class LogServiceImpl implements LogService {
+
+  @Autowired
+  private SqlHandler sqlHandler;
 
   private static final String LOG_PATH = "./logs/rock-blade-java";
   private static final String[] LOG_TYPES = { "info", "error", "sql" };
@@ -116,7 +120,7 @@ public class LogServiceImpl implements LogService {
 
       List<String> lines = Files.readAllLines(logFile);
 
-      PageDomain pageDomain = SqlUtils.getInstance().getPageDomain();
+      PageDomain pageDomain = sqlHandler.getPageDomain();
       int startIndex = (pageDomain.getPage() - 1) * pageDomain.getPageSize();
       int endIndex = Math.min(startIndex + pageDomain.getPageSize(), lines.size());
 

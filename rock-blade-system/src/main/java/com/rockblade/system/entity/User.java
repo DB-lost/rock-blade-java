@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 00:13:16
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:48:54
+ * @LastEditTime: 2025-06-24 15:06:21
  * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/entity/User.java
  * @Description: 用户信息表
  *
@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
-import com.rockblade.domain.system.enums.UserType;
+import com.rockblade.common.enums.UserType;
 import com.rockblade.framework.core.base.entity.BaseEntity;
 import com.rockblade.framework.core.base.entity.BaseInsertListener;
 import com.rockblade.framework.core.base.entity.BaseUpdateListener;

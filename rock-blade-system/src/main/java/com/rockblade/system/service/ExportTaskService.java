@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-21 14:57:09
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:52:57
+ * @LastEditTime: 2025-06-24 15:17:45
  * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/ExportTaskService.java
  * @Description: 数据导出任务表 服务层。
  *
@@ -15,7 +15,7 @@ import java.util.Map;
 import org.springframework.core.io.Resource;
 
 import com.mybatisflex.core.service.IService;
-import com.rockblade.domain.system.entity.ExportTask;
+import com.rockblade.system.entity.ExportTask;
 
 public interface ExportTaskService extends IService<ExportTask> {
 

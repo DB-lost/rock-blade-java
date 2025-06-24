@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-11 09:43:06
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:52:37
+ * @LastEditTime: 2025-06-24 15:18:43
  * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/impl/UserServiceImpl.java
  * @Description: 用户服务实现类
  *
@@ -10,11 +10,11 @@
  */
 package com.rockblade.system.service.impl;
 
-import static com.rockblade.domain.system.entity.table.DeptTableDef.DEPT;
-import static com.rockblade.domain.system.entity.table.RoleTableDef.ROLE;
-import static com.rockblade.domain.system.entity.table.UserDeptTableDef.USER_DEPT;
-import static com.rockblade.domain.system.entity.table.UserRoleTableDef.USER_ROLE;
-import static com.rockblade.domain.system.entity.table.UserTableDef.USER;
+import static com.rockblade.system.entity.table.DeptTableDef.DEPT;
+import static com.rockblade.system.entity.table.RoleTableDef.ROLE;
+import static com.rockblade.system.entity.table.UserDeptTableDef.USER_DEPT;
+import static com.rockblade.system.entity.table.UserRoleTableDef.USER_ROLE;
+import static com.rockblade.system.entity.table.UserTableDef.USER;
 
 import java.security.KeyPair;
 import java.security.PrivateKey;
@@ -31,35 +31,35 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
-import com.rockblade.domain.system.dto.request.EmailCodeRequest;
-import com.rockblade.domain.system.dto.request.EmailLoginRequest;
-import com.rockblade.domain.system.dto.request.LoginRequest;
-import com.rockblade.domain.system.dto.request.RegisterRequest;
-import com.rockblade.domain.system.dto.request.ResetPasswordRequest;
-import com.rockblade.domain.system.dto.request.UserDetailsInfoRequest;
-import com.rockblade.domain.system.dto.request.UserPageRequest;
-import com.rockblade.domain.system.dto.request.UserRequest;
-import com.rockblade.domain.system.dto.request.VerifyEmailCodeRequest;
-import com.rockblade.domain.system.dto.response.PublicKeyResponse;
-import com.rockblade.domain.system.dto.response.UserInfoResponse;
-import com.rockblade.domain.system.dto.response.UserPageResponse;
-import com.rockblade.domain.system.entity.User;
-import com.rockblade.domain.system.entity.UserDept;
-import com.rockblade.domain.system.entity.UserRole;
-import com.rockblade.domain.system.enums.UserType;
-import com.rockblade.domain.system.service.UserDeptService;
-import com.rockblade.domain.system.service.UserRoleService;
-import com.rockblade.domain.system.service.UserService;
+import com.rockblade.common.dto.system.request.EmailCodeRequest;
+import com.rockblade.common.dto.system.request.EmailLoginRequest;
+import com.rockblade.common.dto.system.request.LoginRequest;
+import com.rockblade.common.dto.system.request.RegisterRequest;
+import com.rockblade.common.dto.system.request.ResetPasswordRequest;
+import com.rockblade.common.dto.system.request.UserDetailsInfoRequest;
+import com.rockblade.common.dto.system.request.UserPageRequest;
+import com.rockblade.common.dto.system.request.UserRequest;
+import com.rockblade.common.dto.system.request.VerifyEmailCodeRequest;
+import com.rockblade.common.dto.system.response.PublicKeyResponse;
+import com.rockblade.common.dto.system.response.UserInfoResponse;
+import com.rockblade.common.dto.system.response.UserPageResponse;
+import com.rockblade.system.entity.User;
+import com.rockblade.system.entity.UserDept;
+import com.rockblade.system.entity.UserRole;
+import com.rockblade.common.enums.UserType;
+import com.rockblade.system.service.UserDeptService;
+import com.rockblade.system.service.UserRoleService;
+import com.rockblade.system.service.UserService;
 import com.rockblade.framework.config.RockBladeConfig;
 import com.rockblade.framework.config.RockBladeConfig.Gateway;
 import com.rockblade.framework.core.base.entity.PageDomain;
-import com.rockblade.framework.core.base.exception.ServiceException;
-import com.rockblade.framework.core.constants.RedisKey;
+import com.rockblade.common.exception.ServiceException;
+import com.rockblade.common.constants.RedisKey;
 import com.rockblade.framework.handler.EmailHandler;
 import com.rockblade.framework.handler.RedisHandler;
-import com.rockblade.framework.utils.MessageUtils;
-import com.rockblade.framework.utils.SqlUtils;
-import com.rockblade.infrastructure.system.mapper.UserMapper;
+import com.rockblade.common.utils.MessageUtils;
+import com.rockblade.framework.handler.SqlHandler;
+import com.rockblade.system.mapper.UserMapper;
 
 import cn.dev33.satoken.secure.BCrypt;
 import cn.dev33.satoken.stp.StpUtil;
@@ -87,6 +87,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
   @Autowired
   private RockBladeConfig rockBladeConfig;
+
+  @Autowired
+  private SqlHandler sqlHandler;
 
   @Override
   public PublicKeyResponse getPublicKey(String nonce) {
@@ -294,7 +297,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   @Override
   public Page<UserPageResponse> page(UserPageRequest request) {
     // 分页查询
-    PageDomain pageDomain = SqlUtils.getInstance().getPageDomain();
+    PageDomain pageDomain = sqlHandler.getPageDomain();
     // 转换为详细信息响应对象
     return this.mapper.paginateWithRelationsAs(
         Page.of(pageDomain.getPage(), pageDomain.getPageSize()),

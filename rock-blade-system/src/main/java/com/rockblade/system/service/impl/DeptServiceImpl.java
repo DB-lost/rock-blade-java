@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-24 17:44:17
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:50:49
+ * @LastEditTime: 2025-06-24 14:54:21
  * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/impl/DeptServiceImpl.java
  * @Description: 部门表 服务层实现。
  *
@@ -24,13 +24,13 @@ import org.springframework.util.StringUtils;
 import com.mybatisflex.core.query.QueryChain;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
-import com.rockblade.domain.system.dto.request.DeptRequest;
-import com.rockblade.domain.system.dto.response.DeptResponse;
-import com.rockblade.domain.system.entity.Dept;
-import com.rockblade.domain.system.entity.UserDept;
-import com.rockblade.domain.system.service.DeptService;
-import com.rockblade.domain.system.service.UserDeptService;
-import com.rockblade.infrastructure.system.mapper.DeptMapper;
+import com.rockblade.common.dto.system.request.DeptRequest;
+import com.rockblade.common.dto.system.response.DeptResponse;
+import com.rockblade.system.entity.Dept;
+import com.rockblade.system.entity.UserDept;
+import com.rockblade.system.service.DeptService;
+import com.rockblade.system.service.UserDeptService;
+import com.rockblade.system.mapper.DeptMapper;
 
 import cn.hutool.extra.spring.SpringUtil;
 

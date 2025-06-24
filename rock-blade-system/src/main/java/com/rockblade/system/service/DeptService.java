@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-16 10:16:49
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:52:52
+ * @LastEditTime: 2025-06-24 15:18:02
  * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/DeptService.java
  * @Description: 部门表 服务层。
  *
@@ -13,9 +13,9 @@ package com.rockblade.system.service;
 import java.util.List;
 
 import com.mybatisflex.core.service.IService;
-import com.rockblade.domain.system.dto.request.DeptRequest;
-import com.rockblade.domain.system.dto.response.DeptResponse;
-import com.rockblade.domain.system.entity.Dept;
+import com.rockblade.common.dto.system.request.DeptRequest;
+import com.rockblade.common.dto.system.response.DeptResponse;
+import com.rockblade.system.entity.Dept;
 
 public interface DeptService extends IService<Dept> {
 
