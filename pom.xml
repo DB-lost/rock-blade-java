@@ -62,6 +62,7 @@
 		<module>rock-blade-system</module>
 		<module>rock-blade-api</module>
 		<module>rock-blade-web</module>
+		<module>rock-blade-generator</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
@@ -89,6 +90,11 @@
 			<dependency>
 				<groupId>com.rockblade</groupId>
 				<artifactId>rock-blade-web</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.rockblade</groupId>
+				<artifactId>rock-blade-generator</artifactId>
 				<version>${revision}</version>
 			</dependency>
 
