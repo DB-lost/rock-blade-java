@@ -36,5 +36,12 @@
             <version>${mybatis-flex.version}</version>
         </dependency>
 
+        <!-- PgSQL -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+        </dependency>
+
     </dependencies>
 </project>

@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-16 21:43:20
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 16:02:22
+ * @LastEditTime: 2025-06-24 16:27:20
  * @FilePath: /rock-blade-java/rock-blade-generator/src/main/java/com/rockblade/generator/RockBladeJavaGeneratorApplication.java
  * @Description: 代码生成器
  *
@@ -42,7 +42,9 @@ public class RockBladeJavaGeneratorApplication {
   private static final String PASSWORD = dotenv.get("DEV_DATABASE_PASSWORD");
 
   /** 输出路径 */
-  private static final String EXPORT_URL = "";
+  private static final String EXPORT_URL = "/rock-blade-system";
+
+  private static final String EXPORT_PACKAGE = ".system";
 
   /** 表前缀 */
   private static final String TABLE_PREFIX = "sys_";
@@ -111,11 +113,11 @@ public class RockBladeJavaGeneratorApplication {
         .setSourceDir(System.getProperty("user.dir") + EXPORT_URL + "/src/main/java")
         .setMapperXmlPath(
             System.getProperty("user.dir") + EXPORT_URL + "/src/main/resources/mapper");
-    globalConfig.setEntityPackage("com.rockblade.domain" + ".system.entity");
-    globalConfig.setMapperPackage("com.rockblade.infrastructure" + ".mapper");
-    globalConfig.setServicePackage("com.rockblade.domain" + ".system.service");
-    globalConfig.setServiceImplPackage("com.rockblade.domain" + ".system.service.impl");
-    globalConfig.setControllerPackage("com.rockblade.interfaces" + ".controller");
+    globalConfig.setEntityPackage("com.rockblade" + EXPORT_PACKAGE + ".entity");
+    globalConfig.setMapperPackage("com.rockblade" + EXPORT_PACKAGE + ".mapper");
+    globalConfig.setServicePackage("com.rockblade" + EXPORT_PACKAGE + ".service");
+    globalConfig.setServiceImplPackage("com.rockblade" + EXPORT_PACKAGE + ".service.impl");
+    globalConfig.setControllerPackage("com.rockblade.api.controller" + EXPORT_PACKAGE);
     // 设置策略配置
     globalConfig
         .getStrategyConfig()
@@ -126,17 +128,21 @@ public class RockBladeJavaGeneratorApplication {
     globalConfig
         .getTemplateConfig()
         .setEntity(
-            System.getProperty("user.dir") + "/src/main/resources/templates/enjoy/entity.tpl")
+            System.getProperty("user.dir") + "/rock-blade-generator" + "/src/main/resources/templates/enjoy/entity.tpl")
         .setMapper(
-            System.getProperty("user.dir") + "/src/main/resources/templates/enjoy/mapper.tpl")
+            System.getProperty("user.dir") + "/rock-blade-generator" + "/src/main/resources/templates/enjoy/mapper.tpl")
         .setService(
-            System.getProperty("user.dir") + "/src/main/resources/templates/enjoy/service.tpl")
+            System.getProperty("user.dir") + "/rock-blade-generator"
+                + "/src/main/resources/templates/enjoy/service.tpl")
         .setServiceImpl(
-            System.getProperty("user.dir") + "/src/main/resources/templates/enjoy/serviceImpl.tpl")
+            System.getProperty("user.dir") + "/rock-blade-generator"
+                + "/src/main/resources/templates/enjoy/serviceImpl.tpl")
         .setController(
-            System.getProperty("user.dir") + "/src/main/resources/templates/enjoy/controller.tpl")
+            System.getProperty("user.dir") + "/rock-blade-generator"
+                + "/src/main/resources/templates/enjoy/controller.tpl")
         .setMapperXml(
-            System.getProperty("user.dir") + "/src/main/resources/templates/enjoy/mapperXml.tpl");
+            System.getProperty("user.dir") + "/rock-blade-generator"
+                + "/src/main/resources/templates/enjoy/mapperXml.tpl");
     // Entity 生成配置
     globalConfig
         .getEntityConfig()
@@ -154,6 +160,8 @@ public class RockBladeJavaGeneratorApplication {
     globalConfig.enableServiceImpl();
     // 开启 Controller 的生成
     globalConfig.enableController();
+    globalConfig.getControllerConfig()
+        .setSourceDir(System.getProperty("user.dir") + "/rock-blade-api" + "/src/main/java");
     // 开启 xml 的生成
     globalConfig.enableMapperXml();
     // 遍历设置表配置
