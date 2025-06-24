@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.rockblade</groupId>
         <artifactId>rock-blade-java</artifactId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
     </parent>
+
+    <packaging>jar</packaging>
 
     <artifactId>rock-blade-api</artifactId>
     <name>rock-blade-api</name>
@@ -17,7 +19,8 @@
         <!-- 依赖核心模块 -->
         <dependency>
             <groupId>com.rockblade</groupId>
-            <artifactId>rock-blade-core</artifactId>
+            <artifactId>rock-blade-system</artifactId>
+            <version>${revision}</version>
         </dependency>
 
         <!-- 接口文档 -->

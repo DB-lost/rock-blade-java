@@ -6,8 +6,10 @@
     <parent>
         <groupId>com.rockblade</groupId>
         <artifactId>rock-blade-java</artifactId>
-        <version>${reversion}</version>
+        <version>${revision}</version>
     </parent>
+
+    <packaging>jar</packaging>
 
     <artifactId>rock-blade-common</artifactId>
     <name>rock-blade-common</name>

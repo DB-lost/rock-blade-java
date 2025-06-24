@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.rockblade</groupId>
+    <artifactId>rock-blade-java</artifactId>
+    <version>1.0.0</version>
+  </parent>
+  <artifactId>rock-blade-framework</artifactId>
+  <version>1.0.0</version>
+  <name>rock-blade-framework</name>
+  <description>框架核心模块，包含框架基础组件和核心业务模型</description>
+  <licenses>
+    <license />
+  </licenses>
+  <dependencies>
+    <dependency>
+      <groupId>com.rockblade</groupId>
+      <artifactId>rock-blade-common</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.mybatis-flex</groupId>
+      <artifactId>mybatis-flex-core</artifactId>
+      <version>${mybatis-flex.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>cn.dev33</groupId>
+      <artifactId>sa-token-spring-boot3-starter</artifactId>
+      <version>${sa-token.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>cn.dev33</groupId>
+      <artifactId>sa-token-redis-jackson</artifactId>
+      <version>${sa-token.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>cn.dev33</groupId>
+      <artifactId>sa-token-jwt</artifactId>
+      <version>${sa-token.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>cn.dev33</groupId>
+      <artifactId>sa-token-spring-aop</artifactId>
+      <version>${sa-token.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-pool2</artifactId>
+    </dependency>
+  </dependencies>
+</project>

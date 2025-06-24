@@ -6,8 +6,10 @@
     <parent>
         <groupId>com.rockblade</groupId>
         <artifactId>rock-blade-java</artifactId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
     </parent>
+
+    <packaging>jar</packaging>
 
     <artifactId>rock-blade-framework</artifactId>
     <name>rock-blade-framework</name>
@@ -18,13 +20,14 @@
         <dependency>
             <groupId>com.rockblade</groupId>
             <artifactId>rock-blade-common</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
 
         <!-- MyBatis Flex 依赖 -->
         <dependency>
             <groupId>com.mybatis-flex</groupId>
             <artifactId>mybatis-flex-core</artifactId>
+            <version>${mybatis-flex.version}</version>
         </dependency>
 
         <!-- Sa-Token 权限认证 -->
@@ -53,13 +56,6 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
-        </dependency>
-
-        <!-- 工具包 -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>${hutool.version}</version>
         </dependency>
 
     </dependencies>

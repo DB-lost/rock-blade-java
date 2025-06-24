@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.rockblade</groupId>
 	<artifactId>rock-blade-java</artifactId>
-	<version>${reversion}</version>
+	<version>${revision}</version>
 	<packaging>pom</packaging>
 	<name>rock-blade-java</name>
 	<description>Rock Blade Java - A Modular Spring Boot Template Project</description>
@@ -29,7 +29,7 @@
 		<url />
 	</scm>
 	<properties>
-		<reversion>1.0.0</reversion>
+		<revision>1.0.0</revision>
 		<java.version>21</java.version>
 		<cucumber.version>7.20.1</cucumber.version>
 		<jacoco.version>0.8.12</jacoco.version>
@@ -57,7 +57,7 @@
 
 	<!-- 子模块定义 -->
 	<modules>
-		<module>rock-blade-core</module>
+		<module>rock-blade-common</module>
 		<module>rock-blade-framework</module>
 		<module>rock-blade-infrastructure</module>
 		<module>rock-blade-api</module>
@@ -68,28 +68,28 @@
 			<!-- 子模块依赖 -->
 			<dependency>
 				<groupId>com.rockblade</groupId>
-				<artifactId>rock-blade-core</artifactId>
-				<version>${project.version}</version>
+				<artifactId>rock-blade-common</artifactId>
+				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.rockblade</groupId>
 				<artifactId>rock-blade-framework</artifactId>
-				<version>${project.version}</version>
+				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.rockblade</groupId>
 				<artifactId>rock-blade-infrastructure</artifactId>
-				<version>${project.version}</version>
+				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.rockblade</groupId>
 				<artifactId>rock-blade-api</artifactId>
-				<version>${project.version}</version>
+				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.rockblade</groupId>
 				<artifactId>rock-blade-web</artifactId>
-				<version>${project.version}</version>
+				<version>${revision}</version>
 			</dependency>
 
 			<!-- MyBatis Flex -->
@@ -257,6 +257,32 @@
 					<sortDependencies>scope,groupId,artifactId</sortDependencies>
 					<createBackupFile>false</createBackupFile>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<version>1.6.0</version>
+				<configuration>
+					<updatePomFile>true</updatePomFile>
+					<flattenMode>resolveCiFriendliesOnly</flattenMode>
+				</configuration>
+				<executions>
+					<execution>
+						<id>flatten</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>flatten</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>flatten.clean</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
