@@ -24,7 +24,7 @@
   <modules>
     <module>rock-blade-common</module>
     <module>rock-blade-framework</module>
-    <module>rock-blade-infrastructure</module>
+    <module>rock-blade-system</module>
     <module>rock-blade-api</module>
     <module>rock-blade-web</module>
   </modules>
@@ -72,7 +72,7 @@
       </dependency>
       <dependency>
         <groupId>com.rockblade</groupId>
-        <artifactId>rock-blade-infrastructure</artifactId>
+        <artifactId>rock-blade-system</artifactId>
         <version>1.0.0</version>
       </dependency>
       <dependency>

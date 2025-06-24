@@ -2,13 +2,13 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-20 15:13:41
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-23 00:26:19
- * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/monitor/AlertService.java
+ * @LastEditTime: 2025-06-24 15:37:51
+ * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/service/impl/AlertService.java
  * @Description: 监控告警服务 处理系统告警通知
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.framework.monitor;
+package com.rockblade.system.service.impl;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,12 +21,12 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.rockblade.domain.system.entity.AlertHistory;
-import com.rockblade.domain.system.service.AlertHistoryService;
-import com.rockblade.framework.config.properties.AlertProperties;
-import com.rockblade.framework.core.base.exception.UtilException;
+import com.rockblade.system.entity.AlertHistory;
+import com.rockblade.system.service.AlertHistoryService;
+import com.rockblade.system.config.properties.AlertProperties;
+import com.rockblade.common.exception.UtilException;
 import com.rockblade.framework.handler.EmailHandler;
-import com.rockblade.framework.utils.MessageUtils;
+import com.rockblade.common.utils.MessageUtils;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
