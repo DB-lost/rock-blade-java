@@ -1,3 +1,13 @@
+/*
+ * @Author: DB 2502523450@qq.com
+ * @Date: 2025-04-11 14:43:52
+ * @LastEditors: DB 2502523450@qq.com
+ * @LastEditTime: 2025-06-24 22:51:16
+ * @FilePath: /rock-blade-java/rock-blade-api/src/main/java/com/rockblade/interfaces/system/controller/AlertHistoryController.java
+ * @Description: 告警历史记录表 控制层。
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
+ */
 package com.rockblade.interfaces.system.controller;
 
 import java.io.Serializable;
@@ -14,8 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mybatisflex.core.paginate.Page;
-import com.rockblade.domain.system.entity.AlertHistory;
-import com.rockblade.domain.system.service.AlertHistoryService;
+import com.rockblade.system.entity.AlertHistory;
+import com.rockblade.system.service.AlertHistoryService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -32,7 +42,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/alertHistory")
 public class AlertHistoryController {
 
-  @Autowired private AlertHistoryService alertHistoryService;
+  @Autowired
+  private AlertHistoryService alertHistoryService;
 
   /**
    * 分页查询告警历史记录表。

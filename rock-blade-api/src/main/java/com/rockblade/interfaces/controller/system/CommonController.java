@@ -38,9 +38,11 @@ import lombok.extern.slf4j.Slf4j;
 @Tag(name = "公共接口")
 public class CommonController {
 
-  @Autowired private MenuService menuService;
+  @Autowired
+  private MenuService menuService;
 
-  @Autowired private UserService userService;
+  @Autowired
+  private UserService userService;
 
   @GetMapping("/getUserInfo")
   @Operation(summary = "获取用户信息")
