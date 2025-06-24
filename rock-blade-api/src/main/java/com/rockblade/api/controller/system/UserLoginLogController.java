@@ -18,5 +18,4 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @Tag(name = "用户登录日志表接口")
 @RequestMapping("/userLoginLog")
-public class UserLoginLogController {
-}
+public class UserLoginLogController {}

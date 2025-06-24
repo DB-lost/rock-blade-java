@@ -33,8 +33,7 @@ public class RockBladeConfig {
   private static String profile;
 
   /** 验证码类型 */
-  @Getter
-  private static String captchaType;
+  @Getter private static String captchaType;
 
   /** jwt */
   private Jwt jwt;
@@ -65,8 +64,7 @@ public class RockBladeConfig {
   }
 
   /** 网关配置 */
-  @Getter
-  private Gateway gateway;
+  @Getter private Gateway gateway;
 
   /**
    * 设置网关

@@ -16,8 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import com.rockblade.system.entity.UserDept;
-import com.rockblade.system.service.UserDeptService;
 import com.rockblade.system.mapper.UserDeptMapper;
+import com.rockblade.system.service.UserDeptService;
 
 @Service
 public class UserDeptServiceImpl extends ServiceImpl<UserDeptMapper, UserDept>

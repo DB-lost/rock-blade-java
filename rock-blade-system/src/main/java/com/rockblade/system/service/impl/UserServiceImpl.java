@@ -31,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
+import com.rockblade.common.constants.RedisKey;
 import com.rockblade.common.dto.system.request.EmailCodeRequest;
 import com.rockblade.common.dto.system.request.EmailLoginRequest;
 import com.rockblade.common.dto.system.request.LoginRequest;
@@ -43,23 +44,22 @@ import com.rockblade.common.dto.system.request.VerifyEmailCodeRequest;
 import com.rockblade.common.dto.system.response.PublicKeyResponse;
 import com.rockblade.common.dto.system.response.UserInfoResponse;
 import com.rockblade.common.dto.system.response.UserPageResponse;
-import com.rockblade.system.entity.User;
-import com.rockblade.system.entity.UserDept;
-import com.rockblade.system.entity.UserRole;
 import com.rockblade.common.enums.UserType;
-import com.rockblade.system.service.UserDeptService;
-import com.rockblade.system.service.UserRoleService;
-import com.rockblade.system.service.UserService;
+import com.rockblade.common.exception.ServiceException;
+import com.rockblade.common.utils.MessageUtils;
 import com.rockblade.framework.config.RockBladeConfig;
 import com.rockblade.framework.config.RockBladeConfig.Gateway;
 import com.rockblade.framework.core.base.entity.PageDomain;
-import com.rockblade.common.exception.ServiceException;
-import com.rockblade.common.constants.RedisKey;
 import com.rockblade.framework.handler.EmailHandler;
 import com.rockblade.framework.handler.RedisHandler;
-import com.rockblade.common.utils.MessageUtils;
 import com.rockblade.framework.handler.SqlHandler;
+import com.rockblade.system.entity.User;
+import com.rockblade.system.entity.UserDept;
+import com.rockblade.system.entity.UserRole;
 import com.rockblade.system.mapper.UserMapper;
+import com.rockblade.system.service.UserDeptService;
+import com.rockblade.system.service.UserRoleService;
+import com.rockblade.system.service.UserService;
 
 import cn.dev33.satoken.secure.BCrypt;
 import cn.dev33.satoken.stp.StpUtil;
@@ -79,17 +79,13 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
-  @Autowired
-  private EmailHandler emailHandler;
+  @Autowired private EmailHandler emailHandler;
 
-  @Autowired
-  private RedisHandler redisHandler;
+  @Autowired private RedisHandler redisHandler;
 
-  @Autowired
-  private RockBladeConfig rockBladeConfig;
+  @Autowired private RockBladeConfig rockBladeConfig;
 
-  @Autowired
-  private SqlHandler sqlHandler;
+  @Autowired private SqlHandler sqlHandler;
 
   @Override
   public PublicKeyResponse getPublicKey(String nonce) {
@@ -98,8 +94,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
     Gateway gateway = rockBladeConfig.getGateway();
     // 生成RSA密钥对
-    KeyPair rsa = SecureUtil.generateKeyPair(
-        gateway.getRsaKeypair().getAlgorithm(), gateway.getRsaKeypair().getKeySize());
+    KeyPair rsa =
+        SecureUtil.generateKeyPair(
+            gateway.getRsaKeypair().getAlgorithm(), gateway.getRsaKeypair().getKeySize());
     PublicKey publicKey = rsa.getPublic();
     PrivateKey privateKey = rsa.getPrivate();
 
@@ -129,13 +126,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     // 保存用户信息
-    User user = User.builder()
-        .email(request.getEmail())
-        .password(BCrypt.hashpw(request.getPassword()))
-        .username(request.getUsername())
-        .phone(request.getPhone())
-        .userType(UserType.USER) // 设置用户类型为user
-        .build();
+    User user =
+        User.builder()
+            .email(request.getEmail())
+            .password(BCrypt.hashpw(request.getPassword()))
+            .username(request.getUsername())
+            .phone(request.getPhone())
+            .userType(UserType.USER) // 设置用户类型为user
+            .build();
     this.save(user);
   }
 
@@ -182,7 +180,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     switch (request.getType()) {
       case "register":
         // 校验邮箱是否已注册
-        QueryWrapper queryWrapper = QueryWrapper.create().where(User::getEmail).eq(request.getEmail());
+        QueryWrapper queryWrapper =
+            QueryWrapper.create().where(User::getEmail).eq(request.getEmail());
         if (this.count(queryWrapper) > 0) {
           throw new ServiceException(MessageUtils.message("auth.email.registered"));
         }
@@ -244,7 +243,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
   /**
    * @description: 登陆
-   * @param {User}   user
+   * @param {User} user
    * @param {String} password
    * @param {String} nonce
    * @return {*}
@@ -268,8 +267,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   /**
    * 解密密码并删除私钥缓存
    *
-   * @param password     加密的密码
-   * @param nonce        随机字符串
+   * @param password 加密的密码
+   * @param nonce 随机字符串
    * @param redisHandler Redis工具类
    * @return 解密后的密码
    */
@@ -314,24 +313,28 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             .and(USER_ROLE.ROLE_ID.eq(request.getRoleId()))
             .and(USER_DEPT.DEPT_ID.eq(request.getDeptId())),
         UserPageResponse.class,
-        deptInfo -> deptInfo
-            .field(UserPageResponse::getDeptInfo)
-            .queryWrapper(
-                UserPageResponse -> QueryWrapper.create()
-                    .select(DEPT.ID, DEPT.NAME)
-                    .from(USER_DEPT)
-                    .leftJoin(DEPT)
-                    .on(DEPT.ID.eq(USER_DEPT.DEPT_ID))
-                    .where(USER_DEPT.USER_ID.eq(UserPageResponse.getId()))),
-        roleInfo -> roleInfo
-            .field(UserPageResponse::getRoleInfo)
-            .queryWrapper(
-                UserPageResponse -> QueryWrapper.create()
-                    .select(ROLE.ID, ROLE.ROLE_NAME)
-                    .from(USER_ROLE)
-                    .leftJoin(ROLE)
-                    .on(ROLE.ID.eq(USER_ROLE.ROLE_ID))
-                    .where(USER_ROLE.USER_ID.eq(UserPageResponse.getId()))));
+        deptInfo ->
+            deptInfo
+                .field(UserPageResponse::getDeptInfo)
+                .queryWrapper(
+                    UserPageResponse ->
+                        QueryWrapper.create()
+                            .select(DEPT.ID, DEPT.NAME)
+                            .from(USER_DEPT)
+                            .leftJoin(DEPT)
+                            .on(DEPT.ID.eq(USER_DEPT.DEPT_ID))
+                            .where(USER_DEPT.USER_ID.eq(UserPageResponse.getId()))),
+        roleInfo ->
+            roleInfo
+                .field(UserPageResponse::getRoleInfo)
+                .queryWrapper(
+                    UserPageResponse ->
+                        QueryWrapper.create()
+                            .select(ROLE.ID, ROLE.ROLE_NAME)
+                            .from(USER_ROLE)
+                            .leftJoin(ROLE)
+                            .on(ROLE.ID.eq(USER_ROLE.ROLE_ID))
+                            .where(USER_ROLE.USER_ID.eq(UserPageResponse.getId()))));
   }
 
   @Override

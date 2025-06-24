@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rockblade.common.dto.system.request.LogSearchRequest;
 import com.rockblade.common.dto.system.response.LogFileInfoResponse;
-import com.rockblade.system.service.LogService;
 import com.rockblade.framework.core.base.entity.R;
+import com.rockblade.system.service.LogService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -38,8 +38,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/logs")
 public class LogController {
 
-  @Autowired
-  private LogService logService;
+  @Autowired private LogService logService;
 
   /**
    * 获取日志文件列表
@@ -51,7 +50,9 @@ public class LogController {
   @Operation(summary = "获取日志文件列表")
   // @SaCheckPermission("system:log:list")
   public R<List<LogFileInfoResponse>> getLogFiles(
-      @Parameter(description = "日志类型（可选）", example = "\"INFO\", \"ERROR\", \"SQL\", \"ALL\"") @RequestParam(required = false) String logType) {
+      @Parameter(description = "日志类型（可选）", example = "\"INFO\", \"ERROR\", \"SQL\", \"ALL\"")
+          @RequestParam(required = false)
+          String logType) {
     return R.ok(logService.getLogFiles(logType));
   }
 

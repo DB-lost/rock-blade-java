@@ -17,8 +17,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.rockblade.framework.core.base.entity.R;
 import com.rockblade.common.exception.ServiceException;
+import com.rockblade.framework.core.base.entity.R;
 
 import cn.dev33.satoken.exception.SaTokenException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -59,7 +59,7 @@ public class GlobalExceptionHandler {
   /**
    * 拦截未知的运行时异常
    *
-   * @param e       异常
+   * @param e 异常
    * @param request 请求
    * @return {@link R }<{@link Void }>
    * @author DB
@@ -75,7 +75,7 @@ public class GlobalExceptionHandler {
   /**
    * 系统异常
    *
-   * @param e       异常
+   * @param e 异常
    * @param request 请求
    * @return {@link R }<{@link Void }>
    * @author DB
@@ -114,7 +114,8 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public R<Void> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
     log.error(e.getMessage(), e);
-    String message = Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage();
+    String message =
+        Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage();
     return R.fail(message);
   }
 }

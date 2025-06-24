@@ -5,13 +5,12 @@
  * @LastEditTime: 2025-06-24 14:51:21
  * @FilePath: /rock-blade-java/rock-blade-system/src/main/java/com/rockblade/system/mapper/AlertHistoryMapper.java
  * @Description: 告警历史记录表 映射层。
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.system.mapper;
 
 import com.mybatisflex.core.BaseMapper;
 import com.rockblade.system.entity.AlertHistory;
 
-public interface AlertHistoryMapper extends BaseMapper<AlertHistory> {
-}
+public interface AlertHistoryMapper extends BaseMapper<AlertHistory> {}

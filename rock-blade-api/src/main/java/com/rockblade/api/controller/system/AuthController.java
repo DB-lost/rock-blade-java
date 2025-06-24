@@ -26,10 +26,10 @@ import com.rockblade.common.dto.system.request.RegisterRequest;
 import com.rockblade.common.dto.system.request.ResetPasswordRequest;
 import com.rockblade.common.dto.system.request.VerifyEmailCodeRequest;
 import com.rockblade.common.dto.system.response.PublicKeyResponse;
-import com.rockblade.system.service.UserService;
-import com.rockblade.framework.core.base.entity.R;
 import com.rockblade.common.utils.IpUtils;
 import com.rockblade.common.utils.ServletUtils;
+import com.rockblade.framework.core.base.entity.R;
+import com.rockblade.system.service.UserService;
 
 import cn.dev33.satoken.stp.StpUtil;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -44,15 +44,14 @@ import lombok.extern.slf4j.Slf4j;
 @Tag(name = "认证接口")
 public class AuthController {
 
-  @Autowired
-  private UserService userService;
-  @Autowired
-  private MeterRegistry meterRegistry;
+  @Autowired private UserService userService;
+  @Autowired private MeterRegistry meterRegistry;
 
   @GetMapping("/getPublicKey")
   @Operation(summary = "获取公钥")
   public R<PublicKeyResponse> getPublicKey(
-      @Parameter(description = "随机字符串") @RequestParam(name = "nonce", required = false) String nonce) {
+      @Parameter(description = "随机字符串") @RequestParam(name = "nonce", required = false)
+          String nonce) {
     return R.ok(userService.getPublicKey(nonce));
   }
 
@@ -123,8 +122,7 @@ public class AuthController {
   }
 
   private String getDeviceType(String userAgent) {
-    if (userAgent == null)
-      return "unknown";
+    if (userAgent == null) return "unknown";
     userAgent = userAgent.toLowerCase();
     if (userAgent.contains("mobile")
         || userAgent.contains("android")
@@ -137,8 +135,7 @@ public class AuthController {
   }
 
   private String getBrowserType(String userAgent) {
-    if (userAgent == null)
-      return "unknown";
+    if (userAgent == null) return "unknown";
     userAgent = userAgent.toLowerCase();
     if (userAgent.contains("chrome")) {
       return "chrome";

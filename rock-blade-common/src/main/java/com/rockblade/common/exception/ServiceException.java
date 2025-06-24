@@ -15,8 +15,7 @@ import java.io.Serial;
 public final class ServiceException extends RuntimeException {
 
   /** 序列化uid */
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   /** 错误码 */
   private Integer code;
@@ -28,8 +27,7 @@ public final class ServiceException extends RuntimeException {
   private String detailMessage;
 
   /** 空构造方法，避免反序列化问题 */
-  public ServiceException() {
-  }
+  public ServiceException() {}
 
   /**
    * 业务异常
@@ -46,7 +44,7 @@ public final class ServiceException extends RuntimeException {
    * 业务异常
    *
    * @param message 消息
-   * @param code    代码
+   * @param code 代码
    * @author DB
    * @since 2024/05/23
    */

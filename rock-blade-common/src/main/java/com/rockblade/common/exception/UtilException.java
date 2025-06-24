@@ -14,8 +14,7 @@ import java.io.Serial;
 public class UtilException extends RuntimeException {
 
   /** 序列化uid */
-  @Serial
-  private static final long serialVersionUID = 8247610319171014183L;
+  @Serial private static final long serialVersionUID = 8247610319171014183L;
 
   /**
    * 工具类异常
@@ -42,7 +41,7 @@ public class UtilException extends RuntimeException {
   /**
    * 工具类异常
    *
-   * @param message   消息
+   * @param message 消息
    * @param throwable 异常
    * @author DB
    * @since 2024/05/23

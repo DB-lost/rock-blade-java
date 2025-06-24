@@ -38,8 +38,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SaTokenConfigure implements WebMvcConfigurer {
 
-  @Autowired
-  private RockBladeConfig rockBladeConfig;
+  @Autowired private RockBladeConfig rockBladeConfig;
 
   /**
    * 获取servlet过滤器

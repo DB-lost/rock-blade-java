@@ -27,16 +27,18 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(value = "sys_user_dept", onInsert = BaseInsertListener.class, onUpdate = BaseUpdateListener.class, mapperGenerateEnable = false)
+@Table(
+    value = "sys_user_dept",
+    onInsert = BaseInsertListener.class,
+    onUpdate = BaseUpdateListener.class,
+    mapperGenerateEnable = false)
 public class UserDept extends BaseEntity implements Serializable {
 
   /** 用户ID */
-  @Id
-  private String userId;
+  @Id private String userId;
 
   /** 部门ID */
-  @Id
-  private String deptId;
+  @Id private String deptId;
 
   /** 是否为主部门 */
   private Boolean isPrimary;

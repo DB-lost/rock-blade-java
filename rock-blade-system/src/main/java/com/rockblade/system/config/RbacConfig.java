@@ -14,10 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-import com.rockblade.system.entity.Role;
-import com.rockblade.system.service.RoleService;
 import com.rockblade.system.config.properties.RbacProperties;
 import com.rockblade.system.config.properties.RbacProperties.RoleConfig;
+import com.rockblade.system.entity.Role;
+import com.rockblade.system.service.RoleService;
 
 import jakarta.annotation.PostConstruct;
 
@@ -25,11 +25,9 @@ import jakarta.annotation.PostConstruct;
 @EnableConfigurationProperties(RbacProperties.class)
 public class RbacConfig {
 
-  @Autowired
-  private RbacProperties rbacProperties;
+  @Autowired private RbacProperties rbacProperties;
 
-  @Autowired
-  private RoleService roleService;
+  @Autowired private RoleService roleService;
 
   @PostConstruct
   public void init() {

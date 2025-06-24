@@ -20,18 +20,18 @@ jobs:
           cache: 'maven'
           
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B package --file pom.xml -pl rock-blade-web -am
         
       - name: List Files
         run: |
           echo "检查构建文件："
-          ls -la target/
+          ls -la rock-blade-web/target/
         
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-package
-          path: target/*.jar
+          path: rock-blade-web/target/*.jar
           retention-days: 1
 
   deploy:

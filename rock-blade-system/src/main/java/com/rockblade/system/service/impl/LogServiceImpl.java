@@ -22,27 +22,26 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import com.rockblade.common.dto.system.request.LogSearchRequest;
 import com.rockblade.common.dto.system.response.LogFileInfoResponse;
-import com.rockblade.system.service.LogService;
 import com.rockblade.framework.core.base.entity.PageDomain;
 import com.rockblade.framework.handler.SqlHandler;
+import com.rockblade.system.service.LogService;
 
 import cn.hutool.core.util.StrUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class LogServiceImpl implements LogService {
 
-  @Autowired
-  private SqlHandler sqlHandler;
+  @Autowired private SqlHandler sqlHandler;
 
   private static final String LOG_PATH = "./logs/rock-blade-java";
-  private static final String[] LOG_TYPES = { "info", "error", "sql" };
+  private static final String[] LOG_TYPES = {"info", "error", "sql"};
 
   @Override
   public List<LogFileInfoResponse> getLogFiles(String logType) {
@@ -54,34 +53,35 @@ public class LogServiceImpl implements LogService {
       }
 
       Stream<Path> walk = Files.walk(logDir.toPath(), 1);
-      logFiles = walk.filter(Files::isRegularFile)
-          .filter(
-              path -> {
-                if (StrUtil.isNotEmpty(logType)) {
-                  return path.getFileName().toString().contains(logType);
-                }
-                return true;
-              })
-          .map(
-              path -> {
-                LogFileInfoResponse info = new LogFileInfoResponse();
-                File file = path.toFile();
-                info.setFileName(file.getName());
-                info.setFilePath(file.getPath());
-                info.setFileSize(file.length());
-                info.setLastModified(
-                    LocalDateTime.ofInstant(
-                        java.time.Instant.ofEpochMilli(file.lastModified()),
-                        ZoneId.systemDefault()));
-                for (String type : LOG_TYPES) {
-                  if (file.getName().contains(type)) {
-                    info.setLogType(type.toUpperCase());
-                    break;
-                  }
-                }
-                return info;
-              })
-          .collect(Collectors.toList());
+      logFiles =
+          walk.filter(Files::isRegularFile)
+              .filter(
+                  path -> {
+                    if (StrUtil.isNotEmpty(logType)) {
+                      return path.getFileName().toString().contains(logType);
+                    }
+                    return true;
+                  })
+              .map(
+                  path -> {
+                    LogFileInfoResponse info = new LogFileInfoResponse();
+                    File file = path.toFile();
+                    info.setFileName(file.getName());
+                    info.setFilePath(file.getPath());
+                    info.setFileSize(file.length());
+                    info.setLastModified(
+                        LocalDateTime.ofInstant(
+                            java.time.Instant.ofEpochMilli(file.lastModified()),
+                            ZoneId.systemDefault()));
+                    for (String type : LOG_TYPES) {
+                      if (file.getName().contains(type)) {
+                        info.setLogType(type.toUpperCase());
+                        break;
+                      }
+                    }
+                    return info;
+                  })
+              .collect(Collectors.toList());
       walk.close();
     } catch (IOException e) {
       e.printStackTrace();
@@ -126,9 +126,10 @@ public class LogServiceImpl implements LogService {
 
       // 如果有关键字，进行过滤
       if (StrUtil.isNotEmpty(request.getKeyword())) {
-        lines = lines.stream()
-            .filter(line -> line.contains(request.getKeyword()))
-            .collect(Collectors.toList());
+        lines =
+            lines.stream()
+                .filter(line -> line.contains(request.getKeyword()))
+                .collect(Collectors.toList());
       }
 
       // 时间过滤待实现

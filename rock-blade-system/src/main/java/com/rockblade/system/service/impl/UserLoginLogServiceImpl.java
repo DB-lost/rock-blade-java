@@ -14,10 +14,9 @@ import org.springframework.stereotype.Service;
 
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import com.rockblade.system.entity.UserLoginLog;
-import com.rockblade.system.service.UserLoginLogService;
 import com.rockblade.system.mapper.UserLoginLogMapper;
+import com.rockblade.system.service.UserLoginLogService;
 
 @Service("userLoginLogService")
 public class UserLoginLogServiceImpl extends ServiceImpl<UserLoginLogMapper, UserLoginLog>
-                implements UserLoginLogService {
-}
+    implements UserLoginLogService {}

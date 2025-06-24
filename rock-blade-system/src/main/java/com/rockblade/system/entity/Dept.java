@@ -33,12 +33,15 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(value = "sys_dept", onInsert = BaseInsertListener.class, onUpdate = BaseUpdateListener.class, mapperGenerateEnable = false)
+@Table(
+    value = "sys_dept",
+    onInsert = BaseInsertListener.class,
+    onUpdate = BaseUpdateListener.class,
+    mapperGenerateEnable = false)
 public class Dept extends BaseEntity implements Serializable {
 
   /** 部门ID */
-  @Id
-  private String id;
+  @Id private String id;
 
   /** 部门名称 */
   private String name;

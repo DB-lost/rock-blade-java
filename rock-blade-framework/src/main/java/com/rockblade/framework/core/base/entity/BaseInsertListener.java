@@ -33,9 +33,10 @@ public class BaseInsertListener implements InsertListener {
     // 设置 account 被新增时的一些默认数据
     String userId;
     try {
-      userId = StpUtil.getLoginIdDefaultNull() == null
-          ? Constants.SUPER_ADMIN_ID
-          : StpUtil.getLoginIdAsString();
+      userId =
+          StpUtil.getLoginIdDefaultNull() == null
+              ? Constants.SUPER_ADMIN_ID
+              : StpUtil.getLoginIdAsString();
     } catch (SaTokenContextException e) {
       userId = Constants.SUPER_ADMIN_ID;
     }

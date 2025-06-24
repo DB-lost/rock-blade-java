@@ -14,10 +14,9 @@ import org.springframework.stereotype.Service;
 
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import com.rockblade.system.entity.RoleMenu;
-import com.rockblade.system.service.RoleMenuService;
 import com.rockblade.system.mapper.RoleMenuMapper;
+import com.rockblade.system.service.RoleMenuService;
 
 @Service("roleMenuService")
 public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu>
-                implements RoleMenuService {
-}
+    implements RoleMenuService {}

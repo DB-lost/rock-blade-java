@@ -31,9 +31,10 @@ public class PostgresExtensionInitializer {
   public void initializePostgresExtensions() {
     try {
       // 检查pg_stat_statements扩展是否已安装
-      Boolean extensionExists = jdbcTemplate.queryForObject(
-          "SELECT EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'pg_stat_statements')",
-          Boolean.class);
+      Boolean extensionExists =
+          jdbcTemplate.queryForObject(
+              "SELECT EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'pg_stat_statements')",
+              Boolean.class);
 
       if (Boolean.FALSE.equals(extensionExists)) {
         log.warn("pg_stat_statements扩展未安装，尝试安装...");
@@ -59,10 +60,11 @@ public class PostgresExtensionInitializer {
         log.info("pg_stat_statements扩展已安装");
 
         // 检查扩展是否正确配置
-        Boolean isEnabled = jdbcTemplate.queryForObject(
-            "SELECT count(*) > 0 FROM pg_settings WHERE name = 'pg_stat_statements.track' AND"
-                + " setting = 'all'",
-            Boolean.class);
+        Boolean isEnabled =
+            jdbcTemplate.queryForObject(
+                "SELECT count(*) > 0 FROM pg_settings WHERE name = 'pg_stat_statements.track' AND"
+                    + " setting = 'all'",
+                Boolean.class);
 
         if (Boolean.FALSE.equals(isEnabled)) {
           log.warn("pg_stat_statements扩展未正确配置，尝试更新配置...");

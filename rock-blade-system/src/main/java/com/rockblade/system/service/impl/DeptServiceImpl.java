@@ -28,9 +28,9 @@ import com.rockblade.common.dto.system.request.DeptRequest;
 import com.rockblade.common.dto.system.response.DeptResponse;
 import com.rockblade.system.entity.Dept;
 import com.rockblade.system.entity.UserDept;
+import com.rockblade.system.mapper.DeptMapper;
 import com.rockblade.system.service.DeptService;
 import com.rockblade.system.service.UserDeptService;
-import com.rockblade.system.mapper.DeptMapper;
 
 import cn.hutool.extra.spring.SpringUtil;
 
@@ -105,25 +105,27 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
 
   @Override
   public boolean checkDeptNameUnique(String deptName, String parentId, String deptId) {
-    long count = QueryChain.of(getMapper())
-        .select()
-        .from(DEPT)
-        .where(DEPT.DELETED.eq(false))
-        .and(DEPT.NAME.eq(deptName))
-        .and(DEPT.PID.eq(parentId))
-        .and(DEPT.ID.ne(deptId).when(StringUtils.hasText(deptId)))
-        .count();
+    long count =
+        QueryChain.of(getMapper())
+            .select()
+            .from(DEPT)
+            .where(DEPT.DELETED.eq(false))
+            .and(DEPT.NAME.eq(deptName))
+            .and(DEPT.PID.eq(parentId))
+            .and(DEPT.ID.ne(deptId).when(StringUtils.hasText(deptId)))
+            .count();
     return count == 0;
   }
 
   @Override
   public boolean hasChildDept(String deptId) {
-    long count = QueryChain.of(getMapper())
-        .select()
-        .from(DEPT)
-        .where(DEPT.DELETED.eq(false))
-        .and(DEPT.PID.eq(deptId))
-        .count();
+    long count =
+        QueryChain.of(getMapper())
+            .select()
+            .from(DEPT)
+            .where(DEPT.DELETED.eq(false))
+            .and(DEPT.PID.eq(deptId))
+            .count();
     return count > 0;
   }
 
@@ -183,11 +185,12 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
   }
 
   private void updateChildrenAncestors(String deptId, String oldAncestors, String newAncestors) {
-    List<Dept> children = QueryChain.of(getMapper())
-        .select()
-        .from(DEPT)
-        .where(DEPT.ANCESTORS.like(oldAncestors + "," + deptId + "%"))
-        .list();
+    List<Dept> children =
+        QueryChain.of(getMapper())
+            .select()
+            .from(DEPT)
+            .where(DEPT.ANCESTORS.like(oldAncestors + "," + deptId + "%"))
+            .list();
 
     for (Dept child : children) {
       child.setAncestors(child.getAncestors().replace(oldAncestors, newAncestors));
@@ -198,8 +201,9 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
   @Override
   public List<DeptResponse> getDeptsByUserId(String userId) {
     // 查询用户关联的部门ID列表
-    List<UserDept> userDepts = SpringUtil.getBean(UserDeptService.class)
-        .list(QueryWrapper.create().where(USER_DEPT.USER_ID.eq(userId)));
+    List<UserDept> userDepts =
+        SpringUtil.getBean(UserDeptService.class)
+            .list(QueryWrapper.create().where(USER_DEPT.USER_ID.eq(userId)));
 
     if (userDepts.isEmpty()) {
       return new ArrayList<>();
@@ -209,11 +213,12 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     List<String> deptIds = userDepts.stream().map(UserDept::getDeptId).toList();
 
     // 查询部门信息
-    List<Dept> depts = this.list(
-        QueryWrapper.create()
-            .where(DEPT.ID.in(deptIds))
-            .and(DEPT.DELETED.eq(false))
-            .orderBy(DEPT.ORDER.asc()));
+    List<Dept> depts =
+        this.list(
+            QueryWrapper.create()
+                .where(DEPT.ID.in(deptIds))
+                .and(DEPT.DELETED.eq(false))
+                .orderBy(DEPT.ORDER.asc()));
 
     // 转换为响应对象
     List<DeptResponse> responses = new ArrayList<>();

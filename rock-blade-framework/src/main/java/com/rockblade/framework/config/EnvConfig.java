@@ -28,7 +28,8 @@ public class EnvConfig implements EnvironmentPostProcessor {
       ConfigurableEnvironment environment, SpringApplication application) {
     try {
       // 加载.env文件
-      Dotenv dotenv = Dotenv.configure().directory(System.getProperty("user.dir")).filename(".env").load();
+      Dotenv dotenv =
+          Dotenv.configure().directory(System.getProperty("user.dir")).filename(".env").load();
 
       // 将.env的配置转换为Properties
       Properties properties = new Properties();

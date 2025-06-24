@@ -87,7 +87,7 @@ public interface MenuService extends IService<Menu> {
    *
    * @param menuName 菜单名称
    * @param parentId 父菜单ID
-   * @param menuId   菜单ID（更新时传入）
+   * @param menuId 菜单ID（更新时传入）
    * @return true: 唯一, false: 不唯一
    */
   Boolean checkMenuNameUnique(String menuName, String parentId, String menuId);

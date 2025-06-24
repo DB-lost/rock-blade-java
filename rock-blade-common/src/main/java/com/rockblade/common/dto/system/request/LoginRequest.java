@@ -5,8 +5,8 @@
  * @LastEditTime: 2025-06-24 13:16:01
  * @FilePath: /rock-blade-java/rock-blade-common/src/main/java/com/rockblade/common/dto/system/request/LoginRequest.java
  * @Description: 登录请求
- * 
- * Copyright (c) 2025 by RockBlade, All Rights Reserved. 
+ *
+ * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
 package com.rockblade.common.dto.system.request;
 

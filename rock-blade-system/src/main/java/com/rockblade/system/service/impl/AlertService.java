@@ -21,12 +21,12 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import com.rockblade.common.exception.UtilException;
+import com.rockblade.common.utils.MessageUtils;
+import com.rockblade.framework.handler.EmailHandler;
+import com.rockblade.system.config.properties.AlertProperties;
 import com.rockblade.system.entity.AlertHistory;
 import com.rockblade.system.service.AlertHistoryService;
-import com.rockblade.system.config.properties.AlertProperties;
-import com.rockblade.common.exception.UtilException;
-import com.rockblade.framework.handler.EmailHandler;
-import com.rockblade.common.utils.MessageUtils;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -38,13 +38,12 @@ public class AlertService {
 
   private AlertProperties alertProperties;
 
-  @Autowired
-  private AlertHistoryService alertHistoryService;
+  @Autowired private AlertHistoryService alertHistoryService;
 
-  @Autowired
-  private EmailHandler emailHandler;
+  @Autowired private EmailHandler emailHandler;
 
-  private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+  private static final DateTimeFormatter DATE_FORMATTER =
+      DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
   /**
    * 处理告警信息

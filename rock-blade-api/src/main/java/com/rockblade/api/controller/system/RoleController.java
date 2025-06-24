@@ -18,8 +18,8 @@ import com.mybatisflex.core.paginate.Page;
 import com.rockblade.common.dto.system.request.RolePageRequest;
 import com.rockblade.common.dto.system.request.RoleRequest;
 import com.rockblade.common.dto.system.response.RoleResponse;
-import com.rockblade.system.service.RoleService;
 import com.rockblade.framework.core.base.entity.R;
+import com.rockblade.system.service.RoleService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,8 +29,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/role")
 public class RoleController {
 
-  @Autowired
-  private RoleService roleService;
+  @Autowired private RoleService roleService;
 
   @GetMapping("/page")
   @Operation(summary = "获取角色列表")

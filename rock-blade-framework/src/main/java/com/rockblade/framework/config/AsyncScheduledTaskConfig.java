@@ -24,20 +24,16 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 public class AsyncScheduledTaskConfig {
 
   /** 配置 */
-  @Autowired
-  private TaskThreadPoolConfig config;
+  @Autowired private TaskThreadPoolConfig config;
 
   /**
    * 1.这种形式的线程池配置是需要在使用的方法上面添加@Async("customAsyncThreadPool")注解的
    *
-   * <p>
-   * 2.如果在使用的方法上不添加该注解，那么spring就会使用默认的线程池
+   * <p>2.如果在使用的方法上不添加该注解，那么spring就会使用默认的线程池
    *
-   * <p>
-   * 3.所以如果添加@Async注解但是不指定使用的线程池，又想自己自定义线程池，那么就可以重写spring默认的线程池
+   * <p>3.所以如果添加@Async注解但是不指定使用的线程池，又想自己自定义线程池，那么就可以重写spring默认的线程池
    *
-   * <p>
-   * 4.所以第二个方法就是重写spring默认的线程池
+   * <p>4.所以第二个方法就是重写spring默认的线程池
    *
    * @return Executor
    * @author DB

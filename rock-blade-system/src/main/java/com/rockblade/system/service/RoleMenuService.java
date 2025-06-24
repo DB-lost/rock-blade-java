@@ -13,5 +13,4 @@ package com.rockblade.system.service;
 import com.mybatisflex.core.service.IService;
 import com.rockblade.system.entity.RoleMenu;
 
-public interface RoleMenuService extends IService<RoleMenu> {
-}
+public interface RoleMenuService extends IService<RoleMenu> {}

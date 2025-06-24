@@ -30,12 +30,15 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table(value = "sys_menu", onInsert = BaseInsertListener.class, onUpdate = BaseUpdateListener.class, mapperGenerateEnable = false)
+@Table(
+    value = "sys_menu",
+    onInsert = BaseInsertListener.class,
+    onUpdate = BaseUpdateListener.class,
+    mapperGenerateEnable = false)
 public class Menu extends BaseEntity implements Serializable {
 
   /** 菜单ID */
-  @Id
-  private String id;
+  @Id private String id;
 
   /** 菜单名称 */
   private String name;

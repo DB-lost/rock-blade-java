@@ -22,7 +22,10 @@ public class ResetPasswordRequest {
   /** 邮箱 */
   @Schema(description = "邮箱", requiredMode = Schema.RequiredMode.REQUIRED)
   @NotBlank(message = "{validation.email.not.blank}")
-  @Email(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "{validation.email.format}", flags = Pattern.Flag.CASE_INSENSITIVE)
+  @Email(
+      regexp = "^[A-Za-z0-9+_.-]+@(.+)$",
+      message = "{validation.email.format}",
+      flags = Pattern.Flag.CASE_INSENSITIVE)
   private String email;
 
   /** 新密码 */

@@ -20,8 +20,7 @@ import lombok.Getter;
 @Getter
 public class InvalidExtensionException extends FileUploadException {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   /** 允许扩展 */
   private final String[] allowedExtension;
@@ -36,8 +35,8 @@ public class InvalidExtensionException extends FileUploadException {
    * 无效扩展异常
    *
    * @param allowedExtension 允许扩展
-   * @param extension        扩展
-   * @param filename         文件名
+   * @param extension 扩展
+   * @param filename 文件名
    * @author DB
    * @since 2024/05/23
    */
@@ -63,8 +62,7 @@ public class InvalidExtensionException extends FileUploadException {
    * @since 2024/05/23
    */
   public static class InvalidImageExtensionException extends InvalidExtensionException {
-    @Serial
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public InvalidImageExtensionException(
         String[] allowedExtension, String extension, String filename) {
@@ -80,8 +78,7 @@ public class InvalidExtensionException extends FileUploadException {
    * @since 2024/05/23
    */
   public static class InvalidFlashExtensionException extends InvalidExtensionException {
-    @Serial
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public InvalidFlashExtensionException(
         String[] allowedExtension, String extension, String filename) {
@@ -97,8 +94,7 @@ public class InvalidExtensionException extends FileUploadException {
    * @since 2024/05/23
    */
   public static class InvalidMediaExtensionException extends InvalidExtensionException {
-    @Serial
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public InvalidMediaExtensionException(
         String[] allowedExtension, String extension, String filename) {
@@ -114,8 +110,7 @@ public class InvalidExtensionException extends FileUploadException {
    * @since 2024/05/23
    */
   public static class InvalidVideoExtensionException extends InvalidExtensionException {
-    @Serial
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     public InvalidVideoExtensionException(
         String[] allowedExtension, String extension, String filename) {
