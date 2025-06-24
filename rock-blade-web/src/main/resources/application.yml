@@ -1,0 +1,159 @@
+# 基础配置
+rock-blade:
+  # 项目名
+  name: rock-blade-java
+  # 版本
+  version: 1.0.0
+  # RBAC配置
+  rbac:
+    # 权限模式: simple/standard
+    mode: simple
+    # 简单模式配置
+    simple:
+      # 默认角色配置
+      default-role-key: user
+      # 基础角色配置
+      roles:
+        - key: super-admin
+          name: 超级管理员
+          description: 系统超级管理员
+        - key: admin
+          name: 管理员
+          description: 系统管理员
+        - key: user
+          name: 普通用户
+          description: 默认用户角色
+      # 功能特性开关
+      features:
+        menu-permission: false
+        data-permission: false
+        dynamic-permission: false
+  # 网关
+  gateway:
+    rsa-keypair:
+      # 加密方式
+      algorithm: RSA
+      # 大小
+      keySize: 1024
+
+############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
+sa-token:
+  # token 名称（同时也是 cookie 名称）
+  token-name: Authorization
+  # token 有效期（单位：秒） 默认30天，-1 代表永久有效
+  timeout: 604800
+  # token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+  active-timeout: -1
+  # 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
+  is-concurrent: false
+  # 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
+  is-share: true
+  # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
+  token-style: random-64
+  # 是否输出操作日志
+  is-log: true
+  # token前缀
+  token-prefix: Bearer
+
+# Alert配置
+alert:
+  # 默认接收人邮箱列表，多个用逗号分隔
+  receivers: ${ALERT_RECEIVERS}
+  # 发件人显示名称
+  from: "运维告警系统 <${spring.mail.username}>"
+  # 邮件主题
+  subject: "系统告警通知"
+
+#Spring
+spring:
+  application:
+    name: rock-blade-java
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  servlet:
+    multipart:
+      #文件最大
+      max-file-size: 1024MB
+      max-request-size: 300MB
+  profiles:
+    active: dev
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.postgresql.Driver
+    #hikari数据源特性配置
+    hikari:
+      pool-name: RockBladeHikariPool
+      #最大连接数,默认值10.
+      maximum-pool-size: 10
+      #最小空闲连接，默认值10.
+      minimum-idle: 10
+      #连接超时时间(毫秒),默认值30秒.
+      connection-timeout: 30000
+      #\空闲连接超时时间，默认值600000(10分钟),只有空闲连接数大于最大连接数且空闲时间超过该值，才会被释放；如果大于等于 max-lifetime 且 max-lifetime>0,则会被重置为0.
+      idle-timeout: 600000
+      #连接最大存活时间,默认值30分钟.设置应该比mysql设置的超时时间短
+      max-lifetime: 3000000
+      #连接测试查询
+      connection-test-query: select 1
+  messages:
+    #i18n
+    basename: static/i18n/messages
+    encoding: UTF-8
+    cacheDuration: 3600
+
+# 线程池配置参数
+task:
+  pool:
+    # 设置核心线程数
+    corePoolSize: 10
+    # 设置最大线程数
+    maxPoolSize: 20
+    # 设置空闲线程存活时间（秒
+    keepAliveSeconds: 300
+    # 设置队列容量
+    queueCapacity: 100
+    # 设置线程名称前缀
+    threadNamePrefix: "RockBlade-AsyncNotify-"
+    # 设置线程池等待终止时间(秒)
+    awaitTerminationSeconds: 60
+
+#Mybatis-Flex
+mybatis-flex:
+  global-config:
+    key-config:
+      key-type: generator
+      value: snowFlakeId
+    # 逻辑删除数据存在标记值 默认值:false
+    normal-value-of-logic-delete: false
+    # 逻辑删除数据删除标记值 默认值:true
+    deleted-value-of-logic-delete: true
+    # 全局默认逻辑删除字段
+    logic-delete-column: deleted
+
+# Actuator配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+    prometheus:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    enable:
+      jvm: true
+      process: true
+      system: true
+      logback: true
+
+#日志
+logging:
+  config: classpath:logback.xml
+  level:
+    org.springframework.web: INFO
