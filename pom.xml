@@ -12,8 +12,9 @@
 	<groupId>com.rockblade</groupId>
 	<artifactId>rock-blade-java</artifactId>
 	<version>1.0.0</version>
+	<packaging>pom</packaging>
 	<name>rock-blade-java</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Rock Blade Java - A Modular Spring Boot Template Project</description>
 	<url />
 	<licenses>
 		<license />
@@ -52,7 +53,48 @@
 		<knife4j.version>4.6.0</knife4j.version>
 		<dotenv.version>5.2.2</dotenv.version>
 	</properties>
+
+	<!-- 子模块定义 -->
+	<modules>
+		<module>rock-blade-core</module>
+		<module>rock-blade-framework</module>
+		<module>rock-blade-infrastructure</module>
+		<module>rock-blade-api</module>
+		<module>rock-blade-web</module>
+	</modules>
+	<dependencyManagement>
+		<dependencies>
+			<!-- 子模块依赖 -->
+			<dependency>
+				<groupId>com.rockblade</groupId>
+				<artifactId>rock-blade-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.rockblade</groupId>
+				<artifactId>rock-blade-framework</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.rockblade</groupId>
+				<artifactId>rock-blade-infrastructure</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.rockblade</groupId>
+				<artifactId>rock-blade-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.rockblade</groupId>
+				<artifactId>rock-blade-web</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
+		<!-- 公共依赖，所有子模块都会继承 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
