@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-16 19:46:28
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:28:45
+ * @LastEditTime: 2025-06-24 14:32:01
  * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/config/SaTokenConfigure.java
  * @Description: SaToken配置中心
  *
@@ -23,7 +23,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.rockblade.framework.core.constants.Constants;
+import com.rockblade.common.constants.Constants;
 import com.rockblade.framework.filter.RepeatableFilter;
 
 import cn.dev33.satoken.context.SaHolder;

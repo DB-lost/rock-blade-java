@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-20 11:55:49
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:28:08
+ * @LastEditTime: 2025-06-24 14:28:56
  * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/config/MonitorConfig.java
  * @Description: 监控配置类 配置系统资源监控指标
  *
@@ -28,7 +28,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import com.rockblade.framework.utils.MessageUtils;
+import com.rockblade.common.utils.MessageUtils;
 import com.zaxxer.hikari.HikariDataSource;
 
 import io.micrometer.core.instrument.Counter;

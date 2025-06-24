@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-16 19:56:48
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:30:06
+ * @LastEditTime: 2025-06-24 14:34:42
  * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/handler/UploadHandler.java
  * @Description: 上传文件工具类
  *
@@ -24,9 +24,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.rockblade.framework.config.RockBladeConfig;
 import com.rockblade.framework.config.ServerConfig;
-import com.rockblade.framework.core.base.exception.InvalidExtensionException;
-import com.rockblade.framework.core.base.exception.UtilException;
-import com.rockblade.framework.core.constants.Constants;
+import com.rockblade.common.exception.InvalidExtensionException;
+import com.rockblade.common.exception.UtilException;
+import com.rockblade.common.constants.Constants;
 
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.IdUtil;

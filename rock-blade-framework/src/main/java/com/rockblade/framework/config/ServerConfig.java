@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-16 19:48:49
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:28:50
+ * @LastEditTime: 2025-06-24 14:39:05
  * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/config/ServerConfig.java
  * @Description: 服务相关配置
  *
@@ -12,7 +12,7 @@ package com.rockblade.framework.config;
 
 import org.springframework.stereotype.Component;
 
-import com.rockblade.framework.utils.ServletUtils;
+import com.rockblade.common.utils.ServletUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
 

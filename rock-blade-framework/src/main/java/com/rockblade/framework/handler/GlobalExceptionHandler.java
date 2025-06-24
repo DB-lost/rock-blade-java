@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-16 19:56:48
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:29:52
+ * @LastEditTime: 2025-06-24 14:27:51
  * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/handler/GlobalExceptionHandler.java
  * @Description: 全局异常处理程序
  *
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.rockblade.framework.core.base.entity.R;
-import com.rockblade.framework.core.base.exception.ServiceException;
+import com.rockblade.common.exception.ServiceException;
 
 import cn.dev33.satoken.exception.SaTokenException;
 import jakarta.servlet.http.HttpServletRequest;

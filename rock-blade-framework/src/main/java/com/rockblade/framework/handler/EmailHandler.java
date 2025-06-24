@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-03-24 15:54:19
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 13:29:48
+ * @LastEditTime: 2025-06-24 14:39:30
  * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/handler/EmailHandler.java
  * @Description: 邮件服务
  *
@@ -18,7 +18,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
-import com.rockblade.framework.core.base.exception.UtilException;
+import com.rockblade.common.exception.UtilException;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;

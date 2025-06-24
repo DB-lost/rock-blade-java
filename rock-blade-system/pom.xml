@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.rockblade</groupId>
         <artifactId>rock-blade-java</artifactId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
     </parent>
 
     <packaging>jar</packaging>

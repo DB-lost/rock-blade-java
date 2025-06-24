@@ -2,20 +2,24 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 23:33:22
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 14:08:06
+ * @LastEditTime: 2025-06-24 14:42:01
  * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/handler/SqlHandler.java
  * @Description: sql操作工具类
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
  */
-package com.rockblade.common.utils;
+package com.rockblade.framework.handler;
 
 import com.rockblade.framework.core.base.entity.PageDomain;
-import com.rockblade.framework.core.base.exception.UtilException;
+import com.rockblade.common.exception.UtilException;
 
 import cn.hutool.core.util.StrUtil;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import com.rockblade.common.utils.ServletUtils;
 
 @Component
 public class SqlHandler {
