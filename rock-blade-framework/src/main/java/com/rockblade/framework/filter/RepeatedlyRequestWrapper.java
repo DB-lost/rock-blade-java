@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-16 19:49:34
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-16 23:08:01
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/filter/RepeatedlyRequestWrapper.java
+ * @LastEditTime: 2025-06-24 13:29:40
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/filter/RepeatedlyRequestWrapper.java
  * @Description: 重复请求包装器
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -29,7 +29,7 @@ public class RepeatedlyRequestWrapper extends HttpServletRequestWrapper {
   /**
    * 重复请求包装器
    *
-   * @param request 请求
+   * @param request  请求
    * @param response 响应
    * @throws IOException ioexception
    * @author DB
@@ -104,7 +104,8 @@ public class RepeatedlyRequestWrapper extends HttpServletRequestWrapper {
       }
 
       @Override
-      public void setReadListener(ReadListener readListener) {}
+      public void setReadListener(ReadListener readListener) {
+      }
     };
   }
 }

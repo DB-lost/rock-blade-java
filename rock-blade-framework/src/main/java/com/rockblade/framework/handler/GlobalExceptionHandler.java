@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-16 19:56:48
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-16 19:57:19
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/handler/GlobalExceptionHandler.java
+ * @LastEditTime: 2025-06-24 13:29:52
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/handler/GlobalExceptionHandler.java
  * @Description: 全局异常处理程序
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -59,7 +59,7 @@ public class GlobalExceptionHandler {
   /**
    * 拦截未知的运行时异常
    *
-   * @param e 异常
+   * @param e       异常
    * @param request 请求
    * @return {@link R }<{@link Void }>
    * @author DB
@@ -75,7 +75,7 @@ public class GlobalExceptionHandler {
   /**
    * 系统异常
    *
-   * @param e 异常
+   * @param e       异常
    * @param request 请求
    * @return {@link R }<{@link Void }>
    * @author DB
@@ -114,8 +114,7 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public R<Void> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
     log.error(e.getMessage(), e);
-    String message =
-        Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage();
+    String message = Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage();
     return R.fail(message);
   }
 }

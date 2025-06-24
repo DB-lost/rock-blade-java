@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-12 09:34:36
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-12 10:08:28
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/config/properties/RbacProperties.java
+ * @LastEditTime: 2025-06-24 13:27:52
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/config/properties/RbacProperties.java
  * @Description:
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.

@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-02-22 18:15:35
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-02-22 18:27:31
- * @FilePath: /rock-blade-admin-java/src/main/java/com/rockblade/framework/handler/RedisHandler.java
+ * @LastEditTime: 2025-06-24 13:30:00
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/handler/RedisHandler.java
  * @Description: Redis操作工具类。
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -21,12 +21,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class RedisHandler {
 
-  @Autowired private RedisTemplate<String, Object> redisTemplate;
+  @Autowired
+  private RedisTemplate<String, Object> redisTemplate;
 
   /**
    * 指定缓存失效时间
    *
-   * @param key 键
+   * @param key  键
    * @param time 时间(秒)
    */
   public boolean expire(String key, long time) {
@@ -96,7 +97,7 @@ public class RedisHandler {
   /**
    * 放入普通缓存
    *
-   * @param key 键
+   * @param key   键
    * @param value 值
    * @return true成功 false失败
    */
@@ -113,9 +114,9 @@ public class RedisHandler {
   /**
    * 放入普通缓存并设置时间
    *
-   * @param key 键
+   * @param key   键
    * @param value 值
-   * @param time 时间(秒) time要大于0 如果time小于等于0 将设置无限期
+   * @param time  时间(秒) time要大于0 如果time小于等于0 将设置无限期
    * @return true成功 false 失败
    */
   public boolean set(String key, Object value, long time) {
@@ -135,7 +136,7 @@ public class RedisHandler {
   /**
    * 递增
    *
-   * @param key 键
+   * @param key   键
    * @param delta 要增加几(大于0)
    * @return
    */
@@ -149,7 +150,7 @@ public class RedisHandler {
   /**
    * 递减
    *
-   * @param key 键
+   * @param key   键
    * @param delta 要减少几(小于0)
    * @return
    */
@@ -165,7 +166,7 @@ public class RedisHandler {
   /**
    * HashGet
    *
-   * @param key 键 不能为null
+   * @param key  键 不能为null
    * @param item 项 不能为null
    * @return 值
    */
@@ -220,7 +221,7 @@ public class RedisHandler {
   /**
    * 将数据放入set缓存
    *
-   * @param key 键
+   * @param key    键
    * @param values 值 可以是多个
    * @return 成功个数
    */
@@ -238,9 +239,9 @@ public class RedisHandler {
   /**
    * 获取list缓存的内容
    *
-   * @param key 键
+   * @param key   键
    * @param start 开始
-   * @param end 结束 0 到 -1代表所有值
+   * @param end   结束 0 到 -1代表所有值
    * @return
    */
   public List<Object> lGet(String key, long start, long end) {
@@ -255,7 +256,7 @@ public class RedisHandler {
   /**
    * 将list放入缓存
    *
-   * @param key 键
+   * @param key   键
    * @param value 值
    * @return
    */
@@ -272,9 +273,9 @@ public class RedisHandler {
   /**
    * 将list放入缓存
    *
-   * @param key 键
+   * @param key   键
    * @param value 值
-   * @param time 时间(秒)
+   * @param time  时间(秒)
    * @return
    */
   public boolean lSet(String key, Object value, long time) {

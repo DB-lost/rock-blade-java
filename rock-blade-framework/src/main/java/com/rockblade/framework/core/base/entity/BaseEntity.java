@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 21:06:09
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-15 16:34:21
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/core/base/entity/BaseEntity.java
+ * @LastEditTime: 2025-06-24 13:29:08
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/core/base/entity/BaseEntity.java
  * @Description: 基础实体类
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.

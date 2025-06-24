@@ -3,7 +3,7 @@
  * @Date: 2025-05-20 15:13:41
  * @LastEditors: DB 2502523450@qq.com
  * @LastEditTime: 2025-05-23 00:26:19
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/monitor/AlertService.java
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/monitor/AlertService.java
  * @Description: 监控告警服务 处理系统告警通知
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -38,12 +38,13 @@ public class AlertService {
 
   private AlertProperties alertProperties;
 
-  @Autowired private AlertHistoryService alertHistoryService;
+  @Autowired
+  private AlertHistoryService alertHistoryService;
 
-  @Autowired private EmailHandler emailHandler;
+  @Autowired
+  private EmailHandler emailHandler;
 
-  private static final DateTimeFormatter DATE_FORMATTER =
-      DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+  private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
   /**
    * 处理告警信息

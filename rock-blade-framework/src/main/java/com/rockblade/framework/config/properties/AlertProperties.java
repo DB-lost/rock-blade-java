@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-23 00:19:34
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-23 00:21:24
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/config/properties/AlertProperties.java
+ * @LastEditTime: 2025-06-24 13:27:47
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/config/properties/AlertProperties.java
  * @Description:
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.

@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-21 14:14:37
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-21 14:17:05
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/monitor/PostgresExtensionInitializer.java
+ * @LastEditTime: 2025-06-24 13:31:15
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/monitor/PostgresExtensionInitializer.java
  * @Description: PostgreSQL扩展初始化器 用于在应用启动时检查和配置所需的PostgreSQL扩展
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -31,10 +31,9 @@ public class PostgresExtensionInitializer {
   public void initializePostgresExtensions() {
     try {
       // 检查pg_stat_statements扩展是否已安装
-      Boolean extensionExists =
-          jdbcTemplate.queryForObject(
-              "SELECT EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'pg_stat_statements')",
-              Boolean.class);
+      Boolean extensionExists = jdbcTemplate.queryForObject(
+          "SELECT EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'pg_stat_statements')",
+          Boolean.class);
 
       if (Boolean.FALSE.equals(extensionExists)) {
         log.warn("pg_stat_statements扩展未安装，尝试安装...");
@@ -60,11 +59,10 @@ public class PostgresExtensionInitializer {
         log.info("pg_stat_statements扩展已安装");
 
         // 检查扩展是否正确配置
-        Boolean isEnabled =
-            jdbcTemplate.queryForObject(
-                "SELECT count(*) > 0 FROM pg_settings WHERE name = 'pg_stat_statements.track' AND"
-                    + " setting = 'all'",
-                Boolean.class);
+        Boolean isEnabled = jdbcTemplate.queryForObject(
+            "SELECT count(*) > 0 FROM pg_settings WHERE name = 'pg_stat_statements.track' AND"
+                + " setting = 'all'",
+            Boolean.class);
 
         if (Boolean.FALSE.equals(isEnabled)) {
           log.warn("pg_stat_statements扩展未正确配置，尝试更新配置...");

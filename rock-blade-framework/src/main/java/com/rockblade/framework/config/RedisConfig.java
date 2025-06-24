@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-02-22 18:14:46
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-02-22 18:25:47
- * @FilePath: /rock-blade-admin-java/src/main/java/com/rockblade/framework/config/RedisConfig.java
+ * @LastEditTime: 2025-06-24 13:28:23
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/config/RedisConfig.java
  * @Description: Redis配置类。
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.

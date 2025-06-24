@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-03-24 15:54:19
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-23 00:28:04
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/handler/EmailHandler.java
+ * @LastEditTime: 2025-06-24 13:29:48
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/handler/EmailHandler.java
  * @Description: 邮件服务
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -28,7 +28,8 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class EmailHandler {
 
-  @Autowired private JavaMailSender mailSender;
+  @Autowired
+  private JavaMailSender mailSender;
 
   @Value("${spring.mail.username}")
   private String fromEmail;
@@ -36,7 +37,7 @@ public class EmailHandler {
   /**
    * 发送告警邮件
    *
-   * @param to 收件人列表
+   * @param to      收件人列表
    * @param subject 邮件主题
    * @param content HTML格式的邮件内容
    */
@@ -59,15 +60,14 @@ public class EmailHandler {
   /**
    * 发送验证码邮件
    *
-   * @param to 收件人
-   * @param code 验证码
+   * @param to            收件人
+   * @param code          验证码
    * @param expireMinutes 过期时间（分钟）
-   * @param subject 邮件主题
+   * @param subject       邮件主题
    */
   private void sendVerificationEmail(String to, String code, int expireMinutes, String subject) {
-    String htmlContent =
-        String.format(
-            """
+    String htmlContent = String.format(
+        """
             <div style="text-align: center;">
                 <h2>%s</h2>
                 <p>您的验证码是：</p>
@@ -76,7 +76,7 @@ public class EmailHandler {
                 <p>如果这不是您的操作，请忽略此邮件。</p>
             </div>
             """,
-            subject, code, expireMinutes);
+        subject, code, expireMinutes);
 
     try {
       MimeMessage message = mailSender.createMimeMessage();
@@ -96,8 +96,8 @@ public class EmailHandler {
   /**
    * 发送重置密码邮件
    *
-   * @param to 收件人
-   * @param code 验证码
+   * @param to            收件人
+   * @param code          验证码
    * @param expireMinutes 过期时间（分钟）
    */
   public void sendResetPasswordEmail(String to, String code, int expireMinutes) {
@@ -107,8 +107,8 @@ public class EmailHandler {
   /**
    * 发送邮箱验证码
    *
-   * @param to 收件人
-   * @param code 验证码
+   * @param to            收件人
+   * @param code          验证码
    * @param expireMinutes 过期时间（分钟）
    */
   public void sendEmailCode(String to, String code, int expireMinutes) {

@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 23:53:28
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-16 09:03:00
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/config/TaskThreadPoolConfig.java
+ * @LastEditTime: 2025-06-24 13:28:57
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/config/TaskThreadPoolConfig.java
  * @Description: 任务线程池配置
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.

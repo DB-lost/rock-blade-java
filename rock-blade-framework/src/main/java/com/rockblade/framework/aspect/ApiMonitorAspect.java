@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-05-21 14:06:00
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-21 14:09:50
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/aspect/ApiMonitorAspect.java
+ * @LastEditTime: 2025-06-24 13:27:40
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/aspect/ApiMonitorAspect.java
  * @Description: API接口监控切面 用于收集接口调用的响应时间、请求量、错误率等指标
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -33,15 +33,13 @@ public class ApiMonitorAspect {
     this.meterRegistry = meterRegistry;
   }
 
-  @Around(
-      "@annotation(org.springframework.web.bind.annotation.RequestMapping) || "
-          + "@annotation(org.springframework.web.bind.annotation.GetMapping) || "
-          + "@annotation(org.springframework.web.bind.annotation.PostMapping) || "
-          + "@annotation(org.springframework.web.bind.annotation.PutMapping) || "
-          + "@annotation(org.springframework.web.bind.annotation.DeleteMapping)")
+  @Around("@annotation(org.springframework.web.bind.annotation.RequestMapping) || "
+      + "@annotation(org.springframework.web.bind.annotation.GetMapping) || "
+      + "@annotation(org.springframework.web.bind.annotation.PostMapping) || "
+      + "@annotation(org.springframework.web.bind.annotation.PutMapping) || "
+      + "@annotation(org.springframework.web.bind.annotation.DeleteMapping)")
   public Object monitorApiEndpoint(ProceedingJoinPoint joinPoint) throws Throwable {
-    HttpServletRequest request =
-        ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
     String endpoint = request.getRequestURI();
     String method = request.getMethod();
 

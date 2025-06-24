@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-16 19:49:34
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-16 19:49:54
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/filter/RepeatableFilter.java
+ * @LastEditTime: 2025-06-24 13:29:32
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/filter/RepeatableFilter.java
  * @Description: 可重复过滤器
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -27,14 +27,15 @@ import jakarta.servlet.http.HttpServletRequest;
 public class RepeatableFilter extends SaServletFilter {
 
   @Override
-  public void init(FilterConfig filterConfig) {}
+  public void init(FilterConfig filterConfig) {
+  }
 
   /**
    * 做过滤器
    *
-   * @param request 请求
+   * @param request  请求
    * @param response 响应
-   * @param chain 链
+   * @param chain    链
    * @throws IOException ioexception
    * @author LOST
    * @since 2024/05/24
@@ -52,10 +53,9 @@ public class RepeatableFilter extends SaServletFilter {
               });
     } catch (StopMatchException ignored) {
     } catch (Throwable var7) {
-      String result =
-          var7 instanceof BackResultException
-              ? var7.getMessage()
-              : String.valueOf(this.error.run(var7));
+      String result = var7 instanceof BackResultException
+          ? var7.getMessage()
+          : String.valueOf(this.error.run(var7));
       if (response.getContentType() == null) {
         response.setContentType("text/plain; charset=utf-8");
       }
@@ -76,5 +76,6 @@ public class RepeatableFilter extends SaServletFilter {
   }
 
   @Override
-  public void destroy() {}
+  public void destroy() {
+  }
 }

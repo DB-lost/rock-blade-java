@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-16 20:22:04
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-16 20:23:09
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/listen/RockBladeSaTokenListener.java
+ * @LastEditTime: 2025-06-24 13:30:18
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/listen/RockBladeSaTokenListener.java
  * @Description: SaToken监听器
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -21,8 +21,8 @@ public class RockBladeSaTokenListener implements SaTokenListener {
   /**
    * 每次登录时触发
    *
-   * @param loginType 登录类型
-   * @param loginId 登录id
+   * @param loginType  登录类型
+   * @param loginId    登录id
    * @param tokenValue token
    * @param loginModel 登录模块
    * @author DB
@@ -39,8 +39,8 @@ public class RockBladeSaTokenListener implements SaTokenListener {
    *
    * @author DB
    * @since 2024/3/20
-   * @param loginType 登录类型
-   * @param loginId 登录id
+   * @param loginType  登录类型
+   * @param loginId    登录id
    * @param tokenValue token
    */
   @Override
@@ -51,8 +51,8 @@ public class RockBladeSaTokenListener implements SaTokenListener {
   /**
    * 每次被踢下线时触发
    *
-   * @param loginType 登录类型
-   * @param loginId 登录id
+   * @param loginType  登录类型
+   * @param loginId    登录id
    * @param tokenValue 令牌值
    * @author DB
    * @since 2024/05/23
@@ -65,8 +65,8 @@ public class RockBladeSaTokenListener implements SaTokenListener {
   /**
    * 每次被顶下线时触发
    *
-   * @param loginType 登录类型
-   * @param loginId 登录id
+   * @param loginType  登录类型
+   * @param loginId    登录id
    * @param tokenValue 令牌值
    * @author DB
    * @since 2024/05/23
@@ -79,10 +79,10 @@ public class RockBladeSaTokenListener implements SaTokenListener {
   /**
    * 每次被封禁时触发
    *
-   * @param loginType 登录类型
-   * @param loginId 登录id
-   * @param service 服务
-   * @param level 水平
+   * @param loginType   登录类型
+   * @param loginId     登录id
+   * @param service     服务
+   * @param level       水平
    * @param disableTime 禁用时间
    * @author DB
    * @since 2024/05/23
@@ -97,8 +97,8 @@ public class RockBladeSaTokenListener implements SaTokenListener {
    * 每次被解封时触发
    *
    * @param loginType 登录类型
-   * @param loginId 登录id
-   * @param service 服务
+   * @param loginId   登录id
+   * @param service   服务
    * @author DB
    * @since 2024/05/23
    */
@@ -110,10 +110,10 @@ public class RockBladeSaTokenListener implements SaTokenListener {
   /**
    * 每次二级认证时触发
    *
-   * @param loginType 登录类型
+   * @param loginType  登录类型
    * @param tokenValue 令牌值
-   * @param service 服务
-   * @param safeTime 安全时间
+   * @param service    服务
+   * @param safeTime   安全时间
    * @author DB
    * @since 2024/05/23
    */
@@ -125,9 +125,9 @@ public class RockBladeSaTokenListener implements SaTokenListener {
   /**
    * 每次退出二级认证时触发
    *
-   * @param loginType 登录类型
+   * @param loginType  登录类型
    * @param tokenValue 令牌值
-   * @param service 服务
+   * @param service    服务
    * @author DB
    * @since 2024/05/23
    */
@@ -164,8 +164,8 @@ public class RockBladeSaTokenListener implements SaTokenListener {
    * 每次Token续期时触发
    *
    * @param tokenValue 令牌值
-   * @param loginId 登录id
-   * @param timeout 超时
+   * @param loginId    登录id
+   * @param timeout    超时
    * @author DB
    * @since 2024/05/23
    */

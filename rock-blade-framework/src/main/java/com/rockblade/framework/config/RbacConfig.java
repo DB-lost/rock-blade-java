@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-04-12 09:34:55
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-16 10:10:18
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/config/RbacConfig.java
+ * @LastEditTime: 2025-06-24 13:28:18
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/config/RbacConfig.java
  * @Description:
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -25,9 +25,11 @@ import jakarta.annotation.PostConstruct;
 @EnableConfigurationProperties(RbacProperties.class)
 public class RbacConfig {
 
-  @Autowired private RbacProperties rbacProperties;
+  @Autowired
+  private RbacProperties rbacProperties;
 
-  @Autowired private RoleService roleService;
+  @Autowired
+  private RoleService roleService;
 
   @PostConstruct
   public void init() {

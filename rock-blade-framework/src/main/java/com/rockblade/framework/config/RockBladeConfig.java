@@ -1,9 +1,9 @@
 /*
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 23:51:34
- * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @LastEditTime: 2025-04-23 23:12:52
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/config/RockBladeConfig.java
+ * @LastEditors: DB 2502523450@qq.com
+ * @LastEditTime: 2025-06-24 13:28:35
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/config/RockBladeConfig.java
  * @Description: rock-blade-java配置
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -33,7 +33,8 @@ public class RockBladeConfig {
   private static String profile;
 
   /** 验证码类型 */
-  @Getter private static String captchaType;
+  @Getter
+  private static String captchaType;
 
   /** jwt */
   private Jwt jwt;
@@ -64,7 +65,8 @@ public class RockBladeConfig {
   }
 
   /** 网关配置 */
-  @Getter private Gateway gateway;
+  @Getter
+  private Gateway gateway;
 
   /**
    * 设置网关

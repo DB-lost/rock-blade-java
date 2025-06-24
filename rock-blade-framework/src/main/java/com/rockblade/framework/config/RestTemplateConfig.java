@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-16 08:43:34
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-16 09:02:34
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/config/RestTemplateConfig.java
+ * @LastEditTime: 2025-06-24 13:28:27
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/config/RestTemplateConfig.java
  * @Description: Rest模板
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.

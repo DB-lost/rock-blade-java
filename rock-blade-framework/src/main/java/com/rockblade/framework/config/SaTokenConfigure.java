@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-16 19:46:28
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-01-16 19:53:36
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/config/SaTokenConfigure.java
+ * @LastEditTime: 2025-06-24 13:28:45
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/config/SaTokenConfigure.java
  * @Description: SaToken配置中心
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -38,7 +38,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SaTokenConfigure implements WebMvcConfigurer {
 
-  @Autowired private RockBladeConfig rockBladeConfig;
+  @Autowired
+  private RockBladeConfig rockBladeConfig;
 
   /**
    * 获取servlet过滤器
@@ -55,7 +56,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         // 认证函数: 每次请求执行
         // .setAuth(obj -> {
         // 登录认证 -- 拦截所有路由，并排除/user/doLogin 用于开放登录
-        //    SaRouter.match("/**", "/user/doLogin", StpUtil::checkLogin);
+        // SaRouter.match("/**", "/user/doLogin", StpUtil::checkLogin);
         // 更多拦截处理方式，请参考“路由拦截式鉴权”章节 */
         // })
         // 异常处理函数：每次认证函数发生异常时执行此函数

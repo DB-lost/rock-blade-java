@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-02-22 23:18:25
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-05-21 11:24:56
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/config/EnvConfig.java
+ * @LastEditTime: 2025-06-24 13:28:02
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/config/EnvConfig.java
  * @Description: 读取.env文件的配置
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -28,8 +28,7 @@ public class EnvConfig implements EnvironmentPostProcessor {
       ConfigurableEnvironment environment, SpringApplication application) {
     try {
       // 加载.env文件
-      Dotenv dotenv =
-          Dotenv.configure().directory(System.getProperty("user.dir")).filename(".env").load();
+      Dotenv dotenv = Dotenv.configure().directory(System.getProperty("user.dir")).filename(".env").load();
 
       // 将.env的配置转换为Properties
       Properties properties = new Properties();

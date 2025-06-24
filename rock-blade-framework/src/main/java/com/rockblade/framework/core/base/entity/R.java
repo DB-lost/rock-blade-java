@@ -2,8 +2,8 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-15 21:06:09
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-04-13 09:58:53
- * @FilePath: /rock-blade-java/src/main/java/com/rockblade/framework/core/base/entity/R.java
+ * @LastEditTime: 2025-06-24 13:29:28
+ * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/core/base/entity/R.java
  * @Description: 响应信息主体
  *
  * Copyright (c) 2025 by RockBlade, All Rights Reserved.
@@ -20,7 +20,8 @@ import lombok.Getter;
 @Getter
 public class R<T> implements Serializable {
 
-  @Serial private static final long serialVersionUID = 1L;
+  @Serial
+  private static final long serialVersionUID = 1L;
 
   /** 成功 */
   public static final int SUCCESS = HttpStatus.SUCCESS;
@@ -63,7 +64,7 @@ public class R<T> implements Serializable {
   /**
    * 成功
    *
-   * @param data 结果
+   * @param data    结果
    * @param message 消息
    * @return {@link R }<{@link T }>
    * @author DB
@@ -111,7 +112,7 @@ public class R<T> implements Serializable {
   /**
    * 失败
    *
-   * @param data 结果
+   * @param data    结果
    * @param message 消息
    * @return {@link R }<{@link T }>
    * @author DB
@@ -124,7 +125,7 @@ public class R<T> implements Serializable {
   /**
    * 失败
    *
-   * @param code 代码
+   * @param code    代码
    * @param message 消息
    * @return {@link R }<{@link T }>
    * @author DB
@@ -137,8 +138,8 @@ public class R<T> implements Serializable {
   /**
    * 其他结果
    *
-   * @param data 结果
-   * @param code 代码
+   * @param data    结果
+   * @param code    代码
    * @param message 消息
    * @return {@link R }<{@link T }>
    * @author DB
