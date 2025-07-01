@@ -2,7 +2,7 @@
  * @Author: DB 2502523450@qq.com
  * @Date: 2025-01-16 19:56:48
  * @LastEditors: DB 2502523450@qq.com
- * @LastEditTime: 2025-06-24 14:34:42
+ * @LastEditTime: 2025-07-01 11:42:51
  * @FilePath: /rock-blade-java/rock-blade-framework/src/main/java/com/rockblade/framework/handler/UploadHandler.java
  * @Description: 上传文件工具类
  *
@@ -42,9 +42,11 @@ import cn.hutool.core.util.StrUtil;
 @Component
 public class UploadHandler {
 
-  @Autowired private RockBladeConfig rockBladeConfig;
+  @Autowired
+  private RockBladeConfig rockBladeConfig;
 
-  @Autowired private ServerConfig serverConfig;
+  @Autowired
+  private ServerConfig serverConfig;
 
   /**
    * 上传文件
@@ -77,11 +79,24 @@ public class UploadHandler {
       throw new UtilException(e);
     }
     // 上传并返回新文件名称
-    String pathFileName = getPathFileName(rockBladeConfig.getUploadPath(), fileName);
+    String pathFileName = getPathFileName(fileName);
     // 强制将http变成https
     // String https = serverConfig.getUrl().replace("http:", "https:");
     // String url = https + fileName;
     return serverConfig.getUrl() + pathFileName;
+  }
+
+  /**
+   * 获取文件url
+   *
+   * @param fileName 文件名称
+   * @return {@link String }
+   * @author DB
+   * @since 2024/05/23
+   */
+  public String replaceUrl(String fileName) {
+    return fileName.replace(
+        serverConfig.getUrl() + Constants.RESOURCE_PREFIX, rockBladeConfig.getProfile());
   }
 
   /**
@@ -105,15 +120,13 @@ public class UploadHandler {
   /**
    * 获取路径文件名
    *
-   * @param uploadDir 上传dir
    * @param fileName 文件名称
    * @return {@link String }
    * @author DB
    * @since 2024/05/23
    */
-  private String getPathFileName(String uploadDir, String fileName) {
-    int dirLastIndex = rockBladeConfig.getProfile().length() + 1;
-    String currentDir = StrUtil.sub(uploadDir, 0, dirLastIndex);
+  private String getPathFileName(String fileName) {
+    String currentDir = rockBladeConfig.getUploadPath().replace(rockBladeConfig.getProfile(), "");
     return Constants.RESOURCE_PREFIX + "/" + currentDir + "/" + fileName;
   }
 
@@ -138,7 +151,7 @@ public class UploadHandler {
    * 获取绝对文件
    *
    * @param uploadDir 上传dir
-   * @param fileName 文件名称
+   * @param fileName  文件名称
    * @return {@link File }
    * @author DB
    * @since 2024/05/23
@@ -156,10 +169,10 @@ public class UploadHandler {
   /**
    * 文件大小校验
    *
-   * @param file 上传的文件
+   * @param file             上传的文件
    * @param allowedExtension 允许扩展
    * @throws FileSizeLimitExceededException 文件大小限制超出异常
-   * @throws InvalidExtensionException 无效扩展异常
+   * @throws InvalidExtensionException      无效扩展异常
    * @author DB
    * @since 2024/05/23
    */
@@ -210,7 +223,7 @@ public class UploadHandler {
   /**
    * 允许扩展
    *
-   * @param extension 扩展
+   * @param extension        扩展
    * @param allowedExtension 允许扩展
    * @return boolean
    * @author DB
